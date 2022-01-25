@@ -24,6 +24,7 @@ const ExternalApi = () => {
   const callSecureApi = async () => {
     try {
       const token = await getAccessTokenSilently();
+      console.log(token)
 
       const response = await fetch(
         `${serverUrl}/api/private-scoped`,
