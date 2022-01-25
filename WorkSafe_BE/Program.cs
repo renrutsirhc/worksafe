@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder.WithOrigins("https://localhost:7001", "http://localhost:7000",
-                "https://localhost:3000");
+                "https://localhost:3000", "http://localhost:3000");
         });
 });
 
@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseCors(AllowPorts);
 

@@ -52,7 +52,7 @@ export default class App extends Component {
     }
 
     async populateWeatherData() {
-        const response = await fetch('http://localhost:7000/weatherforecast');
+        const response = await fetch('https://localhost:7001/weatherforecast');
         const data = await response.json();
         this.setState({ forecasts: data, loading: false });
     }
