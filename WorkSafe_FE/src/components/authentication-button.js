@@ -1,16 +1,16 @@
+// src/components/authentication-button.js
+
 import React from "react";
 
 import LoginButton from "./login-button";
 import LogoutButton from "./logout-button";
 
-import { withAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
-class AuthenticationButton extends React.Component {
-  render() {
-    const { isAuthenticated } = this.props.auth0;
+const AuthenticationButton = () => {
+  const { isAuthenticated } = useAuth0();
 
-    return isAuthenticated ? <LogoutButton /> : <LoginButton />;
-  }
-}
+  return isAuthenticated ? <LogoutButton /> : <LoginButton />;
+};
 
-export default withAuth0(AuthenticationButton);
+export default AuthenticationButton;
