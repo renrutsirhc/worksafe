@@ -1,9 +1,9 @@
 import {NavLink} from "react-router-dom";
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 const MainNav = () => {
-  const { isAuthenticated } = useAuth0();
+  // const { isAuthenticated } = useAuth0();
   return(
   <div className="navbar-nav mr-auto">
     <NavLink
@@ -14,7 +14,7 @@ const MainNav = () => {
     >
       Home
     </NavLink>
-    {isAuthenticated && ( <>
+    {/* {isAuthenticated && ( <> */}
     <NavLink
       to="/profile"
       exact
@@ -30,7 +30,8 @@ const MainNav = () => {
       activeClassName="router-link-exact-active"
     >
       External API
-    </NavLink></>)}
+    </NavLink>
+    {/* </>)} */}
   </div>
 );
 };

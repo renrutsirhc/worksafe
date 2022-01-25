@@ -1,41 +1,61 @@
-var builder = WebApplication.CreateBuilder(args);
+// var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddControllers();
+// // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
 
 
-var AllowPorts = "_allowPorts";
+// var AllowPorts = "_allowPorts";
 
-builder.Services.AddCors(options =>
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy(name: AllowPorts,
+//         builder =>
+//         {
+//             builder.WithOrigins("https://localhost:7001", "http://localhost:7000",
+//                 "https://localhost:3000", "http://localhost:3000");
+//         });
+// });
+
+
+// var app = builder.Build();
+
+// // Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+
+// //app.UseHttpsRedirection();
+
+// app.UseCors(AllowPorts);
+
+// app.UseAuthorization();
+
+// app.MapControllers();
+
+// app.Run();
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+namespace WorkSafe_BE
 {
-    options.AddPolicy(name: AllowPorts,
-        builder =>
+    public class Program
+    {
+        public static void Main(string[] args)
         {
-            builder.WithOrigins("https://localhost:7001", "http://localhost:7000",
-                "https://localhost:3000", "http://localhost:3000");
-        });
-});
+            CreateHostBuilder(args).Build().Run();
+        }
 
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
 }
-
-//app.UseHttpsRedirection();
-
-app.UseCors(AllowPorts);
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
