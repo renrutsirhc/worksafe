@@ -1,59 +1,36 @@
 import React, { Component } from 'react';
+import { Route, Switch } from "react-router-dom";
 
-export default class App extends Component {
-    static displayName = App.name;
+import { NavBar, Footer, Loading } from "./components";
+import { Home, Profile, ExternalApi } from "./views";
 
-    constructor(props) {
-        super(props);
-        this.state = { forecasts: [], loading: true };
-    }
+import { withAuth0 } from "@auth0/auth0-react";
+import ProtectedRoute from "./auth/protected-route";
 
-    componentDidMount() {
-        this.populateWeatherData();
-    }
-
-    static renderForecastsTable(forecasts) {
-        return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {forecasts.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        );
-    }
-
+class App extends Component {
     render() {
-        let contents = this.state.loading
-            ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-            : App.renderForecastsTable(this.state.forecasts);
+        const { isLoading } = this.props.auth0;
+
+        if (isLoading) {
+            return <Loading />;
+        }
 
         return (
-            <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
+            <div id="app" className="d-flex flex-column h-100">
+            <NavBar />
+            <div className="container flex-grow-1">
+                <div className="mt-5">
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    <ProtectedRoute path="/profile" component={Profile} />
+                    <ProtectedRoute path="/external-api" component={ExternalApi} />
+                </Switch>
+                </div>
+            </div>
+            <Footer />
             </div>
         );
     }
-
-    async populateWeatherData() {
-        const response = await fetch('https://localhost:7001/weatherforecast');
-        const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
-    }
 }
+
+export default withAuth0(App);
