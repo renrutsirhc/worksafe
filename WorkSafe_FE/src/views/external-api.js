@@ -27,13 +27,15 @@ const ExternalApi = () => {
       console.log(token)
 
       const response = await fetch(
-        `${serverUrl}/api/private-scoped`,
+        `${serverUrl}/api/private`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      console.log(response)
 
       const responseData = await response.json();
 
