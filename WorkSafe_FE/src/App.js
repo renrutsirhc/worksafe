@@ -14,7 +14,7 @@ class App extends Component {
         if (isLoading) {
             return <Loading />;
         }
-
+        
         return (
             <div id="app" className="d-flex flex-column h-100">
             <NavBar />

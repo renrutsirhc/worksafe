@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "worksafe-f99a3",
+  "private_key_id": "dfd3441ac6fd5254cd4fb1ed7c7521620b4038a8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDdqe0qraXyucAo\ny4b05BOh1KkL9Z6IgAXDh47xx0xgpQvyRgHoBCCduljjFjyZXiUyZzDQ/otfb+FY\nfM2GdFkA3gxTlXoWW1PTQH6Y7We2gQtqa5zGH/8Zn7XmLrZBXvvDN/1hJzoqYXGR\nFjcc48TAcH7HZOsBtCFLTh5wbLPSX+dmt8T+nnyWBp+aIC+JetBdUJzBuGG8flGp\nUrKTA/sP6WJ4NCyNW5DmLCFbB8RDl7AbAeeRP1MhTPIuJP8nkZKS9GhP0qLEwcdl\nqwr/E1BjnT66JT4RymdS6lNlJA5wep5wFJCa6dOvFWGU8StIwjWhcDqHkXLJCr21\nn+1AwlNXAgMBAAECggEAChKtl+RnPPtVm6T6v4iDyeAHmecHVW2ilWrvbdZK3BNz\n/QZTEi+UfzEXgU5NN6z7D2oit5nxocchnECjov9eMgy6eQE7GJFS4wU0cOT3nb1f\nKZlf+PLoR/T63Ph0yM4KWSnjW6Be43Z6ejI3vpotIo+aJfEp6scRl5dNCSUvcMOx\nnPUxvUAvrjzk/2LlG3+HfsEMiatMIVcGE14p6F7AyFzzcEOC5HX6kH/xKsnbL142\nF9k+DUpLged6xSp7ZPz1vcJRsA6IWg22ZhnoHrFcedFkKNkm9LdJg3DhD96euD1C\nIbqVi1rNzdnvUfGtk3KjFiSx98Gv5Q/pzdjdkO9QDQKBgQDug7Otug8xLYR23R9M\nPzoMDJ2G5sdSGYHVa5o4xkbMCmrjoBi7vjTF7KMT8eFlJojYEkx2UrOSks/S+mMi\nE9T2PdMR3F5DGKFeHWx0qKyPcrjwzwzlFq3T6R/xWoY08gkixHxe71ffvqIDmLgP\nU7I76DgStHhyD0qQW3Wp5CpYSwKBgQDt6fsbBqz8JXQ6VfKtMCcYKHs3M/AIUX+Q\ny2rqyjQm6sFRI3gE8oyNPmb4Ow9AOHzf6I9XqzJi+SLg8Oq3sAIeDewiOi/fUF/P\nX9tfJLCp8iZO9TnNbHEgGBTdurO/Qogk9AK7H69dp8fOmhKODpLqqBbdlsFpeUie\nqqpVxilhpQKBgQDrrtpChYLzjk3BgpilqCh8tY6HOc2lU60Wrb/z8AEPKBAdIxqt\nkbLmDQHL+IxHfj9kexhxJyFoaYfQqzh/+ObL96V0lbPTSyhRLnP4BqCVEsCqu327\ndaCIsGiu/kt1T+E1KMDYslq7rcy8DxF5m7OYPMwDt674ziFY6fcnzF0HZwKBgQCZ\nRY01OxbElqiLUIW4F3aINMQ0qywvX7nMIZCu1DfG/qQuTqhqn4v3DsWtk/beS8X/\nRkbalvsuEgzrV6oPTr/+dr+yyUPAHXqsEbg1UmDSC6OsaIWllwBGSd1ff4F/bTBi\nhiUgQmhq8MVjj5T2meMCc+nPNelCtxUWyyJTggd01QKBgQCgo7ZJ/DidcMYNsMJB\nJalDTU3R4wr0GFDw20IXlIJ5Pd4yKKy/wioDUkpLxprR/IH6ItaYEgxYF3cDRujw\nIbN6Li8S9IU4/4/5HjLXoFganNhqiccIDA9bJeO6hM7sg8xDsRmYlgbMNjrm56yy\ntZK5NX2SGL3M6Af7K42HamBjPA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "worksafe-be@worksafe-f99a3.iam.gserviceaccount.com",
+  "client_id": "102629416886470301055",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/worksafe-be%40worksafe-f99a3.iam.gserviceaccount.com"
+}
