@@ -1,8 +1,7 @@
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPIApplication.Controllers
+namespace WorkSafe_BE.Controllers
 {
     [Route("api")]
     [ApiController]

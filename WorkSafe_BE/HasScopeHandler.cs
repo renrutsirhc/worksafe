@@ -13,10 +13,10 @@ namespace WorkSafe_BE
                 return Task.CompletedTask;
 
             // Split the scopes string into an array
-            var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.Issuer).Value.Split(' ');
-
+            var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.Issuer)?.Value.Split(' ');
+            
             // Succeed if the scope array contains the required scope
-            if (scopes.Any(s => s == requirement.Scope))
+            if ((scopes ?? Array.Empty<string>()).Any(s => s == requirement.Scope))
                 context.Succeed(requirement);
 
             return Task.CompletedTask;
