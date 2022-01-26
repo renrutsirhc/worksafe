@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace WorkSafe_BE
 {
@@ -36,14 +39,18 @@ namespace WorkSafe_BE
 
             var domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
                     options.Authority = domain;
                     options.Audience = Configuration["Auth0:Audience"];
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        NameClaimType = ClaimTypes.NameIdentifier
+                    };
                 });
 
             services.AddAuthorization(options =>
@@ -51,12 +58,12 @@ namespace WorkSafe_BE
 
                 // Can add other policies here?
                 options.AddPolicy("read:messages", policy => policy.Requirements.Add(new HasScopeRequirement("read:messages", domain)));
-            });
-
-            services.AddControllers();
+            });           
 
             // Register the scope authorization handler
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +83,8 @@ namespace WorkSafe_BE
             app.UseRouting();
 
             app.UseCors("AllowSpecificOrigin");
+
+            IdentityModelEventSource.ShowPII = true; //for debugging
 
             app.UseAuthentication();
             app.UseAuthorization();
