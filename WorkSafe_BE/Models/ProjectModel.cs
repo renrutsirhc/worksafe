@@ -55,6 +55,15 @@
             set { _timeStamp = value; }
         }
 
+        private UserModel _owner;
+
+        public UserModel Owner
+        {
+            get { return _owner; }
+            set { _owner = value; }
+        }
+
+
 
     }
 }
