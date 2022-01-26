@@ -70,5 +70,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 6.0.1
-
-dotnet add package Microsoft.AspNetCore.Authorization --version 6.0.1
