@@ -6,7 +6,8 @@ const Footer = () => (
         <div className="logo" />
         <hr></hr>
         <p>
-            <Col className='text-center py-3'>Copyright &copy; WorkSafe New Zealand</Col>
+            <Col className='text-center py-3'>&copy; WorkSafe NZ</Col>
+            <Col className='text-center py-3'>Powered by Team Awesomeness</Col>
         </p>
       </footer>
     );
