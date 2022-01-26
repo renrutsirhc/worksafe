@@ -8,35 +8,6 @@ namespace WorkSafe_BE
     {
         public static void Main(string[] args)
         {
-<<<<<<< HEAD
-            builder.WithOrigins("https://localhost:7001", "http://localhost:7000",
-                "https://localhost:3000", "http://localhost:3000");
-        });
-});
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-||||||| 874ee4d
-            builder.WithOrigins("https://localhost:7001", "http://localhost:7000",
-                "https://localhost:3000");
-        });
-});
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-=======
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -47,7 +18,6 @@ if (app.Environment.IsDevelopment())
                     webBuilder.UseStartup<Startup>();
                 });
     }
->>>>>>> main
 }
 
 
