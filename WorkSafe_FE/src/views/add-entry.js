@@ -36,6 +36,15 @@ class AddEntry extends Component {
             <label>Learning:
                 <textarea value={this.state.value} onChange={this.handleChange}/>
             </label>
+            <label>Mind Set:
+                <textarea value={this.state.value} onChange={this.handleChange}/>
+            </label>
+            <label>Impact:
+                <textarea value={this.state.value} onChange={this.handleChange}/>
+            </label>
+            <label>Next Steps:
+                <textarea value={this.state.value} onChange={this.handleChange}/>
+            </label>
             <label></label>
             <input type="submit" value="Add Entry"/>
         </form>);
