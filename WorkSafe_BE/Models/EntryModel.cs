@@ -1,7 +1,41 @@
-﻿namespace WorkSafe_BE.Models
+﻿using Google.Cloud.Firestore;
+
+namespace WorkSafe_BE.Models
 {
     public class EntryModel
     {
+        public EntryModel()
+        {
+
+        }
+
+        public EntryModel(string id)
+        {
+            Id = id;
+        }
+
+        public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author, ProjectModel project):this(id)
+        {
+            _author = author;
+            _project = project;
+            _description = (string)documentDictionary["Description"];
+            _files = ((List<object>)documentDictionary["Files"]).Select(i => i.ToString()).ToList();
+            _impact = (string)documentDictionary["Impact"];
+            _learning = (string)documentDictionary["Learning"];
+            _mindSet = (string)documentDictionary["MindSet"];
+            _nextSteps = (string)documentDictionary["NextSteps"];
+            _tags = ((List<object>)documentDictionary["Tags"]).Select(i => i.ToString()).ToList();
+            _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
+        }
+        private string _id;
+
+        public string Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+
         private UserModel _author;
 
         public UserModel Author
@@ -9,6 +43,20 @@
             get { return _author; }
             set { _author = value; }
         }
+
+        private ProjectModel _project;
+        public ProjectModel Project
+        {
+            get { return _project; }
+            set { _project = value; }
+        }
+
+        public ProjectModel MyProperty
+        {
+            get { return _project; }
+            set { _project = value; }
+        }
+
 
         private string _description;
 
@@ -42,12 +90,12 @@
             set { _learning = value; }
         }
 
-        private string _mindset;
+        private string _mindSet;
 
         public string MindSet
         {
-            get { return _mindset; }
-            set { _mindset = value; }
+            get { return _mindSet; }
+            set { _mindSet = value; }
         }
 
         private string _nextSteps;
