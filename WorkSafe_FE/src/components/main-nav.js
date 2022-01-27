@@ -14,7 +14,7 @@ const MainNav = () => {
     >
       Home
     </NavLink>
-    {/* {isAuthenticated && ( <> */}
+    
     <NavLink
       to="/profile"
       exact
@@ -31,7 +31,6 @@ const MainNav = () => {
     >
       External API
     </NavLink>
-    {/* </>)} */}
   </div>
 );
 };
