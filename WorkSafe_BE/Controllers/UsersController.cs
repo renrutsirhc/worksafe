@@ -34,13 +34,13 @@ namespace WorkSafe_BE.Controllers
             }
         }
 
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
+        // GET api/<UsersController>/{userid}
+        [HttpGet("{userid}")]
         [Produces("application/json")]
         //[Authorize]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(string userid)
         {
-            var user = await _dbService.GetUser(id);
+            var user = await _dbService.GetUser(userid);
             if (user != null)
             {
                 return Ok(user);
@@ -48,8 +48,7 @@ namespace WorkSafe_BE.Controllers
             else
             {
                 return BadRequest();
-            }
-            
+            }          
         }
 
         // POST api/<UsersController>
@@ -69,20 +68,88 @@ namespace WorkSafe_BE.Controllers
             }
         }
 
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
+        // PUT api/<UsersController>/{userid}
+        [HttpPut("{userid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int userid, [FromBody] string value)
         {
 
         }
 
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
+        // DELETE api/<UsersController>/{userid}
+        [HttpDelete("{userid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Delete(int id)
+        public void Delete(int userid)
+        {
+        }
+
+        // GET api/<UsersController>/{userid}/entries
+        [HttpGet("{userid}/entries")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> GetEntries(string userid)
+        {
+            var entries = await _dbService.GetEntries(userid, TopCollection.Users);
+            if (entries != null)
+            {
+                return Ok(entries);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // GET api/<UsersController>/{userid}/entries/{entryid}
+        [HttpGet("{userid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> GetEntries(string userid, string entryid)
+        {
+            var entry = await _dbService.GetEntry(entryid,userid,TopCollection.Users);
+            if (entry != null)
+            {
+                return Ok(entry);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // POST api/<UsersController>/{userid}/entries
+        [HttpPost("{userid}/entries")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
+        {
+            var entryId = await _dbService.AddEntry(entry);
+            if (entryId.Equals(entry.Id))
+            {
+                return Ok(entryId);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // PUT api/<UsersController>/{userid}/entries/{entryid}
+        [HttpPut("{userid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public void PutEntry(int userid, [FromBody] string value)
+        {
+
+        }
+
+        // DELETE api/<UsersController>/{userid}/entries/{entryid}
+        [HttpDelete("{userid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public void DeleteEntry(int userid)
         {
         }
     }

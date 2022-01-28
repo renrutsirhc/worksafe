@@ -35,12 +35,12 @@ namespace WorkSafe_BE.Controllers
         }
 
         // GET api/<ProjectsController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{projectid}")]
         [Produces("application/json")]
         //[Authorize]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(string projectid)
         {
-            var project = await _dbService.GetProject(id);
+            var project = await _dbService.GetProject(projectid);
             if (project != null)
             {
                 return Ok(project);
@@ -69,19 +69,88 @@ namespace WorkSafe_BE.Controllers
         }
 
         // PUT api/<ProjectsController>/5
-        [HttpPut("{id}")]
+        [HttpPut("{projectid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int projectid, [FromBody] string value)
         {
         }
 
         // DELETE api/<ProjectsController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{projectid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Delete(int id)
+        public void Delete(int projectid)
         {
         }
+
+        // GET api/<UsersController>/{projectid}/entries
+        [HttpGet("{projectid}/entries")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> GetEntries(string projectid)
+        {
+            var entries = await _dbService.GetEntries(projectid, TopCollection.Projects);
+            if (entries != null)
+            {
+                return Ok(entries);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // GET api/<UsersController>/{projectid}/entries/{entryid}
+        [HttpGet("{projectid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> GetEntries(string projectid, string entryid)
+        {
+            var entry = await _dbService.GetEntry(entryid, projectid, TopCollection.Projects);
+            if (entry != null)
+            {
+                return Ok(entry);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // POST api/<UsersController>/{projectid}/entries
+        [HttpPost("{projectid}/entries")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
+        {
+            var entryId = await _dbService.AddEntry(entry);
+            if (entryId.Equals(entry.Id))
+            {
+                return Ok(entryId);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        // PUT api/<UsersController>/{projectid}/entries/{entryid}
+        [HttpPut("{projectid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public void PutEntry(int projectid, [FromBody] string value)
+        {
+
+        }
+
+        // DELETE api/<UsersController>/{projectid}/entries/{entryid}
+        [HttpDelete("{projectid}/entries/{entryid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public void DeleteEntry(int projectid)
+        {
+        }
+
     }
 }

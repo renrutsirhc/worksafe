@@ -51,13 +51,6 @@ namespace WorkSafe_BE.Models
             set { _project = value; }
         }
 
-        public ProjectModel MyProperty
-        {
-            get { return _project; }
-            set { _project = value; }
-        }
-
-
         private string _description;
 
         public string Description
