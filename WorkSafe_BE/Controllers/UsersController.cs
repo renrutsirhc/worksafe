@@ -74,17 +74,39 @@ namespace WorkSafe_BE.Controllers
         [HttpPut("{userid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Put(int userid, [FromBody] string value)
+        public async Task<IActionResult> Put(string userid, [FromBody] UserModel user)
         {
-
+            user.Id = userid;
+            var userId = await _dbService.UpdateUser(user);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", userId);
+            if (userId.Equals(user.Id))
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<UsersController>/{userid}
         [HttpDelete("{userid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Delete(int userid)
+        public async Task<IActionResult> Delete(string userid)
         {
+            var userId = await _dbService.DeleteUser(userid);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", userId);
+            if (userId.Equals(userid))
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<UsersController>/{userid}/entries
@@ -128,9 +150,11 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
         {
             var entryId = await _dbService.AddEntry(entry);
-            if (entryId.Equals(entry.Id))
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", entryId);
+            if (!entryId.Equals("Error"))
             {
-                return Ok(entryId);
+                return Ok(data);
             }
             else
             {
@@ -142,17 +166,40 @@ namespace WorkSafe_BE.Controllers
         [HttpPut("{userid}/entries/{entryid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void PutEntry(int userid, [FromBody] string value)
+        public async Task<IActionResult> PutEntry(string userid, string entryid, [FromBody] EntryModel entry)
         {
-
+            entry.Id = entryid;
+            entry.AuthorId = userid;
+            var entryId = await _dbService.UpdateEntry(entry);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", entryId);
+            if (!entryId.Equals("Error"))
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/<UsersController>/{userid}/entries/{entryid}
         [HttpDelete("{userid}/entries/{entryid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void DeleteEntry(int userid)
+        public async Task<IActionResult> DeleteEntry(string userid, string entryid)
         {
+            var entryId = await _dbService.DeleteEntry(userid, entryid);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", entryId);
+            if (entryId.Equals(entryid))
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
