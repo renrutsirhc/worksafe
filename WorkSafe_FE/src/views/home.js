@@ -27,11 +27,11 @@ class Home extends Component {
                 </thead>
                 <tbody>
                     {forecasts.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
+                        <tr key={forecast.Date}>
+                            <td>{forecast.Date}</td>
+                            <td>{forecast.TemperatureC}</td>
+                            <td>{forecast.TemperatureF}</td>
+                            <td>{forecast.Summary}</td>
                         </tr>
                     )}
                 </tbody>

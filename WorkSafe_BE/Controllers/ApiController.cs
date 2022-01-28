@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WorkSafe_BE.DataAccess;
 
 namespace WorkSafe_BE.Controllers
 {
@@ -8,6 +9,13 @@ namespace WorkSafe_BE.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
+        FirestoreService _dbService;
+        public ApiController(FirestoreService dbService)
+        {
+            _dbService = dbService;
+        }
+
+
         [HttpGet("public")]
         public IActionResult Public()
         {

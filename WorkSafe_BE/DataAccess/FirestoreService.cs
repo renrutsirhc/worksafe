@@ -41,14 +41,21 @@ namespace WorkSafe_BE.DataAccess
         /// </summary>
         /// <param name="id">The id of the user as a string</param>
         /// <returns>A UserModel containing the user or null of user with given id is not in the db</returns>
-        public async Task<UserModel> GetUser(string id)
+        public async Task<UserModel?> GetUser(string id)
         {           
             DocumentReference docRef = _db.Collection("Users").Document(id);
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
-            Dictionary<string, object> documentDictionary = document.ToDictionary();
+            if (document.Exists == true)
+            {               
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                var user = new UserModel(id, documentDictionary);
+                return user;
+            }
+            else
+            {
+                return null;
+            }
 
-            var user = new UserModel(id, documentDictionary);
-            return user;
         }
 
 
