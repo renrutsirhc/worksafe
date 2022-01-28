@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WorkSafe_BE.DataAccess;
 
 namespace WorkSafe_BE.Controllers
 {
@@ -6,17 +7,21 @@ namespace WorkSafe_BE.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        FirestoreService _dbService;
+        public WeatherForecastController(FirestoreService dbService, ILogger<WeatherForecastController> logger)
+        {
+            _dbService = dbService;
+            _logger = logger;
+        }
+
         private static readonly string[] Summaries = new[]
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
+
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()

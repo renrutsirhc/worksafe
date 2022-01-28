@@ -59,7 +59,7 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(result);            
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            result.Owner.WithDeepEqual(project.Owner).IgnoreSourceProperty(x => x.TimeStamp).Assert();
+            Assert.AreEqual(project.OwnerId, result.OwnerId);
             result.TimeStamp.TrimMilliseconds().ShouldDeepEqual(project.TimeStamp.TrimMilliseconds());
         }
 
@@ -77,7 +77,7 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            result.Owner.WithDeepEqual(project.Owner).IgnoreSourceProperty(x => x.TimeStamp).Assert();
+            Assert.AreEqual(project.OwnerId, result.OwnerId);
         }
 
         [TestMethod]
@@ -94,11 +94,7 @@ namespace WorkSafe_Tests
 
             var result = service.GetEntry(entryId, author.Id, TopCollection.Users).Result;
 
-            Assert.IsNotNull(entry.Author);
-            Assert.IsNotNull(entry.Project);
-
-            Assert.AreEqual(author.Id, result.Author.Id);
-
+            Assert.AreEqual(author.Id, result.AuthorId);
             Assert.AreEqual(entry.Description,result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
             Assert.AreEqual(entry.Impact, result.Impact);
@@ -121,14 +117,12 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(entries);
             var result = entries.Where(x => x.Id == "0itV3s1fzaqpSmDUDIIP").FirstOrDefault();
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Author);
-            Assert.IsNotNull(result.Project);
 
             var author = GenerateUser();
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.Author.Id);
+            Assert.AreEqual(author.Id, result.AuthorId);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -147,14 +141,12 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(entries);
             var result = entries.Where(x => x.Id == "0itV3s1fzaqpSmDUDIIP").FirstOrDefault();
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Author);
-            Assert.IsNotNull(result.Project);
 
             var author = GenerateUser();
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.Author.Id);
+            Assert.AreEqual(author.Id, result.AuthorId);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -183,20 +175,16 @@ namespace WorkSafe_Tests
             project.Title = "Unit Test Project Title";
             project.Description = "Unit Test Project Description";
             project.TimeStamp = DateTime.UtcNow;
-            project.Owner = new UserModel("Unit Test User ID");
-            project.Owner.Name = "Unit Test UserName";
-            project.Owner.Email = "Unit Test Email";
-            project.Owner.NickName = "Unit Test NickName";
-            project.Owner.Picture = "Unit Test Picture Url";
-            project.Owner.TimeStamp = DateTime.UtcNow;
+            project.OwnerId = "Unit Test User ID";
+
             return project;
         }
 
         private EntryModel GenerateEntry(UserModel author, ProjectModel project)
         {
             var entry = new EntryModel();
-            entry.Author = author;
-            entry.Project = project;
+            entry.AuthorId = author.Id;
+            entry.ProjectId = project.Id;
             entry.Description = "Unit Test Entry Description";
             entry.Files = new List<string>{ "file1.jpg", "file2.jpg", "file3.jpg" };
             entry.Impact = "Unit Test Entry Impact";

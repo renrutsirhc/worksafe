@@ -38,7 +38,7 @@ namespace WorkSafe_BE.Models
         }
 
 
-        private string _name;
+        private string _name = "";
 
         public string Name
         {
@@ -46,7 +46,7 @@ namespace WorkSafe_BE.Models
             set { _name = value; }
         }
 
-        private string _nickName;
+        private string _nickName = "";
 
         public string NickName
         {
@@ -55,7 +55,7 @@ namespace WorkSafe_BE.Models
         }
 
 
-        private string _email;
+        private string _email = "";
 
         public string Email
         {
@@ -63,7 +63,7 @@ namespace WorkSafe_BE.Models
             set { _email = value; }
         }
 
-        private string _picture;
+        private string _picture = "";
 
         public string Picture
         {
@@ -71,7 +71,7 @@ namespace WorkSafe_BE.Models
             set { _picture = value; }
         }
 
-        private DateTime _timeStamp;
+        private DateTime _timeStamp = DateTime.UtcNow;
 
         public DateTime TimeStamp
         {
