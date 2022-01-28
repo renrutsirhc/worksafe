@@ -94,11 +94,7 @@ namespace WorkSafe_Tests
 
             var result = service.GetEntry(entryId, author.Id, TopCollection.Users).Result;
 
-            Assert.IsNotNull(entry.Author);
-            Assert.IsNotNull(entry.Project);
-
-            Assert.AreEqual(author.Id, result.Author.Id);
-
+            Assert.AreEqual(author.Id, result.AuthorId);
             Assert.AreEqual(entry.Description,result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
             Assert.AreEqual(entry.Impact, result.Impact);
@@ -121,14 +117,12 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(entries);
             var result = entries.Where(x => x.Id == "0itV3s1fzaqpSmDUDIIP").FirstOrDefault();
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Author);
-            Assert.IsNotNull(result.Project);
 
             var author = GenerateUser();
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.Author.Id);
+            Assert.AreEqual(author.Id, result.AuthorId);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -147,14 +141,12 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(entries);
             var result = entries.Where(x => x.Id == "0itV3s1fzaqpSmDUDIIP").FirstOrDefault();
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Author);
-            Assert.IsNotNull(result.Project);
 
             var author = GenerateUser();
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.Author.Id);
+            Assert.AreEqual(author.Id, result.AuthorId);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -195,8 +187,8 @@ namespace WorkSafe_Tests
         private EntryModel GenerateEntry(UserModel author, ProjectModel project)
         {
             var entry = new EntryModel();
-            entry.Author = author;
-            entry.Project = project;
+            entry.AuthorId = author.Id;
+            entry.ProjectId = project.Id;
             entry.Description = "Unit Test Entry Description";
             entry.Files = new List<string>{ "file1.jpg", "file2.jpg", "file3.jpg" };
             entry.Impact = "Unit Test Entry Impact";

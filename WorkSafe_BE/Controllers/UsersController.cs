@@ -58,9 +58,11 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
             var userId = await _dbService.AddUser(user);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", userId);
             if (userId.Equals(user.Id))
             {
-                return Ok(userId);
+                return Ok(data);
             }
             else
             {

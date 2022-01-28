@@ -14,10 +14,10 @@ namespace WorkSafe_BE.Models
             Id = id;
         }
 
-        public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author, ProjectModel project):this(id)
+        public EntryModel(string id, Dictionary<string, object> documentDictionary):this(id)
         {
-            _author = author;
-            _project = project;
+            _authorId = (string)documentDictionary["AuthorId"];
+            _projectId = (string)documentDictionary["ProjectId"];
             _description = (string)documentDictionary["Description"];
             _files = ((List<object>)documentDictionary["Files"]).Select(i => i.ToString()).ToList();
             _impact = (string)documentDictionary["Impact"];
@@ -35,21 +35,38 @@ namespace WorkSafe_BE.Models
             set { _id = value; }
         }
 
+        private string _authorId;
 
-        private UserModel _author;
-
-        public UserModel Author
+        public string AuthorId
         {
-            get { return _author; }
-            set { _author = value; }
+            get { return _authorId; }
+            set { _authorId = value; }
         }
 
-        private ProjectModel _project;
-        public ProjectModel Project
+        private string _projectId;
+
+        public string ProjectId
         {
-            get { return _project; }
-            set { _project = value; }
+            get { return _projectId; }
+            set { _projectId = value; }
         }
+
+
+
+        //private UserModel _author;
+
+        //public UserModel Author
+        //{
+        //    get { return _author; }
+        //    set { _author = value; }
+        //}
+
+        //private ProjectModel _project;
+        //public ProjectModel Project
+        //{
+        //    get { return _project; }
+        //    set { _project = value; }
+        //}
 
         private string _description;
 
