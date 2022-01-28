@@ -58,9 +58,25 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> Post([FromBody] ProjectModel project)
         {
             var projectId = await _dbService.AddProject(project);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", projectId);
+            return Ok(data);
+
+        }
+
+        // PUT api/<ProjectsController>/5
+        [HttpPut("{projectid}")]
+        [Produces("application/json")]
+        //[Authorize]
+        public async Task<IActionResult> Put(string projectid, [FromBody] ProjectModel project)
+        {
+            project.Id = projectid;
+            var projectId = await _dbService.UpdateProject(project);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", projectId);
             if (projectId.Equals(project.Id))
             {
-                return Ok(projectId);
+                return Ok(data);
             }
             else
             {
@@ -68,20 +84,23 @@ namespace WorkSafe_BE.Controllers
             }
         }
 
-        // PUT api/<ProjectsController>/5
-        [HttpPut("{projectid}")]
-        [Produces("application/json")]
-        //[Authorize]
-        public void Put(int projectid, [FromBody] string value)
-        {
-        }
-
         // DELETE api/<ProjectsController>/5
         [HttpDelete("{projectid}")]
         [Produces("application/json")]
         //[Authorize]
-        public void Delete(int projectid)
+        public async Task<IActionResult> Delete(string projectid)
         {
+            var projectId = await _dbService.DeleteProject(projectid);
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("Id", projectId);
+            if (projectId.Equals(projectid))
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<UsersController>/{projectid}/entries

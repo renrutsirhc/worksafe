@@ -85,7 +85,7 @@ namespace WorkSafe_BE.DataAccess
 
 
         /// <summary>
-        /// Gets a list of all pusers from firebase
+        /// Gets a list of all users from firebase
         /// </summary>
         /// <returns>A list of UserModels</returns>
         public async Task<List<UserModel>> GetUsers()
@@ -136,7 +136,7 @@ namespace WorkSafe_BE.DataAccess
                 { "Title", project.Title },
                 { "Description", project.Description },
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
-                { "OwnerId", project.Owner.Id }
+                { "OwnerId", project.OwnerId }
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -159,7 +159,7 @@ namespace WorkSafe_BE.DataAccess
 
                 //replace empty list of collaborators with actual list at some point
                 var collaborators = new List<UserModel>();
-                var project = new ProjectModel(document.Id, documentDictionary, owner, collaborators);
+                var project = new ProjectModel(document.Id, documentDictionary, collaborators);
                 return project;
             }
             else
@@ -182,11 +182,43 @@ namespace WorkSafe_BE.DataAccess
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 var owner = await GetUser((string)documentDictionary["OwnerId"]);
-                var project = new ProjectModel(document.Id, documentDictionary, owner, new List<UserModel>());
+                var project = new ProjectModel(document.Id, documentDictionary, new List<UserModel>());
                 output.Add(project);
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Updates a user in firestore
+        /// </summary>
+        /// <param name="user">A usermodel containg the user to update</param>
+        /// <returns>The id of the user that was updated</returns>
+        public async Task<string?> UpdateProject(ProjectModel project)
+        {
+            DocumentReference docRef = _db.Collection("Projects").Document(project.Id);
+            Dictionary<string, object> projectDictionary = new Dictionary<string, object>
+            {
+                { "Title", project.Title },
+                { "Description", project.Description },
+                { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
+                { "OwnerId", project.OwnerId }
+            };
+            await docRef.SetAsync(projectDictionary);
+            //need to also add collection of Collaborators possibly later
+            return docRef.Id;
+        }
+
+        /// <summary>
+        /// Deletes a user from firestore
+        /// </summary>
+        /// <param name="id">The Id of the user to delete</param>
+        /// <returns>The Id of the user that was deleted</returns>
+        public async Task<string?> DeleteProject(string id)
+        {
+            DocumentReference docRef = _db.Collection("Projects").Document(id);
+            await docRef.DeleteAsync();
+            return docRef.Id;
         }
 
 

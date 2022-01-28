@@ -59,7 +59,7 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(result);            
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            result.Owner.WithDeepEqual(project.Owner).IgnoreSourceProperty(x => x.TimeStamp).Assert();
+            Assert.AreEqual(project.OwnerId, result.OwnerId);
             result.TimeStamp.TrimMilliseconds().ShouldDeepEqual(project.TimeStamp.TrimMilliseconds());
         }
 
@@ -77,7 +77,7 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            result.Owner.WithDeepEqual(project.Owner).IgnoreSourceProperty(x => x.TimeStamp).Assert();
+            Assert.AreEqual(project.OwnerId, result.OwnerId);
         }
 
         [TestMethod]
@@ -175,12 +175,8 @@ namespace WorkSafe_Tests
             project.Title = "Unit Test Project Title";
             project.Description = "Unit Test Project Description";
             project.TimeStamp = DateTime.UtcNow;
-            project.Owner = new UserModel("Unit Test User ID");
-            project.Owner.Name = "Unit Test UserName";
-            project.Owner.Email = "Unit Test Email";
-            project.Owner.NickName = "Unit Test NickName";
-            project.Owner.Picture = "Unit Test Picture Url";
-            project.Owner.TimeStamp = DateTime.UtcNow;
+            project.OwnerId = "Unit Test User ID";
+
             return project;
         }
 
