@@ -1,4 +1,6 @@
-﻿namespace WorkSafe_BE.Models
+﻿using Google.Cloud.Firestore;
+
+namespace WorkSafe_BE.Models
 {
     public class ProjectModel
     {
@@ -7,28 +9,26 @@
 
         }
 
+        public ProjectModel(string id)
+        {
+            _id = id;
+        }
+
+        public ProjectModel(string id, Dictionary<string, object> documentDictionary, UserModel owner, List<UserModel> collaborators) : this(id)
+        {
+            _title = (string)documentDictionary["Title"];
+            _description = (string)documentDictionary["Description"];
+            _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
+            _collaborators = collaborators;
+            _owner = owner;
+        }
+
         private string _id;
 
         public string Id
         {
             get { return _id; }
             set { _id = value; }
-        }
-
-        private List<UserModel> _collaborators;
-
-        public List<UserModel> Collaborators
-        {
-            get { return _collaborators; }
-            set { _collaborators = value; }
-        }
-
-        private List<EntryModel> _entries;
-
-        public List<EntryModel> Entries
-        {
-            get { return _entries; }
-            set { _entries = value; }
         }
 
         private string _description;
@@ -54,6 +54,23 @@
             get { return _timeStamp; }
             set { _timeStamp = value; }
         }
+
+        private UserModel _owner;
+
+        public UserModel Owner
+        {
+            get { return _owner; }
+            set { _owner = value; }
+        }
+
+        private List<UserModel> _collaborators;
+
+        public List<UserModel> Collaborators
+        {
+            get { return _collaborators; }
+            set { _collaborators = value; }
+        }
+
 
 
     }
