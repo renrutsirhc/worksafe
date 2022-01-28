@@ -108,13 +108,21 @@ namespace WorkSafe_BE.DataAccess
         {
             DocumentReference docRef = _db.Collection("Projects").Document(id);
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
-            Dictionary<string, object> documentDictionary = document.ToDictionary();
-            var owner = await GetUser((string)documentDictionary["OwnerId"]);
+            if (document.Exists == true)
+            {
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                var owner = await GetUser((string)documentDictionary["OwnerId"]);
 
-            //replace empty list of collaborators with actual list at some point
-            var collaborators = new List<UserModel>();
-            var project = new ProjectModel(document.Id, documentDictionary, owner, collaborators);
-            return project;
+                //replace empty list of collaborators with actual list at some point
+                var collaborators = new List<UserModel>();
+                var project = new ProjectModel(document.Id, documentDictionary, owner, collaborators);
+                return project;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorkSafe_BE.DataAccess;
+using WorkSafe_BE.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,26 +21,51 @@ namespace WorkSafe_BE.Controllers
         [HttpGet]
         [Produces("application/json")]
         //[Authorize]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var projects = await _dbService.GetProjects();
+            if (projects != null)
+            {
+                return Ok(projects);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<ProjectsController>/5
         [HttpGet("{id}")]
         [Produces("application/json")]
         //[Authorize]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            var project = await _dbService.GetProject(id);
+            if (project != null)
+            {
+                return Ok(project);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<ProjectsController>
         [HttpPost]
         [Produces("application/json")]
         //[Authorize]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] ProjectModel project)
         {
+            var projectId = await _dbService.AddProject(project);
+            if (projectId.Equals(project.Id))
+            {
+                return Ok(projectId);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<ProjectsController>/5
