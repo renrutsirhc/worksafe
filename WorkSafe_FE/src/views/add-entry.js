@@ -1,54 +1,90 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Button, Form, Alert, FormGroup, FormLabel, FormControl, Row, Col, Container } from 'react-bootstrap'
 
 class AddEntry extends Component {
     constructor(props) {
-        super(props);
-        this.state = {value: ""};
+        super(props)
+        this.state = {value: new Date().toISOString}
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({value: event.target.value})
     }
 
     handleSubmit(event) {
-        event.preventDefault();
+        event.preventDefault()
     }
 
     render() {
         return (
-        <form onSubmit={this.handleSubmit}>
-            <label>Entry Title:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            <label>Choose a project:
-                <select value={this.state.value} onChange={this.handleChange}>
-                    <option value="project1">Project 1</option>
-                    <option value="project2">Project 2</option>
-                    <option value="project3">Project 3</option>
-                </select>
-            </label>
-            <label>Entry Description:
-                <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <label>Learning:
-                <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <label>Mind Set:
-                <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <label>Impact:
-                <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <label>Next Steps:
-                <textarea value={this.state.value} onChange={this.handleChange}/>
-            </label>
-            <label></label>
-            <input type="submit" value="Add Entry"/>
-        </form>);
-      }
+        <Container>
+            <h1>Add New Entry</h1>
+            <Form>
+                <Row sm={1} md={2}>
+                    <Col>
+                        <FormGroup>
+                            <FormLabel>Title</FormLabel>
+                            <FormControl placeholder="Summarise the entry"/>
+                        </FormGroup>
+                    </Col>
+
+                    <Col md={3}>
+                        <FormGroup>
+                            <FormLabel>Date</FormLabel>
+                            <FormControl type="date" name="date"/>
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl as="textarea" placeholder="Decribe the entry"/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={5}>
+                        <Form.Label>Upload files</Form.Label>
+                        <Form.Control type="file" multiple />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <FormLabel>Learning</FormLabel>
+                        <FormControl as="textarea" placeholder="Decribe the learning"/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <FormLabel>Mind set</FormLabel>
+                        <FormControl placeholder="Mind set used"/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <FormLabel>Impact</FormLabel>
+                        <FormControl as="textarea" placeholder="Impact of entry"/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <FormLabel>Next steps</FormLabel>
+                        <FormControl as="textarea" placeholder="Next steps based on this entry"/>
+                    </Col>
+                </Row>
+
+                <Button variant="success" type="submit">
+                        Add entry
+                    </Button>
+
+
+            </Form>
+        </Container>
+        
+        
+        )}
 }
 
-export default AddEntry;
+export default AddEntry

@@ -7,6 +7,7 @@ import AddEntry from './views/add-entry';
 
 import { withAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from "./auth/protected-route";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
     render() {
