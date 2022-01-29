@@ -7,10 +7,10 @@ const ViewEntry = (props) => {
     return (
         <div className="view-entry">
             <Card>
-                <Card.Header as="h4">Title</Card.Header>
+                <Card.Header as="h4">{props.entry.Description}</Card.Header>
                 <Card.Body>
-                    <Card.Title>{props.entry.Description}y</Card.Title>
-                    <Card.Text>
+                    <Card.Title>Card title</Card.Title>
+                    <Card.Text> Card properties
                     </Card.Text>
                     <Button variant="primary">View Entry</Button>
                 </Card.Body>
