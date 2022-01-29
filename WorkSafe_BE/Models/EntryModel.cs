@@ -14,10 +14,8 @@ namespace WorkSafe_BE.Models
             Id = id;
         }
 
-        public EntryModel(string id, Dictionary<string, object> documentDictionary):this(id)
+        public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author) : this(id)
         {
-            _authorId = (string)documentDictionary["AuthorId"];
-            _projectId = (string)documentDictionary["ProjectId"];
             _description = (string)documentDictionary["Description"];
             _files = ((List<object>)documentDictionary["Files"]).Select(i => i.ToString()).ToList();
             _impact = (string)documentDictionary["Impact"];
@@ -26,7 +24,15 @@ namespace WorkSafe_BE.Models
             _nextSteps = (string)documentDictionary["NextSteps"];
             _tags = ((List<object>)documentDictionary["Tags"]).Select(i => i.ToString()).ToList();
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
+            _author = author;
         }
+
+        public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author, ProjectModel? project):this(id, documentDictionary, author)
+        {
+            _project = project;
+
+        }
+
         private string _id = "";
 
         public string Id
@@ -35,20 +41,20 @@ namespace WorkSafe_BE.Models
             set { _id = value; }
         }
 
-        private string _authorId;
+        private UserModel _author;
 
-        public string AuthorId
+        public UserModel Author
         {
-            get { return _authorId; }
-            set { _authorId = value; }
+            get { return _author; }
+            set { _author = value; }
         }
 
-        private string _projectId = "";
+        private ProjectModel? _project = null;
 
-        public string ProjectId
+        public ProjectModel? Project
         {
-            get { return _projectId; }
-            set { _projectId = value; }
+            get { return _project; }
+            set { _project = value; }
         }
 
 

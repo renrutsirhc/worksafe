@@ -55,7 +55,7 @@ namespace WorkSafe_BE.Models
             set { _timeStamp = value; }
         }
 
-        private string _ownerId;
+        private string _ownerId="";
 
         public string OwnerId
         {

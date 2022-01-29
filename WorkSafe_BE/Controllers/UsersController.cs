@@ -169,7 +169,7 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> PutEntry(string userid, string entryid, [FromBody] EntryModel entry)
         {
             entry.Id = entryid;
-            entry.AuthorId = userid;
+            entry.Author.Id = userid;
             var entryId = await _dbService.UpdateEntry(entry);
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("Id", entryId);
