@@ -36,12 +36,12 @@ const ProfileIcon = () => {
   console.log(user);
 
   return isAuthenticated ? (
-    <div class="avatar-icon">
+    <div className="avatar-icon">
       <Avatar
         src={
           <Image
             className="rounded-circle"
-            style={{ width: 40 }}
+            style={{ width: 30 }}
             src={user["picture"]}
           ></Image>
         }
@@ -49,7 +49,7 @@ const ProfileIcon = () => {
       />
     </div>
   ) : (
-    <div class="avatar-icon">
+    <div className="avatar-icon">
       <Avatar size={40} icon={<UserOutlined />} />
     </div>
   );
