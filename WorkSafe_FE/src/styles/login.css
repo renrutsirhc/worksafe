@@ -1,0 +1,7 @@
+#login-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:150px;
+    margin-bottom:250px;
+}
