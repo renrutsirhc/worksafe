@@ -36,17 +36,22 @@ const ProfileIcon = () => {
 
   return isAuthenticated ? (
     <div>
-      <span>
-        <img
-          src={user["picture"]}
-          alt="Profile"
-          className="rounded-circle img-fluid profile-picture"
-        />
-      </span>
+      <Avatar
+        src={user["picture"]}
+        size={50}
+        icon={<UserOutlined />}
+        gap={4}
+        style={{ verticalAlign: "middle" }}
+      />
     </div>
   ) : (
     <div>
-      <Avatar icon={<UserOutlined />} />
+      <Avatar
+        size={50}
+        icon={<UserOutlined />}
+        gap={4}
+        style={{ verticalAlign: "middle" }}
+      />
     </div>
   );
 };
