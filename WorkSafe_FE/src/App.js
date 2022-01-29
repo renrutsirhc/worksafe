@@ -14,20 +14,20 @@ class App extends Component {
         if (isLoading) {
             return <Loading />;
         }
-        
+
         return (
             <div id="app" className="d-flex flex-column h-100">
-            <NavBar />
-            <div className="container flex-grow-1">
-                <div className="mt-5">
-                <Switch>
-                    <Route path="/" exact component={Home} />
-                    <ProtectedRoute path="/profile" component={Profile} />
-                    <ProtectedRoute path="/external-api" component={ExternalApi} />
-                </Switch>
+                <NavBar />
+                <div className="container flex-grow-1">
+                    <div className="mt-5">
+                        <Switch>
+                            <Route path="/" exact component={Home} />
+                            <ProtectedRoute path="/profile" component={Profile} />
+                            <ProtectedRoute path="/external-api" component={ExternalApi} />
+                        </Switch>
+                    </div>
                 </div>
-            </div>
-            <Footer />
+                <Footer />
             </div>
         );
     }
