@@ -71,7 +71,7 @@ namespace WorkSafe_Tests
             var service = new FirestoreService();
             var projects = service.GetProjects().Result;
             Assert.IsNotNull(projects);
-            var result = projects.Where(x => x.Id == "xJcONkXPANC1452gfEho").FirstOrDefault();
+            var result = projects.Where(x => x.Id == "JV6RduagN681MQYB8umm").FirstOrDefault();
             Assert.IsNotNull(result);
 
             Assert.IsNotNull(result);
@@ -94,7 +94,7 @@ namespace WorkSafe_Tests
 
             var result = service.GetEntry(entryId, author.Id, TopCollection.Users).Result;
 
-            Assert.AreEqual(author.Id, result.AuthorId);
+            Assert.AreEqual(author.Id, result.Author.Id);
             Assert.AreEqual(entry.Description,result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
             Assert.AreEqual(entry.Impact, result.Impact);
@@ -122,7 +122,7 @@ namespace WorkSafe_Tests
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.AuthorId);
+            Assert.AreEqual(author.Id, result.Author.Id);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -146,7 +146,7 @@ namespace WorkSafe_Tests
             var project = GenerateProject();
             var entry = GenerateEntry(author, project);
 
-            Assert.AreEqual(author.Id, result.AuthorId);
+            Assert.AreEqual(author.Id, result.Author.Id);
 
             Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
@@ -183,8 +183,8 @@ namespace WorkSafe_Tests
         private EntryModel GenerateEntry(UserModel author, ProjectModel project)
         {
             var entry = new EntryModel();
-            entry.AuthorId = author.Id;
-            entry.ProjectId = project.Id;
+            entry.Author = author;
+            entry.Project = project;
             entry.Description = "Unit Test Entry Description";
             entry.Files = new List<string>{ "file1.jpg", "file2.jpg", "file3.jpg" };
             entry.Impact = "Unit Test Entry Impact";
