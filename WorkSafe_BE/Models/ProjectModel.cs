@@ -14,16 +14,16 @@ namespace WorkSafe_BE.Models
             _id = id;
         }
 
-        public ProjectModel(string id, Dictionary<string, object> documentDictionary, UserModel owner, List<UserModel> collaborators) : this(id)
+        public ProjectModel(string id, Dictionary<string, object> documentDictionary, List<UserModel> collaborators) : this(id)
         {
             _title = (string)documentDictionary["Title"];
             _description = (string)documentDictionary["Description"];
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
             _collaborators = collaborators;
-            _owner = owner;
+            _ownerId = (string)documentDictionary["OwnerId"];
         }
 
-        private string _id;
+        private string _id = "";
 
         public string Id
         {
@@ -31,7 +31,7 @@ namespace WorkSafe_BE.Models
             set { _id = value; }
         }
 
-        private string _description;
+        private string _description = "";
 
         public string Description
         {
@@ -39,7 +39,7 @@ namespace WorkSafe_BE.Models
             set { _description = value; }
         }
 
-        private string _title;
+        private string _title = "";
 
         public string Title
         {
@@ -47,7 +47,7 @@ namespace WorkSafe_BE.Models
             set { _title = value; }
         }
 
-        private DateTime _timeStamp;
+        private DateTime _timeStamp = DateTime.UtcNow;
 
         public DateTime TimeStamp
         {
@@ -55,15 +55,15 @@ namespace WorkSafe_BE.Models
             set { _timeStamp = value; }
         }
 
-        private UserModel _owner;
+        private string _ownerId;
 
-        public UserModel Owner
+        public string OwnerId
         {
-            get { return _owner; }
-            set { _owner = value; }
+            get { return _ownerId; }
+            set { _ownerId = value; }
         }
 
-        private List<UserModel> _collaborators;
+        private List<UserModel> _collaborators = new List<UserModel>();
 
         public List<UserModel> Collaborators
         {

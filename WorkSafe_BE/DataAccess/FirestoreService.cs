@@ -41,19 +41,51 @@ namespace WorkSafe_BE.DataAccess
         /// </summary>
         /// <param name="id">The id of the user as a string</param>
         /// <returns>A UserModel containing the user or null of user with given id is not in the db</returns>
-        public async Task<UserModel> GetUser(string id)
+        public async Task<UserModel?> GetUser(string id)
         {           
             DocumentReference docRef = _db.Collection("Users").Document(id);
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
-            Dictionary<string, object> documentDictionary = document.ToDictionary();
+            if (document.Exists == true)
+            {               
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                var user = new UserModel(id, documentDictionary);
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
-            var user = new UserModel(id, documentDictionary);
-            return user;
+        /// <summary>
+        /// Updates a user in firestore
+        /// </summary>
+        /// <param name="user">A usermodel containg the user to update</param>
+        /// <returns>The id of the user that was updated</returns>
+        public async Task<string?> UpdateUser(UserModel user)
+        {
+            //updating a user uses the same code as creating in firestore
+            //possible we may want to validate the user exists
+            return await AddUser(user);
+        }
+
+        /// <summary>
+        /// Deletes a user from firestore
+        /// </summary>
+        /// <param name="id">The Id of the user to delete</param>
+        /// <returns>The Id of the user that was deleted</returns>
+        public async Task<string?> DeleteUser(string id)
+        {
+            DocumentReference docRef = _db.Collection("Users").Document(id);
+            await docRef.DeleteAsync();
+            return docRef.Id;
         }
 
 
+
+
         /// <summary>
-        /// Gets a list of all pusers from firebase
+        /// Gets a list of all users from firebase
         /// </summary>
         /// <returns>A list of UserModels</returns>
         public async Task<List<UserModel>> GetUsers()
@@ -70,6 +102,25 @@ namespace WorkSafe_BE.DataAccess
             return output;
         }
 
+        /// <summary>
+        /// Checks if a user already exists in the db
+        /// </summary>
+        /// <param name="userid">The user id to check is in db</param>
+        /// <returns>True if present, false otherwise</returns>
+        public async Task<bool>UserExists(string userid)
+        {
+            var doc = await _db.Collection("Users").Document(userid).GetSnapshotAsync();
+            if (doc.Exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
 
 
         /// <summary>
@@ -85,7 +136,7 @@ namespace WorkSafe_BE.DataAccess
                 { "Title", project.Title },
                 { "Description", project.Description },
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
-                { "OwnerId", project.Owner.Id }
+                { "OwnerId", project.OwnerId }
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -101,13 +152,21 @@ namespace WorkSafe_BE.DataAccess
         {
             DocumentReference docRef = _db.Collection("Projects").Document(id);
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
-            Dictionary<string, object> documentDictionary = document.ToDictionary();
-            var owner = await GetUser((string)documentDictionary["OwnerId"]);
+            if (document.Exists == true)
+            {
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                var owner = await GetUser((string)documentDictionary["OwnerId"]);
 
-            //replace empty list of collaborators with actual list at some point
-            var collaborators = new List<UserModel>();
-            var project = new ProjectModel(document.Id, documentDictionary, owner, collaborators);
-            return project;
+                //replace empty list of collaborators with actual list at some point
+                var collaborators = new List<UserModel>();
+                var project = new ProjectModel(document.Id, documentDictionary, collaborators);
+                return project;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         /// <summary>
@@ -123,11 +182,62 @@ namespace WorkSafe_BE.DataAccess
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 var owner = await GetUser((string)documentDictionary["OwnerId"]);
-                var project = new ProjectModel(document.Id, documentDictionary, owner, new List<UserModel>());
+                var project = new ProjectModel(document.Id, documentDictionary, new List<UserModel>());
                 output.Add(project);
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Updates a user in firestore
+        /// </summary>
+        /// <param name="user">A usermodel containg the user to update</param>
+        /// <returns>The id of the user that was updated</returns>
+        public async Task<string?> UpdateProject(ProjectModel project)
+        {
+            DocumentReference docRef = _db.Collection("Projects").Document(project.Id);
+            Dictionary<string, object> projectDictionary = new Dictionary<string, object>
+            {
+                { "Title", project.Title },
+                { "Description", project.Description },
+                { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
+                { "OwnerId", project.OwnerId }
+            };
+            await docRef.SetAsync(projectDictionary);
+            //need to also add collection of Collaborators possibly later
+            return docRef.Id;
+        }
+
+        /// <summary>
+        /// Deletes a user from firestore
+        /// </summary>
+        /// <param name="id">The Id of the user to delete</param>
+        /// <returns>The Id of the user that was deleted</returns>
+        public async Task<string?> DeleteProject(string id)
+        {
+            DocumentReference docRef = _db.Collection("Projects").Document(id);
+            await docRef.DeleteAsync();
+            return docRef.Id;
+        }
+
+
+        /// <summary>
+        /// Checks if a project already exists in the db
+        /// </summary>
+        /// <param name="projectid">The project id to check is in db</param>
+        /// <returns>True if present, false otherwise</returns>
+        public async Task<bool> ProjectExists(string projectid)
+        {
+            var doc = await _db.Collection("Projects").Document(projectid).GetSnapshotAsync();
+            if (doc.Exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -136,16 +246,20 @@ namespace WorkSafe_BE.DataAccess
         /// </summary>
         /// <param name="project">A ProjectModel containing the Project to add</param>
         /// <returns>The autogenerated Id of the project as a string</returns>
-        public async Task<String> AddEntry(EntryModel entry)
+        public async Task<string> AddEntry(EntryModel entry)
         {
-            DocumentReference userDocRef = _db.Collection("Users").Document(entry.Author.Id).Collection("Entries").Document();
-            DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(userDocRef.Id);
+            if (!await UserExists(entry.AuthorId))
+            {
+                return "Error";
+            }
+            DocumentReference userDocRef = _db.Collection("Users").Document(entry.AuthorId).Collection("Entries").Document();
+            DocumentReference projDocRef = _db.Collection("Projects").Document(entry.ProjectId).Collection("Entries").Document(userDocRef.Id);
             Dictionary<string, object> projectDictionary = new Dictionary<string, object>
             {
                 { "Description", entry.Description },
                 { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
-                { "AuthorId", entry.Author.Id },
-                { "ProjectId", entry.Project.Id },
+                { "AuthorId", entry.AuthorId },
+                { "ProjectId", entry.ProjectId },
                 { "Files", entry.Files },
                 { "Impact", entry.Impact },
                 { "Learning", entry.Learning},
@@ -154,7 +268,12 @@ namespace WorkSafe_BE.DataAccess
                 { "Tags", entry.Tags },
             };
             await userDocRef.SetAsync(projectDictionary);
-            await projDocRef.SetAsync(projectDictionary);
+
+            //add to the project if a project id has been set that matches a project in the db
+            if (await ProjectExists(entry.ProjectId))
+            {
+                await projDocRef.SetAsync(projectDictionary);
+            }          
             return userDocRef.Id;
         }
 
@@ -168,9 +287,7 @@ namespace WorkSafe_BE.DataAccess
             DocumentReference docRef = _db.Collection(topCollection.ToString()).Document(parentId).Collection("Entries").Document(id);
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
             Dictionary<string, object> documentDictionary = document.ToDictionary();
-            var author = await GetUser((string)documentDictionary["AuthorId"]);
-            var project = await GetProject((string)documentDictionary["ProjectId"]);
-            var entry = new EntryModel(id, documentDictionary, author, project);
+            var entry = new EntryModel(id, documentDictionary);
             return entry;
         }
 
@@ -182,13 +299,90 @@ namespace WorkSafe_BE.DataAccess
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
-                var author = await GetUser((string)documentDictionary["AuthorId"]);
-                var project = await GetProject((string)documentDictionary["ProjectId"]);
-                var entry = new EntryModel(document.Id, documentDictionary, author, project);
+                var entry = new EntryModel(document.Id, documentDictionary);
                 output.Add(entry);
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Updates an Entry in Firestore
+        /// </summary>
+        /// <param name="project">A ProjectModel containing the Project to add</param>
+        /// <returns>The autogenerated Id of the project as a string</returns>
+        public async Task<string> UpdateEntry(EntryModel entry)
+        {
+            if (!await UserExists(entry.AuthorId))
+            {
+                return "Error";
+            }
+            DocumentReference userDocRef = _db.Collection("Users").Document(entry.AuthorId).Collection("Entries").Document(entry.Id);
+            DocumentReference projDocRef = _db.Collection("Projects").Document(entry.ProjectId).Collection("Entries").Document(entry.Id);
+            Dictionary<string, object> projectDictionary = new Dictionary<string, object>
+            {
+                { "Description", entry.Description },
+                { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
+                { "AuthorId", entry.AuthorId },
+                { "ProjectId", entry.ProjectId },
+                { "Files", entry.Files },
+                { "Impact", entry.Impact },
+                { "Learning", entry.Learning},
+                { "MindSet", entry.MindSet },
+                { "NextSteps", entry.NextSteps },
+                { "Tags", entry.Tags },
+            };
+            await userDocRef.SetAsync(projectDictionary);
+
+            //add to the project if a project id has been set that matches a project in the db
+            if (await ProjectExists(entry.ProjectId))
+            {
+                await projDocRef.SetAsync(projectDictionary);
+            }
+            return userDocRef.Id;
+        }
+
+        /// <summary>
+        /// Deletes an Entry from Firestore
+        /// </summary>
+        /// <param name="userid">The id of the author of the entry.</param>
+        /// <param name="entryid">The id of the entry to delete</param>
+        /// <returns>The id of the entry that was deleted</returns>
+        public async Task<string> DeleteEntry(string userid, string entryid)
+        {
+            if (await EntryExists(userid, entryid))
+            {
+                var entry = await GetEntry(entryid, userid, TopCollection.Users);
+                var projectEntryRef = _db.Collection("Projects").Document(entry.ProjectId).Collection("Entries").Document(entryid);
+                await projectEntryRef.DeleteAsync();
+
+                var userEntryRef = _db.Collection("Users").Document(userid).Collection("Entries").Document(entryid);
+                await userEntryRef.DeleteAsync();
+
+                return entryid;
+            }
+            else
+            {
+                return "Error";
+            }
+        }
+
+        /// <summary>
+        /// Checks if an entry already exists in the db
+        /// </summary>
+        /// <param name="projectid">The entry id to check is in db</param>
+        /// <returns>True if present, false otherwise</returns>
+        public async Task<bool> EntryExists(string userid, string entryid)
+        {
+            var doc = await _db.Collection("Users").Document(userid).Collection("Entries").Document(entryid).GetSnapshotAsync();
+            if (doc.Exists)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

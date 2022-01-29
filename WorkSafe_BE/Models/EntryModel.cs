@@ -14,10 +14,10 @@ namespace WorkSafe_BE.Models
             Id = id;
         }
 
-        public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author, ProjectModel project):this(id)
+        public EntryModel(string id, Dictionary<string, object> documentDictionary):this(id)
         {
-            _author = author;
-            _project = project;
+            _authorId = (string)documentDictionary["AuthorId"];
+            _projectId = (string)documentDictionary["ProjectId"];
             _description = (string)documentDictionary["Description"];
             _files = ((List<object>)documentDictionary["Files"]).Select(i => i.ToString()).ToList();
             _impact = (string)documentDictionary["Impact"];
@@ -27,7 +27,7 @@ namespace WorkSafe_BE.Models
             _tags = ((List<object>)documentDictionary["Tags"]).Select(i => i.ToString()).ToList();
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
         }
-        private string _id;
+        private string _id = "";
 
         public string Id
         {
@@ -35,30 +35,24 @@ namespace WorkSafe_BE.Models
             set { _id = value; }
         }
 
+        private string _authorId;
 
-        private UserModel _author;
-
-        public UserModel Author
+        public string AuthorId
         {
-            get { return _author; }
-            set { _author = value; }
+            get { return _authorId; }
+            set { _authorId = value; }
         }
 
-        private ProjectModel _project;
-        public ProjectModel Project
-        {
-            get { return _project; }
-            set { _project = value; }
-        }
+        private string _projectId = "";
 
-        public ProjectModel MyProperty
+        public string ProjectId
         {
-            get { return _project; }
-            set { _project = value; }
+            get { return _projectId; }
+            set { _projectId = value; }
         }
 
 
-        private string _description;
+        private string _description = "";
 
         public string Description
         {
@@ -66,7 +60,7 @@ namespace WorkSafe_BE.Models
             set { _description = value; }
         }
 
-        private List<string> _files;
+        private List<string> _files = new List<string>();
 
         public List<string> Files
         {
@@ -74,7 +68,7 @@ namespace WorkSafe_BE.Models
             set { _files = value; }
         }
 
-        private string _impact;
+        private string _impact = "";
 
         public string Impact
         {
@@ -82,7 +76,7 @@ namespace WorkSafe_BE.Models
             set { _impact = value; }
         }
 
-        private string _learning;
+        private string _learning = "";
 
         public string Learning
         {
@@ -90,7 +84,7 @@ namespace WorkSafe_BE.Models
             set { _learning = value; }
         }
 
-        private string _mindSet;
+        private string _mindSet = "";
 
         public string MindSet
         {
@@ -98,7 +92,7 @@ namespace WorkSafe_BE.Models
             set { _mindSet = value; }
         }
 
-        private string _nextSteps;
+        private string _nextSteps = "";
 
         public string NextSteps
         {
@@ -106,7 +100,7 @@ namespace WorkSafe_BE.Models
             set { _nextSteps = value; }
         }
 
-        private List<string> _tags;
+        private List<string> _tags = new List<string>();
 
         public List<string> Tags
         {
@@ -114,7 +108,7 @@ namespace WorkSafe_BE.Models
             set { _tags = value; }
         }
 
-        private DateTime _timeStamp;
+        private DateTime _timeStamp = DateTime.UtcNow;
 
         public DateTime TimeStamp
         {
