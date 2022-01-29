@@ -1,81 +1,91 @@
 import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import Moment from 'moment';
+import Select from "react-dropdown-select";
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
             entries: [],
+            projects: []
         }
     }
 
     componentDidMount() {
-        getEntries();
+        this.getEntries();
+        this.getProjects();
+    }
+
+    async getProjects() {
+        let result = await fetch("https://localhost:7001/api/projects");
+        let data = await result.json();
+        this.setState({ projects: data });
     }
 
     async getEntries() {
-        let result = await fetch("https://localhost:7001/api/users/auth0|61ef4114b7db1d0069b8de22/entries");
-        let data = await result.json;
+        let result = await fetch("https://localhost:7001/api/users/Unit Test User ID/entries");
+        let data = await result.json();
         this.setState({ entries: data });
     }
 
-
     render() {
+        var projects = this.state.projects;
+        class ProjectOption {
+            constructor(label, value) {
+                this.label = label;
+                this.value = value;
+            }
+        }
+        var projectOptions = [];
+        projects.map(function (project, index) {
+            const po = new ProjectOption(project.Title, project.Id);
+            projectOptions[index] = po;
+        });
+        var entries = this.state.entries.map(function(entry, index) {
+            return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 class="mb-1">{entry.Description}</h4>
+                </div>
+                <p class="mb-1">{entry.Description}</p>
+                <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
+            </a>
+        });
+       
         if (this.state.entries.length > 0) {
             return (
-                <div class="list-group" style="width: 60%;background: #fff;margin: 30px auto;padding: 10px;border-radius: 5px;">
-
-                    <EntryView entry={this.state.entries} />
-
-                    <div class="d-flex" style="display: flex;flex-direction:row;width: 95%;margin: 10px auto;padding: 5px 5px;">
-                        <div class="mr-auto p-2" style="width: 90%; background-color:#fff">
-                            <h2>Projects</h2>
+                <div>
+                    <h2 class="mb-3">My Projects</h2>
+                    <Select placeholder="All projects" options={projectOptions} onChange={(values) => this.setValues(values)} />
+                    <div class="list-group">
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                <h2>Feed</h2>
+                            </div>
+                            {/*<div class="mx-auto"></div>*/}
+                            {/*<div class="p-2"><button type="button"*/}
+                            {/*    class="btn btn-success">Get Report</button></div>*/}
+                            {/*<div class="p-2"><button type="button" class="btn btn-primary">New Report</button>*/}
+                            {/*</div>*/}
                         </div>
-                        <div class="p-2" style="padding-right: 20px; background-color:#fff"><button type="button"
-                            class="btn btn-success">Get Report</button></div>
-                        <div class="p-2" style="background-color:#fff"><button type="button" class="btn btn-primary">New Report</button>
-                        </div>
+                        {entries}
                     </div>
-
-                    <a href="#" class="list-group-item list-group-item-action" style=" width: 95%;margin: 10px auto;padding: 5px 5px;
-                box-shadow: 0 4px 8px 0 #ccc, 0 6px 20px 0 #ccc;
-                border-radius: 5px; background-color:aquamarine">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Reporting Project</h4>
-                        </div>
-                        <p class="mb-1">The project will implement our reporting system.</p>
-                        <small>3 days ago Selina Yu</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action" style="width: 95%;
-                margin: 10px auto;
-                padding: 5px 5px;
-                box-shadow: 0 4px 8px 0 #ccc, 0 6px 20px 0 #ccc;
-                border-radius: 5px; background-color:burlywood">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Dashboard Project</h4>
-                        </div>
-                        <p class="mb-1">The project will implement our dashboard.</p>
-                        <small>2 days ago Chris</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action" style="width: 95%;
-                margin: 10px auto;
-                padding: 5px 5px;
-                box-shadow: 0 4px 8px 0 #ccc, 0 6px 20px 0 #ccc;
-                border-radius: 5px; background-color:darkgrey">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">Management Project</h4>
-                        </div>
-                        <p class="mb-1">The project will implement our management system.</p>
-                        <small>2 days ago Tehanui</small>
-                    </a>
-                </div>
-            )
+            </div>
+               
+            );
         }
         else {
             return (
                 <div>
                     <h2>No Entries to Display...</h2>
-                 </div>
-                )
+                </div>
+            );
         }
     }
 }
+
+export default Dashboard;
