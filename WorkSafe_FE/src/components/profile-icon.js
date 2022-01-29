@@ -3,6 +3,7 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import Image from "react-bootstrap/Image";
 
 // const ProfileIcon = () => {
 //   const { isAuthenticated } = useAuth0();
@@ -37,19 +38,21 @@ const ProfileIcon = () => {
   return isAuthenticated ? (
     <div>
       <Avatar
-        src={user["picture"]}
-        size={50}
-        icon={<UserOutlined />}
-        gap={4}
+        src={
+          <Image
+            className="rounded-circle"
+            style={{ width: 50 }}
+            src={user["picture"]}
+          ></Image>
+        }
         style={{ verticalAlign: "middle" }}
       />
     </div>
   ) : (
     <div>
       <Avatar
-        size={50}
+        size={40}
         icon={<UserOutlined />}
-        gap={4}
         style={{ verticalAlign: "middle" }}
       />
     </div>
