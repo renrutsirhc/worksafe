@@ -11,26 +11,28 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            loading: true,
             entries: [],
             projects: []
         }
     }
 
     componentDidMount() {
-        this.getEntries();
         this.getProjects();
+        this.getEntries();
     }
 
     async getProjects() {
-        let result = await fetch("https://localhost:7001/api/projects");
+        let result = await fetch("/api/projects");
         let data = await result.json();
         this.setState({ projects: data });
     }
 
     async getEntries() {
-        let result = await fetch("https://localhost:7001/api/users/Unit Test User ID/entries");
+        let result = await fetch("/api/users/Unit Test User ID/entries");
         let data = await result.json();
         this.setState({ entries: data });
+        this.setState({ loading: false });
     }
 
     render() {
@@ -46,7 +48,7 @@ class Dashboard extends Component {
             const po = new ProjectOption(project.Title, project.Id);
             projectOptions[index] = po;
         });
-        var entries = this.state.entries.map(function(entry, index) {
+        var entries = this.state.entries.map(function (entry, index) {
             return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
                 <div class="d-flex w-100 justify-content-between">
                     <h4 class="mb-1">{entry.Description}</h4>
@@ -55,7 +57,15 @@ class Dashboard extends Component {
                 <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
             </a>
         });
-       
+
+        if (this.state.loading) {
+            return (
+                <div>
+                    <h2>Loading...</h2>
+                </div>
+            );
+        }
+
         if (this.state.entries.length > 0) {
             return (
                 <div>
@@ -74,17 +84,17 @@ class Dashboard extends Component {
                         </div>
                         {entries}
                     </div>
-            </div>
-               
-            );
-        }
-        else {
-            return (
-                <div>
-                    <h2>No Entries to Display...</h2>
                 </div>
+
             );
         }
+
+        return (
+            <div>
+                <h2>No Entries to Display...</h2>
+            </div>
+        );
+
     }
 }
 
