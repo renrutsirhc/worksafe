@@ -8,6 +8,16 @@ const Profile = () => {
   const { user } = useAuth0();
   const { name, picture, email } = user;
 
+  // fetch('https://localhost:7001/entryfeeds"')
+  //   .then((r) = r.json())
+  //   .then((response) => {
+  //     process(response);
+  //   })
+
+  // function process(r) {
+  //   console.log(r);
+  // }
+
   return (
     <div>
       <div className="row align-items-center profile-header">
