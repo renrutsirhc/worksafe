@@ -36,25 +36,21 @@ const ProfileIcon = () => {
   console.log(user);
 
   return isAuthenticated ? (
-    <div>
+    <div class="avatar-icon">
       <Avatar
         src={
           <Image
             className="rounded-circle"
-            style={{ width: 50 }}
+            style={{ width: 40 }}
             src={user["picture"]}
           ></Image>
         }
-        style={{ verticalAlign: "middle" }}
+        size={40}
       />
     </div>
   ) : (
-    <div>
-      <Avatar
-        size={40}
-        icon={<UserOutlined />}
-        style={{ verticalAlign: "middle" }}
-      />
+    <div class="avatar-icon">
+      <Avatar size={40} icon={<UserOutlined />} />
     </div>
   );
 };
