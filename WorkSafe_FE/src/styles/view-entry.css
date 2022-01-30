@@ -1,0 +1,6 @@
+.EditButton {
+    display: inline-block;
+    align-items: right;
+    justify-content: right;
+    padding: 5px 20px;
+}

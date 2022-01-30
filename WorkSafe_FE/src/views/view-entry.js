@@ -6,6 +6,7 @@ import {
     faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, Button } from "react-bootstrap";
+import "../styles/view-entry.css";
 
 const ViewEntry = (props) => {
     return (
@@ -13,9 +14,9 @@ const ViewEntry = (props) => {
             <Card>
                 <Card.Header style={{ backgroundColor: "#ffcc80" }} as="h4">
                     {props.entry.Description}
-                    <Button variant="light" className="mb-3"><FontAwesomeIcon icon={faFloppyDisk} /></Button>
-                    <Button variant="light" className="mb-3"><FontAwesomeIcon icon={faPlus} /></Button>
-                    <Button variant="light" className="mb-3"><FontAwesomeIcon icon={faPenToSquare} /></Button>
+                    <div className="EditButton">
+                        <Button variant="light"><FontAwesomeIcon icon={faPenToSquare} /></Button>
+                    </div>
                 </Card.Header>
                 <Card.Body>
                     <Card.Text> Card properties</Card.Text>
