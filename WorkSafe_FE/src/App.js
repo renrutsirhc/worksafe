@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
 
 import { NavBar, Footer, Loading } from "./components";
-import { Home, Profile, ExternalApi } from "./views";
+import { Home, Profile, ViewEntry, ExternalApi } from "./views";
 
 import { withAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from "./auth/protected-route";
@@ -23,6 +23,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/" exact component={Home} />
                             <ProtectedRoute path="/profile" component={Profile} />
+                            <ProtectedRoute path="/view-entry" component={ViewEntry} />
                             <ProtectedRoute path="/external-api" component={ExternalApi} />
                         </Switch>
                     </div>

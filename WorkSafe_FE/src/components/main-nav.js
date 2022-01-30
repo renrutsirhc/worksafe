@@ -24,6 +24,14 @@ const MainNav = () => {
                 Profile
             </NavLink>
             <NavLink
+                to="/view-entry"
+                exact
+                className="nav-link"
+                activeClassName="router-link-exact-active"
+            >
+                View Entry
+            </NavLink>
+            <NavLink
                 to="/external-api"
                 exact
                 className="nav-link"
