@@ -21,8 +21,8 @@ namespace WorkSafe_BE.DataAccess
         /// </summary>
         /// <param name="project">A UsertModel containing the Project to add</param>
         /// <returns>The Id of the user as a string</returns>
-        public async Task<String> AddUser(UserModel user)
-        {
+        public async Task<string> AddUser(UserModel user)
+        {           
             DocumentReference docRef = _db.Collection("Users").Document(user.Id);
             Dictionary<string, object> userDictionary = new Dictionary<string, object>
             {             
@@ -32,7 +32,10 @@ namespace WorkSafe_BE.DataAccess
                 { "Picture", user.Picture },
                 { "TimeStamp", Timestamp.FromDateTime(user.TimeStamp) },
             };
-            await docRef.SetAsync(userDictionary);
+            if (!await UserExists(user.Id))
+            {
+                await docRef.SetAsync(userDictionary);
+            }            
             return docRef.Id;
         }
 
@@ -255,6 +258,7 @@ namespace WorkSafe_BE.DataAccess
             DocumentReference userDocRef = _db.Collection("Users").Document(entry.Author.Id).Collection("Entries").Document();
             Dictionary<string, object> entryDictionary = new Dictionary<string, object>
             {
+                { "Title", entry.Title },
                 { "Description", entry.Description },
                 { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
                 { "AuthorId", entry.Author.Id },
@@ -330,6 +334,7 @@ namespace WorkSafe_BE.DataAccess
            
             Dictionary<string, object> entryDictionary = new Dictionary<string, object>
             {
+                { "Title", entry.Title },
                 { "Description", entry.Description },
                 { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
                 { "AuthorId", entry.Author.Id },

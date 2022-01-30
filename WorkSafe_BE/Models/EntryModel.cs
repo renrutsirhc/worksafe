@@ -16,6 +16,7 @@ namespace WorkSafe_BE.Models
 
         public EntryModel(string id, Dictionary<string, object> documentDictionary, UserModel author) : this(id)
         {
+            _title = (string)documentDictionary["Title"];
             _description = (string)documentDictionary["Description"];
             _files = ((List<object>)documentDictionary["Files"]).Select(i => i.ToString()).ToList();
             _impact = (string)documentDictionary["Impact"];
@@ -40,6 +41,15 @@ namespace WorkSafe_BE.Models
             get { return _id; }
             set { _id = value; }
         }
+
+        private string _title = "";
+
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; }
+        }
+
 
         private UserModel _author;
 
