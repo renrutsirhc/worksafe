@@ -1,6 +1,6 @@
 .EditButton {
     display: inline-block;
-    align-items: right;
+    align-items: flex-end;
     justify-content: right;
     padding: 5px 20px;
 }
