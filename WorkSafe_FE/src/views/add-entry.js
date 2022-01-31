@@ -109,7 +109,7 @@ class AddEntry extends Component {
         return (
             <Form>
                 <Card>
-                    <CardHeader>Add New Entry</CardHeader>
+                    <CardHeader style={{ backgroundColor: "#D6E06D"}} as="h5">Add New Entry</CardHeader>
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
@@ -168,7 +168,7 @@ class AddEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <Card.Footer>
+                    <Card.Footer style={{ backgroundColor: "#E0E88F"}}>
                         <Button variant="success" onClick={this.handleSubmit}>
                             Add entry
                         </Button>
