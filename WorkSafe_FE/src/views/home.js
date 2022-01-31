@@ -1,9 +1,38 @@
 import React, { Component } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { withAuth0 } from "@auth0/auth0-react";
 import Dashboard from "./dashboard";
 
 class Home extends Component {
-  static displayName = Home.name;
+    constructor(props) {
+        super(props);
+    }
+    static displayName = Home.name;
+
+    componentDidMount() {
+        this.addUser();
+    }
+
+    async addUser() {
+        var user = {
+            Id: this.props.auth0.user.sub,
+            Name: this.props.auth0.user.name,
+            NickName: this.props.auth0.user.nickname,
+            Email: this.props.auth0.user.email,
+            Picture: this.props.auth0.user.picture,
+            TimeStamp: this.props.auth0.user.updated_at,
+        }
+
+        var options = {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }
+        var response = await fetch("/api/users", options);
+        var result = await response.json();
+        console.log(result);
+    }
 
   render() {
     return (
@@ -14,4 +43,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withAuth0(Home);

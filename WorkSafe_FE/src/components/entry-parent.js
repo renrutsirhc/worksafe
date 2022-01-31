@@ -1,4 +1,4 @@
-import { ViewEntry, ViewFullEntry } from "../views";
+import { EditEntry, ViewEntry, ViewFullEntry } from "../views";
 import { Component } from "react";
 //import EditEntry from "../Views/edit-entry";
 
@@ -38,16 +38,12 @@ class EntryParent extends Component {
     render() {
         if (this.state.Editing) {
             return (
-                <div>
-                    <h2>Editing</h2>
-                </div>
+                <EditEntry entry={this.props.entry} setEditing={this.setEditing} handleUpdateEntry={this.props.handleUpdateEntry}/>
             )
         }
         if (this.state.Expanded) {
             return (
-                <div>
-                    <ViewFullEntry entry={this.props.entry} setExpanded={this.setExpanded} setEditing={this.setEditing} />
-                </div>
+                <ViewFullEntry entry={this.props.entry} setExpanded={this.setExpanded} setEditing={this.setEditing} />
             )
         }
 
