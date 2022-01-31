@@ -1,4 +1,4 @@
-import ViewEntry from "../views/view-entry";
+import { EditEntry, ViewEntry, ViewFullEntry } from "../views";
 import { Component } from "react";
 //import EditEntry from "../Views/edit-entry";
 
@@ -19,7 +19,10 @@ class EntryParent extends Component {
             this.setState({ Editing: false })
         }
         else {
-            this.setState({ Editing: true })
+            this.setState({
+                Editing: true,
+                Expanded: false
+            })
         }
     }
 
@@ -33,14 +36,14 @@ class EntryParent extends Component {
     }
 
     render() {
-        if (this.state.editing) {
+        if (this.state.Editing) {
             return (
-                < h2 > Editing</h2 >
+                <EditEntry entry={this.props.entry} setEditing={this.setEditing} handleUpdateEntry={this.props.handleUpdateEntry}/>
             )
         }
-        if (this.state.expanded) {
+        if (this.state.Expanded) {
             return (
-                <h2> Expanded </h2>
+                <ViewFullEntry entry={this.props.entry} setExpanded={this.setExpanded} setEditing={this.setEditing} />
             )
         }
 

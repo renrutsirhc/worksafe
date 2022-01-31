@@ -1,29 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Form, Alert, FormGroup, FormLabel, FormControl, Row, Col, Card } from 'react-bootstrap'
+import { Button, Form, FormLabel, FormControl, Row, Col, Card } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 
-class AddEntry extends Component {
+class EditEntry extends Component {
     constructor(props) {
-        super(props)
-        var entry = {
-            Author: {
-                Id: this.props.userId
-            },
-            Project: {
-                Id: "xJcONkXPANC1452gfEho"
-            },
-            "Description": "",
-            "Files": [
-            ],
-            "Impact": "",
-            "Learning": "",
-            "MindSet": "",
-            "NextSteps": "",
-            "Tags": [
-            ]
-        }
+        super(props)      
         this.state = {
-            Entry: entry,
+            Entry: this.props.entry,
         }
 
         this.handleTitleChange = this.handleTitleChange.bind(this)
@@ -88,21 +71,27 @@ class AddEntry extends Component {
         console.log(this.state)
     }
 
-    async handleSubmit(event) {
+    handleSubmit = async (event) => {
         event.preventDefault()
         var options = {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.state.Entry)
         }
 
-        var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries"
+        var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries/" + this.props.entry.Id
         var response = await fetch(url, options)
 
         var result = await response.json()
-        console.log(result)
+        if (response.ok) {
+            this.props.handleUpdateEntry(this.state.Entry);
+            this.props.setEditing();
+        } else {
+            ///some kind of error message
+        }
+        
     }
 
     render() {
@@ -170,7 +159,7 @@ class AddEntry extends Component {
 
                     <Card.Footer>
                         <Button variant="success" onClick={this.handleSubmit}>
-                            Add entry
+                            Save Changes
                         </Button>
                     </Card.Footer>
 
@@ -182,4 +171,4 @@ class AddEntry extends Component {
     }
 }
 
-export default AddEntry
+export default EditEntry

@@ -9,41 +9,59 @@ import Select from "react-dropdown-select";
 import { Button } from "react-bootstrap";
 import AddEntry from "./add-entry.js"
 import EntryParent from "../components/entry-parent.js"
+import { withAuth0 } from "@auth0/auth0-react";
 
 class Dashboard extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
             loading: true,
             entries: [],
             projects: [],
-            addEntry: false
+            addEntry: false,
+            user: props.auth0.user,
         }
 
-        this.handleAddEntry = this.handleAddEntry.bind(this)
+        this.handleAddEntry = this.handleAddEntry.bind(this);
+        this.handleUpdateEntry = this.handleUpdateEntry.bind(this);
+
+       
     }
 
-  componentDidMount() {
-    this.getProjects();
-    this.getEntries();
-  }
+    componentDidMount() {
+        this.getProjects();
+        this.getEntries();
+    }
 
-  async getProjects() {
-    let result = await fetch("/api/projects");
-    let data = await result.json();
-    this.setState({ projects: data });
-  }
+    async getProjects() {
+        let result = await fetch("/api/projects");
+        let data = await result.json();
+        this.setState({ projects: data });
+    }
 
-  async getEntries() {
-    let result = await fetch("/api/users/Unit Test User ID/entries");
-    let data = await result.json();
-    this.setState({ entries: data });
-    this.setState({ loading: false });
-  }
+    async getEntries() {
+        let result = await fetch("/api/users/" + this.state.user.sub + "/entries");
+        let data = await result.json();
+        this.setState({ entries: data });
+        this.setState({ loading: false });
+    }
 
     handleAddEntry() {
         this.setState({ addEntry: true })
     }
+
+    handleUpdateEntry(entry) {
+        var entries = this.state.entries;
+        for (let i = 0; i < entries.length; i++) {
+            if (entries[i].Id == entry.Id) {              
+                entries[i] = entry;
+                this.setState({ entries: entries });
+                break;
+            }
+        }
+    }
+
 
     render() {
         var projects = this.state.projects;
@@ -58,28 +76,21 @@ class Dashboard extends Component {
             const po = new ProjectOption(project.Title, project.Id);
             projectOptions[index] = po;
         });
-        var entries = this.state.entries.map(function (entry, index) {
-            return (<EntryParent keyx={index} entry={entry}/> );
-            //return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
-            //    <div class="d-flex w-100 justify-content-between">
-            //        <h4 class="mb-1">{entry.Description}</h4>
-            //    </div>
-            //    <p class="mb-1">{entry.Description}</p>
-            //    <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
-            //</a>
-        });
+        var entries = this.state.entries.map(entry => (
+            <EntryParent key={entry.Id} entry={entry} handleUpdateEntry={this.handleUpdateEntry} />
+        ));
 
-    if (this.state.loading) {
-      return (
-        <div>
-          <h2>Loading...</h2>
-        </div>
-      );
-    }
-
-        if(this.state.addEntry) {
+        if (this.state.loading) {
             return (
-                <AddEntry userId="Unit Test User ID"/>
+                <div>
+                    <h2>Loading...</h2>
+                </div>
+            );
+        }
+
+        if (this.state.addEntry) {
+            return (
+                <AddEntry userId={this.state.user.sub} />
             )
         }
 
@@ -92,11 +103,6 @@ class Dashboard extends Component {
                             <div className="mr-auto">
                                 <h2>Feed</h2>
                             </div>
-                            {/*<div class="mx-auto"></div>*/}
-                            {/*<div class="p-2"><button type="button"*/}
-                            {/*    class="btn btn-success">Get Report</button></div>*/}
-                            {/*<div class="p-2"><button type="button" class="btn btn-primary">New Report</button>*/}
-                            {/*</div>*/}
                         </div>
                         {entries}
                     </div>
@@ -105,12 +111,13 @@ class Dashboard extends Component {
             );
         }
 
-    return (
-      <div>
-        <h2>No Entries to Display...</h2>
-      </div>
-    );
-  }
+        return (
+            <div>
+                <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                <h2>No Entries to Display...</h2>
+            </div>
+        );
+    }
 }
 
-export default Dashboard;
+export default withAuth0(Dashboard);
