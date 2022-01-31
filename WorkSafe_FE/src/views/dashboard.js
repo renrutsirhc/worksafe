@@ -6,6 +6,8 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Moment from 'moment';
 import Select from "react-dropdown-select";
+import { Button } from "react-bootstrap";
+import AddEntry from "./add-entry.js"
 
 class Dashboard extends Component {
     constructor(props) {
@@ -13,8 +15,11 @@ class Dashboard extends Component {
         this.state = {
             loading: true,
             entries: [],
-            projects: []
+            projects: [],
+            addEntry: false
         }
+
+        this.handleAddEntry = this.handleAddEntry.bind(this)
     }
 
     componentDidMount() {
@@ -35,6 +40,10 @@ class Dashboard extends Component {
         this.setState({ loading: false });
     }
 
+    handleAddEntry() {
+        this.setState({ addEntry: true })
+    }
+
     render() {
         var projects = this.state.projects;
         class ProjectOption {
@@ -49,11 +58,11 @@ class Dashboard extends Component {
             projectOptions[index] = po;
         });
         var entries = this.state.entries.map(function (entry, index) {
-            return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
-                <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">{entry.Description}</h4>
+            return <a key={index} href="#" className="list-group-item list-group-item-action list-group-item-primary mb-2">
+                <div className="d-flex w-100 justify-content-between">
+                    <h4 className="mb-1">{entry.Description}</h4>
                 </div>
-                <p class="mb-1">{entry.Description}</p>
+                <p className="mb-1">{entry.Description}</p>
                 <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
             </a>
         });
@@ -66,14 +75,19 @@ class Dashboard extends Component {
             );
         }
 
+        if(this.state.addEntry) {
+            return (
+                <AddEntry userId="Unit Test User ID"/>
+            )
+        }
+
         if (this.state.entries.length > 0) {
             return (
                 <div>
-                    <h2 class="mb-3">My Projects</h2>
-                    <Select placeholder="All projects" options={projectOptions} onChange={(values) => this.setValues(values)} />
-                    <div class="list-group">
-                        <div class="d-flex">
-                            <div class="mr-auto">
+                    <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                    <div className="list-group">
+                        <div className="d-flex">
+                            <div className="mr-auto">
                                 <h2>Feed</h2>
                             </div>
                             {/*<div class="mx-auto"></div>*/}
