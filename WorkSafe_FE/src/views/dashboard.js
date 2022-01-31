@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Moment from 'moment';
 import Select from "react-dropdown-select";
+import EntryParent from "../components/entry-parent"
 
 class Dashboard extends Component {
     constructor(props) {
@@ -49,13 +50,14 @@ class Dashboard extends Component {
             projectOptions[index] = po;
         });
         var entries = this.state.entries.map(function (entry, index) {
-            return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
-                <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">{entry.Description}</h4>
-                </div>
-                <p class="mb-1">{entry.Description}</p>
-                <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
-            </a>
+            return (<EntryParent index={index} entry={entry}/> );
+            //return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
+            //    <div class="d-flex w-100 justify-content-between">
+            //        <h4 class="mb-1">{entry.Description}</h4>
+            //    </div>
+            //    <p class="mb-1">{entry.Description}</p>
+            //    <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
+            //</a>
         });
 
         if (this.state.loading) {
@@ -69,11 +71,11 @@ class Dashboard extends Component {
         if (this.state.entries.length > 0) {
             return (
                 <div>
-                    <h2 class="mb-3">My Projects</h2>
+                    <h2 className="mb-3">My Projects</h2>
                     <Select placeholder="All projects" options={projectOptions} onChange={(values) => this.setValues(values)} />
-                    <div class="list-group">
-                        <div class="d-flex">
-                            <div class="mr-auto">
+                    <div className="list-group">
+                        <div className="d-flex">
+                            <div className="mr-auto">
                                 <h2>Feed</h2>
                             </div>
                             {/*<div class="mx-auto"></div>*/}
