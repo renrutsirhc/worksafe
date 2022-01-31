@@ -58,13 +58,14 @@ class Dashboard extends Component {
             projectOptions[index] = po;
         });
         var entries = this.state.entries.map(function (entry, index) {
-            return <a key={index} href="#" className="list-group-item list-group-item-action list-group-item-primary mb-2">
-                <div className="d-flex w-100 justify-content-between">
-                    <h4 className="mb-1">{entry.Description}</h4>
-                </div>
-                <p className="mb-1">{entry.Description}</p>
-                <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
-            </a>
+            return (<EntryParent index={index} entry={entry}/> );
+            //return <a href="#" class="list-group-item list-group-item-action list-group-item-primary mb-2">
+            //    <div class="d-flex w-100 justify-content-between">
+            //        <h4 class="mb-1">{entry.Description}</h4>
+            //    </div>
+            //    <p class="mb-1">{entry.Description}</p>
+            //    <small>Last updated: {Moment(entry.TimeStamp).format('YYYY-MM-DD')} Owner:</small>
+            //</a>
         });
 
     if (this.state.loading) {
