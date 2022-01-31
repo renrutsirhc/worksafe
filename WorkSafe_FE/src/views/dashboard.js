@@ -77,7 +77,7 @@ class Dashboard extends Component {
 
         if(this.state.addEntry) {
             return (
-                <AddEntry></AddEntry>
+                <AddEntry userId="Unit Test User ID"/>
             )
         }
 
@@ -85,8 +85,6 @@ class Dashboard extends Component {
             return (
                 <div>
                     <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
-                    <h2 className="mb-3">My Projects</h2>
-                    <Select placeholder="All projects" options={projectOptions} onChange={(values) => this.setValues(values)} />
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">

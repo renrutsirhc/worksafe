@@ -5,7 +5,26 @@ import CardHeader from 'react-bootstrap/esm/CardHeader'
 class AddEntry extends Component {
     constructor(props) {
         super(props)
-        this.state = {Entry: {}}
+        var entry = {
+            Author: {
+                Id: this.props.userId
+            },
+            Project: {
+                Id: "xJcONkXPANC1452gfEho"
+            },
+            "Description": "",
+            "Files": [
+            ],
+            "Impact": "",
+            "Learning": "",
+            "MindSet": "",
+            "NextSteps": "",
+            "Tags": [
+            ]
+        }
+        this.state = {
+            Entry: entry,
+        }
 
         this.handleTitleChange = this.handleTitleChange.bind(this)
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
@@ -20,7 +39,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.Title = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -29,7 +48,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.Description = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -38,7 +57,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.Learning = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -47,7 +66,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.Mindset = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -56,7 +75,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.Impact = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -64,7 +83,7 @@ class AddEntry extends Component {
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
             Entry.NextSteps = event.target.value
-            return {Entry}
+            return { Entry }
         })
         console.log(this.state)
     }
@@ -73,18 +92,12 @@ class AddEntry extends Component {
         event.preventDefault()
         var options = {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
-
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify(this.state.Entry)
-                }
-        
+        }
+
         var url = "https://localhost:7001/api/users/" + "Unit Test User ID" + "/entries"
         var response = await fetch(url, options)
 
@@ -94,78 +107,79 @@ class AddEntry extends Component {
 
     render() {
         return (
-        <Form>
-        <Card>
-            <CardHeader>Add New Entry</CardHeader>
-            <Card.Body>
-                    <Row sm={1} md={2}>
-                        <Col>
-                            <Form.Group>
-                                <FormLabel >Title</FormLabel>
-                                <FormControl type="text" value={this.state.Entry.Title} onChange={this.handleTitleChange} placeholder="Summarise the entry"/>
-                            </Form.Group>
-                        </Col>
+            <Form>
+                <Card>
+                    <CardHeader>Add New Entry</CardHeader>
+                    <Card.Body>
+                        <Row sm={1} md={2}>
+                            <Col>
+                                <Form.Group>
+                                    <FormLabel >Title</FormLabel>
+                                    <FormControl type="text" value={this.state.Entry.Title} onChange={this.handleTitleChange} placeholder="Summarise the entry" />
+                                </Form.Group>
+                            </Col>
 
-                        <Col md={3}>
-                            <Form.Group>
-                                <FormLabel>Date</FormLabel>
-                                <FormControl type="date" value={this.state.Title} onChange={this.handleChange} name="date"/>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Form.Group className="mt-3">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" type="text" value={this.state.Entry.Description || ""} onChange={this.handleDescriptionChange} placeholder="Decribe the entry"/>
-                        </Form.Group>
-                    </Row>
-                    <Row>
-                        <Col xs={5}>
+                            <Col md={3}>
+                                <Form.Group>
+                                    <FormLabel>Date</FormLabel>
+                                    <FormControl type="date" value={this.state.Title} onChange={this.handleChange} name="date" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Form.Group className="mt-3">
-                                <Form.Label>Upload files</Form.Label>
-                                <Form.Control type="file" multiple />
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control as="textarea" type="text" value={this.state.Entry.Description || ""} onChange={this.handleDescriptionChange} placeholder="Decribe the entry" />
                             </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Form.Group className="mt-3">
-                            <Form.Label>Learning</Form.Label>
-                            <Form.Control as="textarea" value={this.state.Entry.Learning} onChange={this.handleLearningChange} placeholder="Decribe the learning"/>
-                        </Form.Group>
-                    </Row>
-                    <Row>
-                        <Form.Group className="mt-3">
-                            <Form.Label>Mindset</Form.Label>
-                            <Form.Control type="text" value={this.state.Entry.Mindset} onChange={this.handleMindsetChange} placeholder="Mind set used"/>
-                        </Form.Group>
-                    </Row>
-                    <Row>
-                        <Col>
-                        <Form.Group className="mt-3">
-                            <Form.Label>Impact</Form.Label>
-                            <Form.Control as="textarea" value={this.state.Entry.Impact} onChange={this.handleImpactChange} placeholder="Impact of entry"/>
+                        </Row>
+                        <Row>
+                            <Col xs={5}>
+                                <Form.Group className="mt-3">
+                                    <Form.Label>Upload files</Form.Label>
+                                    <Form.Control type="file" multiple />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Learning</Form.Label>
+                                <Form.Control as="textarea" value={this.state.Entry.Learning} onChange={this.handleLearningChange} placeholder="Decribe the learning" />
                             </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Form.Group className="mt-3">
-                            <Form.Label>Next steps</Form.Label>
-                            <Form.Control as="textarea" value={this.state.Entry.NextSteps} onChange={this.handleNextStepsChange} placeholder="Next steps based on this entry"/>
-                        </Form.Group>
-                    </Row>  
-            </Card.Body>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Mindset</Form.Label>
+                                <Form.Control type="text" value={this.state.Entry.Mindset} onChange={this.handleMindsetChange} placeholder="Mind set used" />
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group className="mt-3">
+                                    <Form.Label>Impact</Form.Label>
+                                    <Form.Control as="textarea" value={this.state.Entry.Impact} onChange={this.handleImpactChange} placeholder="Impact of entry" />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Next steps</Form.Label>
+                                <Form.Control as="textarea" value={this.state.Entry.NextSteps} onChange={this.handleNextStepsChange} placeholder="Next steps based on this entry" />
+                            </Form.Group>
+                        </Row>
+                    </Card.Body>
 
-            <Card.Footer>
-                <Button variant="success" onClick={this.handleSubmit}>
-                        Add entry
-                </Button>
-            </Card.Footer>
+                    <Card.Footer>
+                        <Button variant="success" onClick={this.handleSubmit}>
+                            Add entry
+                        </Button>
+                    </Card.Footer>
 
-        </Card>
-        </Form>
-        
-        
-        )}
+                </Card>
+            </Form>
+
+
+        )
+    }
 }
 
 export default AddEntry
