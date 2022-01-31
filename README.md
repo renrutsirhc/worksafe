@@ -17,3 +17,6 @@ About dependencies update:
   use following command in the console under backend directory:
   dotnet add package Google.Cloud.Firestore
   dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 6.0.1
+  
+  FontAwesome install:
+  https://fontawesome.com/v6.0/docs/web/use-with/react/
