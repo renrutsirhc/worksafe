@@ -146,7 +146,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>/{userid}/entries
         [HttpPost("{userid}/entries")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
         {
             var entryId = await _dbService.AddEntry(entry);
