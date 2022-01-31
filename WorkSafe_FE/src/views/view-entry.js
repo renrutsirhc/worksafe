@@ -7,26 +7,31 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 
 // Display view-entry card
-const ViewEntry = (props) => {
+class ViewEntry extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <div className="view-entry mt-3">
-            <Card>
-                <Card.Header style={{ backgroundColor: "#ffcc80" }} as="h4">
-                    {props.entry.Title}
-                    <div className="EditButton">
-                        <Button variant="light"><FontAwesomeIcon icon={faPenToSquare} /></Button>
-                    </div>
-                </Card.Header>
-                <Card.Body>
-                    <Card.Text> {props.entry.Description}</Card.Text>
-                </Card.Body>
-                <Card.Footer style={{ backgroundColor: "#fff3e0" }} as="h6">
-                    Last Updated <Moment format="HH:MM, D MMM YYYY" withTitle>{props.entry.TimeStamp}</Moment> by {props.entry.Author.Name}
-                </Card.Footer>
-            </Card>
-        </div>
-    );
+    render() {
+        return (
+            <div className="view-entry mt-3">
+                <Card>
+                    <Card.Header style={{ backgroundColor: "#ffcc80" }} as="h4">
+                        {this.props.entry.Title}
+                        <div className="EditButton">
+                            <Button variant="light" onClick={this.props.setEditing}><FontAwesomeIcon icon={faPenToSquare} /></Button>
+                        </div>
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Text> {this.props.entry.Description}</Card.Text>
+                    </Card.Body>
+                    <Card.Footer style={{ backgroundColor: "#fff3e0" }} as="h6">
+                        Last Updated <Moment format="HH:MM, D MMM YYYY" withTitle>{this.props.entry.TimeStamp}</Moment> by {this.props.entry.Author.Name}
+                    </Card.Footer>
+                </Card>
+            </div>
+        );
+    }
 };
 
 export default ViewEntry;

@@ -6,8 +6,8 @@ class EntryParent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            editing: false,
-            expanded: false,
+            Editing: false,
+            Expanded: false,
         }
 
         this.setEditing = this.setEditing.bind(this);
