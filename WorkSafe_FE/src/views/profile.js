@@ -3,40 +3,36 @@
 import React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import { AutoComplete, Avatar } from "antd";
+import { Image } from "react-bootstrap";
 
 const Profile = () => {
   const { user } = useAuth0();
-  const { name, picture, email } = user;
+  const { name, nickname, picture, email } = user;
 
-  // fetch('https://localhost:7001/entryfeeds"')
-  //   .then((r) = r.json())
-  //   .then((response) => {
-  //     process(response);
-  //   })
-
-  // function process(r) {
-  //   console.log(r);
-  // }
+  const styleObjs = {};
 
   return (
-    <div>
-      <div className="row align-items-center profile-header">
+    <div style={styleObjs}>
+      <div className="row align-items-center">
         <div className="col-md-2 mb-3">
-          <img
-            src={picture}
-            alt="Profile"
-            className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+          <Avatar
+            src={
+              <Image
+                className="rounded-circle"
+                style={{ width: 150 }}
+                src={picture}
+              ></Image>
+            }
+            size={200}
           />
         </div>
-        <div className="col-md text-center text-md-left">
+        <div className="col-md-5 text-md-left">
           <h2>{name}</h2>
+          <hr></hr>
+          <p className="lead text-muted">{nickname}</p>
           <p className="lead text-muted">{email}</p>
         </div>
-      </div>
-      <div className="row">
-        <pre className="col-12 text-light bg-dark p-4">
-          {JSON.stringify(user, null, 2)}
-        </pre>
       </div>
     </div>
   );
