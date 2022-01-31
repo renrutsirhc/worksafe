@@ -16,12 +16,15 @@ class EntryParent extends Component {
 
     setEditing() {
         if (this.state.Editing) {
-            this.setState({ Editing: false })
+            this.setState({
+                Editing: false,
+                Expanded: true,
+            })
         }
         else {
             this.setState({
                 Editing: true,
-                Expanded: false
+                Expanded: true,
             })
         }
     }
