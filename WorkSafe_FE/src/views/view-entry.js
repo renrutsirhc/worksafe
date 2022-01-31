@@ -10,7 +10,7 @@ import 'moment-timezone';
 const ViewEntry = (props) => {
 
     return (
-        <div className="view-entry">
+        <div className="view-entry mt-3">
             <Card>
                 <Card.Header style={{ backgroundColor: "#ffcc80" }} as="h4">
                     {props.entry.Title}
