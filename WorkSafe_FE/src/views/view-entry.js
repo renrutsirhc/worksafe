@@ -16,7 +16,7 @@ class ViewEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <Card.Header style={{ backgroundColor: "#D6E06D" }} as="h4">
+                    <Card.Header style={{ backgroundColor: "#dededc" }} as="h4">
                         {this.props.entry.Title}
                         <div className="EditButton">
                             <Button variant="light" onClick={this.props.setEditing}><FontAwesomeIcon icon={faPenToSquare} /></Button>
@@ -25,7 +25,7 @@ class ViewEntry extends Component {
                     <Card.Body>
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>
-                    <Card.Footer style={{ backgroundColor: "#E0E88F" }} as="h6">
+                    <Card.Footer className="text-white" style={{ backgroundColor: "#5c5c59" }} as="h6">
                         Last Updated <Moment format="HH:MM, D MMM YYYY" withTitle>{this.props.entry.TimeStamp}</Moment> by {this.props.entry.Author.Name}
                     </Card.Footer>
                 </Card>
