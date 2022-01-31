@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Avatar } from "antd";
@@ -12,23 +12,19 @@ const ProfileIcon = () => {
   console.log(user);
 
   return isAuthenticated ? (
-    <NavLink
-      to="/profile"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-    <div className="avatar-icon">
-      <Avatar
-        src={
-          <Image
-            className="rounded-circle"
-            style={{ width: 30 }}
-            src={user["picture"]}
-          ></Image>
-        }
-        size={40}
-      />
-    </div>
+    <NavLink to="/profile" exact activeClassName="router-link-exact-active">
+      <div className="avatar-icon">
+        <Avatar
+          src={
+            <Image
+              className="rounded-circle"
+              style={{ width: 30 }}
+              src={user["picture"]}
+            ></Image>
+          }
+          size={40}
+        />
+      </div>
     </NavLink>
   ) : (
     <div className="avatar-icon">

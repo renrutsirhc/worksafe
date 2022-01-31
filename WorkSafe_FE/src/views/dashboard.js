@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
-import 'bootstrap/dist/js/bootstrap.js';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import Moment from 'moment';
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+import "bootstrap/dist/js/bootstrap.js";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import Moment from "moment";
 import Select from "react-dropdown-select";
 import { Button } from "react-bootstrap";
 import AddEntry from "./add-entry.js"
@@ -22,23 +22,23 @@ class Dashboard extends Component {
         this.handleAddEntry = this.handleAddEntry.bind(this)
     }
 
-    componentDidMount() {
-        this.getProjects();
-        this.getEntries();
-    }
+  componentDidMount() {
+    this.getProjects();
+    this.getEntries();
+  }
 
-    async getProjects() {
-        let result = await fetch("/api/projects");
-        let data = await result.json();
-        this.setState({ projects: data });
-    }
+  async getProjects() {
+    let result = await fetch("/api/projects");
+    let data = await result.json();
+    this.setState({ projects: data });
+  }
 
-    async getEntries() {
-        let result = await fetch("/api/users/Unit Test User ID/entries");
-        let data = await result.json();
-        this.setState({ entries: data });
-        this.setState({ loading: false });
-    }
+  async getEntries() {
+    let result = await fetch("/api/users/Unit Test User ID/entries");
+    let data = await result.json();
+    this.setState({ entries: data });
+    this.setState({ loading: false });
+  }
 
     handleAddEntry() {
         this.setState({ addEntry: true })
@@ -67,13 +67,13 @@ class Dashboard extends Component {
             </a>
         });
 
-        if (this.state.loading) {
-            return (
-                <div>
-                    <h2>Loading...</h2>
-                </div>
-            );
-        }
+    if (this.state.loading) {
+      return (
+        <div>
+          <h2>Loading...</h2>
+        </div>
+      );
+    }
 
         if(this.state.addEntry) {
             return (
@@ -103,13 +103,12 @@ class Dashboard extends Component {
             );
         }
 
-        return (
-            <div>
-                <h2>No Entries to Display...</h2>
-            </div>
-        );
-
-    }
+    return (
+      <div>
+        <h2>No Entries to Display...</h2>
+      </div>
+    );
+  }
 }
 
 export default Dashboard;
