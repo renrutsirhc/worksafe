@@ -33,7 +33,7 @@ class ViewFullEntry extends Component {
                         <Card.Title>Learning</Card.Title>
                         <Card.Text>{this.props.entry.Learning}</Card.Text>
                         <Card.Title>Mindset</Card.Title>
-                        <Card.Text>{this.props.entry.Mindset}</Card.Text>
+                        <Card.Text>{this.props.entry.MindSet}</Card.Text>
                         <Card.Title>Impact</Card.Title>
                         <Card.Text>{this.props.entry.Impact}</Card.Text>
                         <Card.Title>Next Steps</Card.Title>

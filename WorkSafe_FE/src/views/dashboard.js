@@ -23,8 +23,9 @@ class Dashboard extends Component {
             user: props.auth0.user,
         }
 
-        this.handleAddEntry = this.handleAddEntry.bind(this);
+        this.handleShowAddEntry = this.handleShowAddEntry.bind(this);
         this.handleUpdateEntry = this.handleUpdateEntry.bind(this);
+        this.handleAddEntry = this.handleAddEntry.bind(this);
 
        
     }
@@ -47,8 +48,31 @@ class Dashboard extends Component {
         this.setState({ loading: false });
     }
 
-    handleAddEntry() {
-        this.setState({ addEntry: true })
+    handleShowAddEntry() {
+        if (this.state.addEntry == true) {
+            this.setState({ addEntry: false })
+        } else {
+            this.setState({ addEntry: true })
+        }
+        
+    }
+
+    handleAddEntry(entry) {
+        var entries = this.state.entries;
+        entries.push(entry);
+        entries.sort((entry1, entry2) => {
+            var date1 = new Date(entry1.TimeStamp);
+            var date2 = new Date(entry2.TimeStamp);
+            if (date1.getTime() > date2.getTime()) {
+                return -1;
+            } else if (date1.getTime() < date2.getTime()) {
+                return 1;
+            } else {
+                return 0;
+            }
+            
+        })
+        this.setState({ entries: entries });
     }
 
     handleUpdateEntry(entry) {
@@ -90,14 +114,14 @@ class Dashboard extends Component {
 
         if (this.state.addEntry) {
             return (
-                <AddEntry userId={this.state.user.sub} />
+                <AddEntry userId={this.state.user.sub} handleShowAddEntry={this.handleShowAddEntry} handleAddEntry={this.handleAddEntry} />
             )
         }
 
         if (this.state.entries.length > 0) {
             return (
                 <div>
-                    <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                    <Button variant="success" onClick={this.handleShowAddEntry}>Add Entry</Button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
@@ -113,7 +137,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                <Button variant="success" onClick={this.handleShowAddEntry}>Add Entry</Button>
                 <h2>No Entries to Display...</h2>
             </div>
         );

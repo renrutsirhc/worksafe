@@ -90,19 +90,29 @@ class AddEntry extends Component {
 
     async handleSubmit(event) {
         event.preventDefault()
+
+
+        var entry = this.state.Entry;
         var options = {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.Entry)
+            body: JSON.stringify(entry)
         }
 
         var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries"
         var response = await fetch(url, options)
+        if (response.ok) {
+            var result = await response.json()
+            console.log(result)
+            this.props.handleAddEntry(entry);
+            this.props.handleShowAddEntry();
+        } else {
+            //show error
+        }
 
-        var result = await response.json()
-        console.log(result)
+
     }
 
     render() {
