@@ -6,12 +6,12 @@ const Home = (props) => {
   const { getAccessTokenSilently } = useAuth0();
 
   const getToken = async () => {
-    addUser(props);
+    addUser();
     const token = await getAccessTokenSilently();
     return token;
   };
 
-  const addUser = async (props) => {
+  const addUser = async () => {
     var user = {
       Id: props.auth0.user.sub,
       Name: props.auth0.user.name,
