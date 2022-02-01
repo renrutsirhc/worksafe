@@ -97,7 +97,7 @@ class EditEntry extends Component {
     render() {
         return (
             <Form>
-                <Card>
+                <Card className="mt-3">
                     <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">Add New Entry</CardHeader>
                     <Card.Body>
                         <Row sm={1} md={2}>

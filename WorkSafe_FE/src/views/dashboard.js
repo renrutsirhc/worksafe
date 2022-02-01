@@ -101,7 +101,7 @@ class Dashboard extends Component {
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
-                                <h2>Feed</h2>
+                                <h2 className="mt-3">Feed</h2>
                             </div>
                         </div>
                         {entries}
@@ -113,7 +113,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                <Button className="greenButton" variant="light" onClick={this.handleAddEntry}>Add Entry</Button>
                 <h2>No Entries to Display...</h2>
             </div>
         );
