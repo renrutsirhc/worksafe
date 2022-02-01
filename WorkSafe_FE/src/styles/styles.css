@@ -1,13 +1,12 @@
 .editButton {
     display: inline-block;
-    align-items: flex-end;
     justify-content: right;
     float: right;
     padding: 5px 20px;
 }
 
 .greenButton {
-    background-color: #D6E06D;
+    background-color: #D7E16C;
 }
 
     .greenButton:hover {
@@ -15,11 +14,11 @@
     }
 
 .header {
-    background-color: #dededc;
+    background-color: #E1E5DA;
 }
 
 .footer {
-    background-color: #5c5c59;
+    background-color: #272725;
     color: white;
 }
 
