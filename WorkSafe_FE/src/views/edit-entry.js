@@ -187,30 +187,15 @@ class EditEntry extends Component {
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
+            <Row sm={1} md={2}>
               <Form.Group className="mt-6">
                 <Form.Label>Project selector</Form.Label>
-
-                {/* <Select
-                  showSearch
-                  placeholder="Select a project"
-                  optionFilterProp="children"
-                  onChange={this.onChange}
-                  onSearch={this.onSearch}
-                  filterOption={(input, option) =>
-                    option.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="tom">Tom</Option>
-                </Select> */}
                 <Select
                   value={selectedOption}
                   onChange={this.handleProjectChange}
                   options={options}
+                  // multi={true}
+                  // create={true}
                 />
               </Form.Group>
             </Row>
