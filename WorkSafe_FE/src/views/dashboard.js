@@ -97,7 +97,7 @@ class Dashboard extends Component {
         if (this.state.entries.length > 0) {
             return (
                 <div>
-                    <Button variant="success" onClick={this.handleAddEntry}>Add Entry</Button>
+                    <Button className="grow greenButton" variant="light" onClick={this.handleAddEntry}>Add Entry</Button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">

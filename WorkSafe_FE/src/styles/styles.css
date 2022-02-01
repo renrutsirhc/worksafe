@@ -1,0 +1,28 @@
+.editButton {
+    display: inline-block;
+    align-items: flex-end;
+    justify-content: right;
+    float: right;
+    padding: 5px 20px;
+}
+
+.greenButton {
+    background-color: #D6E06D;
+}
+
+    .greenButton:hover {
+        background-color: #E0E88F;
+    }
+
+.header {
+    background-color: #dededc;
+}
+
+.footer {
+    background-color: #5c5c59;
+    color: white;
+}
+
+.whitefooter {
+    background-color: white;
+}
