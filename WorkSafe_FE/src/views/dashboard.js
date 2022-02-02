@@ -4,8 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import Moment from "moment";
-import Select from "react-dropdown-select";
 import { Button } from "react-bootstrap";
 import AddEntry from "./add-entry.js";
 import EntryParent from "../components/entry-parent.js";
@@ -17,7 +15,7 @@ class Dashboard extends Component {
 
     this.state = {
       loading: true,
-      projectLoaded: false,
+      projectsLoaded: false,
       entries: [],
       projects: [],
       addEntry: false,
@@ -37,12 +35,13 @@ class Dashboard extends Component {
   async getProjects() {
     let result = await fetch("/api/projects");
     let data = await result.json();
-    this.setState({ projects: data });
+    this.setState({ projects: data, projectsLoaded: true });
   }
 
   async getEntries() {
     let result = await fetch("/api/users/" + this.state.user.sub + "/entries");
     let data = await result.json();
+    console.log(data);
     this.setState({ entries: data });
     this.setState({ loading: false });
   }
@@ -116,20 +115,21 @@ class Dashboard extends Component {
     if (this.state.addEntry) {
       return (
         <AddEntry
-          userId={this.state.user.sub}
           handleShowAddEntry={this.handleShowAddEntry}
           handleAddEntry={this.handleAddEntry}
+          projects={projects}
+          currentUser={this.state.user}
         />
       );
     }
 
-    if (this.state.entries.length > 0 && this.state.projectLoaded) {
+    if (this.state.entries.length > 0 && this.state.projectsLoaded) {
       return (
         <div>
           <Button
             className="greenButton"
             variant="light"
-            onClick={this.handleAddEntry}
+            onClick={this.handleShowAddEntry}
           >
             Add Entry
           </Button>
@@ -150,7 +150,7 @@ class Dashboard extends Component {
         <Button
           className="greenButton"
           variant="light"
-          onClick={this.handleAddEntry}
+          onClick={this.handleShowAddEntry}
         >
           Add Entry
         </Button>

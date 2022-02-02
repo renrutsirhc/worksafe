@@ -25,15 +25,8 @@ class EditEntry extends Component {
     this.handleImpactChange = this.handleImpactChange.bind(this);
     this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
     this.handleProjectChange = this.handleProjectChange.bind(this);
-    // this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  // onChange(selectedProject) {
-  //   this.setState({ selectedProject }, () =>
-  //     console.log(`Option selected:`, this.state.selectedProject)
-  //   );
-  // }
 
   handleTitleChange(event) {
     this.setState((prevState) => {
@@ -137,6 +130,7 @@ class EditEntry extends Component {
   }
 
   feedOptions() {
+    console.log("here");
     var options = this.props.projects.map((project) => {
       return {
         value: project.Id,
@@ -149,11 +143,7 @@ class EditEntry extends Component {
 
   render() {
     const placeHolderOption = this.state.Entry.Project.Title;
-
-    // var options = this.feedOptions();
-    //   { value: "strawberry", label: "Strawberry" },
-    //   { value: "vanilla", label: "Vanilla" },
-    // ];
+    const projectsOptions = this.feedOptions();
 
     return (
       <Form>
@@ -191,7 +181,8 @@ class EditEntry extends Component {
                 <Select
                   placeholder={placeHolderOption}
                   onChange={this.handleProjectChange}
-                  options={this.feedOptions}
+                  options={projectsOptions}
+                  backspaceDelete={false}
                   // multi={true}
                   // create={true}
                 />
