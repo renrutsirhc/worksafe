@@ -23,7 +23,6 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-@import "~antd/dist/antd.css";
 
 .App-link {
   color: #61dafb;
