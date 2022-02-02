@@ -242,7 +242,6 @@ class EditEntry extends Component {
                   />
                 </Form.Group>
               </Col>
-              onChange
             </Row>
             <Row>
               <Form.Group className="mt-3">
