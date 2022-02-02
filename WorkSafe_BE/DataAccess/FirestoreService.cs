@@ -271,7 +271,7 @@ namespace WorkSafe_BE.DataAccess
             };
 
 
-            if (entry.Project != null)
+            if (!entry.Project.Id.Equals(""))
             {
                 entryDictionary.Add("ProjectId", entry.Project.Id);
                 DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(userDocRef.Id);
@@ -347,7 +347,7 @@ namespace WorkSafe_BE.DataAccess
                 { "Tags", entry.Tags },
             };
 
-            if (entry.Project != null)
+            if (!entry.Project.Id.Equals(""))
             {
                 entryDictionary.Add("ProjectId", entry.Project.Id);
                 DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(entry.Id);
