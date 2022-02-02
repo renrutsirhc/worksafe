@@ -81,7 +81,7 @@ class EditEntry extends Component {
             body: JSON.stringify(this.state.Entry)
         }
 
-        var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries/" + this.props.entry.Id
+        var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries/" + this.state.Entry.Id
         var response = await fetch(url, options)
 
         var result = await response.json()
