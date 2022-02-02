@@ -408,5 +408,76 @@ namespace WorkSafe_BE.DataAccess
             }
         }
 
+
+        //Tags
+
+        /// <summary>
+        /// Gets a list of all the tags currenlty in the database
+        /// </summary>
+        /// <returns>A List of the tags in the databse</returns>
+        public async Task<List<string>> GetTags()
+        {
+            var output = new List<string>();
+            CollectionReference usersRef = _db.Collection("Tags");
+            QuerySnapshot snapshot = await usersRef.GetSnapshotAsync();
+            foreach (DocumentSnapshot document in snapshot.Documents)
+            {
+                output.Add(document.Id);
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Adds a list of tags to the database
+        /// </summary>
+        /// <param name="tags">The list of tags to add</param>
+        /// <returns>???</returns>
+        public async Task<List<string>> AddTags(List<string> tags)
+        {
+            var output = new List<string>();
+            foreach(var tag in tags)
+            {
+                DocumentReference docRef = _db.Collection("Tags").Document(tag);
+                Dictionary<string, object> tagDictionary = new Dictionary<string, object>
+                {
+                };
+
+                await docRef.SetAsync(tagDictionary);
+
+                //some kind of check here to make sure that the tags was added?
+                output.Add(tag);
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Updates a tag in the database
+        /// </summary>
+        /// <param name="oldTag"></param>
+        /// <param name="newTag"></param>
+        /// <returns></returns>
+        public async Task<string> UpdateTag(string oldTag, string newTag)
+        {
+            await DeleteTag(oldTag);
+
+            List<string> tags = new List<string>();
+            tags.Add(newTag);
+
+            var result = await AddTags(tags);
+            return result.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Deletes a tag from the database.
+        /// </summary>
+        /// <param name="tag">the tag to delete</param>
+        /// <returns>The tag that was deleted</returns>
+        public async Task<string> DeleteTag(string tag)
+        {
+            DocumentReference docRef = _db.Collection("Tags").Document(tag);
+            await docRef.DeleteAsync();
+            return docRef.Id;
+        }
+
     }
 }
