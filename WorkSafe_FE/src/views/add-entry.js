@@ -49,6 +49,7 @@ class AddEntry extends Component {
     this.handleImpactChange = this.handleImpactChange.bind(this);
     this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
     this.handleProjectChange = this.handleProjectChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -142,7 +143,7 @@ class AddEntry extends Component {
     return options;
   }
 
-  handleTagChange() {}
+  handleTagChange(event) {}
 
   feedTagsOptions() {
     var options = this.props.tags.map((tag) => {
@@ -315,7 +316,10 @@ class AddEntry extends Component {
                 <Form.Label>Tag</Form.Label>
                 <Select
                   placeholder={placeHolderOption}
-                  onChange={this.handleTagChange}
+                  onChange={(values) => {
+                    this.setValues(values);
+                    console.log(values);
+                  }}
                   options={tagsOptions}
                   clearable={true}
                   dropdownHandle={false}
