@@ -115,7 +115,7 @@ namespace WorkSafe_Tests
             var service = new FirestoreService();
             var entries = service.GetEntries("Unit Test User ID", TopCollection.Users).Result;
             Assert.IsNotNull(entries);
-            var result = entries.Where(x => x.Id == "hoewkvKPfUGg5xRDOAuO").FirstOrDefault();
+            var result = entries.Where(x => x.Id == "YmKyaI373sGgzyrxXPMp").FirstOrDefault();
             Assert.IsNotNull(result);
 
             var author = GenerateUser();
@@ -139,7 +139,7 @@ namespace WorkSafe_Tests
             var service = new FirestoreService();
             var entries = service.GetEntries("xJcONkXPANC1452gfEho", TopCollection.Projects).Result;
             Assert.IsNotNull(entries);
-            var result = entries.Where(x => x.Id == "hoewkvKPfUGg5xRDOAuO").FirstOrDefault();
+            var result = entries.Where(x => x.Id == "YmKyaI373sGgzyrxXPMp").FirstOrDefault();
             Assert.IsNotNull(result);
 
             var author = GenerateUser();

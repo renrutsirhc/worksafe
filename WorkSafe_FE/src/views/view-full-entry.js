@@ -15,9 +15,9 @@ class ViewFullEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <Card.Header>
+                    <Card.Header className="header" as="h4">
                         {this.props.entry.Title}
-                        <div className="EditButton">
+                        <div className="editButton">
                             <Button variant="light" onClick={this.props.setEditing}><FontAwesomeIcon icon={faPenToSquare} /></Button>
                         </div>
                     </Card.Header>
@@ -33,13 +33,13 @@ class ViewFullEntry extends Component {
                         <Card.Title>Learning</Card.Title>
                         <Card.Text>{this.props.entry.Learning}</Card.Text>
                         <Card.Title>Mindset</Card.Title>
-                        <Card.Text>{this.props.entry.Mindset}</Card.Text>
+                        <Card.Text>{this.props.entry.MindSet}</Card.Text>
                         <Card.Title>Impact</Card.Title>
                         <Card.Text>{this.props.entry.Impact}</Card.Text>
                         <Card.Title>Next Steps</Card.Title>
                         <Card.Text>{this.props.entry.NextSteps}</Card.Text>
                     </Card.Body>
-                    <Card.Footer style={{ backgroundColor: "#fff3e0" }} as="h6">
+                    <Card.Footer className="footer" as="h6">
                         Last Updated <Moment format="HH:MM, D MMM YYYY" withTitle>{this.props.entry.TimeStamp}</Moment> by {this.props.entry.Author.Name}
                     </Card.Footer>
                 </Card>

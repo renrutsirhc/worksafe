@@ -305,7 +305,8 @@ namespace WorkSafe_BE.DataAccess
         {
             var output = new List<EntryModel>();
             CollectionReference entriesRef = _db.Collection(topCollection.ToString()).Document(id).Collection("Entries");
-            QuerySnapshot snapshot = await entriesRef.GetSnapshotAsync();
+            Query query = entriesRef.OrderByDescending("TimeStamp");
+            QuerySnapshot snapshot = await query.GetSnapshotAsync();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();

@@ -4,8 +4,8 @@ import React from "react";
 
 const MainNav = () => {
   // const { isAuthenticated } = useAuth0();
-  return(
-  <div className="navbar-nav mr-auto">
+    return (
+        <div className="navbar-nav mr-auto">
     <NavLink
       to="/"
       exact

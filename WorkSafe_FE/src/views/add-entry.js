@@ -90,26 +90,36 @@ class AddEntry extends Component {
 
     async handleSubmit(event) {
         event.preventDefault()
+
+
+        var entry = this.state.Entry;
         var options = {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.Entry)
+            body: JSON.stringify(entry)
         }
 
         var url = "https://localhost:7001/api/users/" + this.state.Entry.Author.Id + "/entries"
         var response = await fetch(url, options)
+        if (response.ok) {
+            var result = await response.json()
+            console.log(result)
+            this.props.handleAddEntry(entry);
+            this.props.handleShowAddEntry();
+        } else {
+            //show error
+        }
 
-        var result = await response.json()
-        console.log(result)
+
     }
 
     render() {
         return (
             <Form>
                 <Card>
-                    <CardHeader>Add New Entry</CardHeader>
+                    <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">Add New Entry</CardHeader>
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
@@ -168,8 +178,8 @@ class AddEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <Card.Footer>
-                        <Button variant="success" onClick={this.handleSubmit}>
+                    <Card.Footer className="text-white" style={{ backgroundColor: "white" }} as="h6">
+                        <Button className="grow greenButton" variant="light" onClick={this.handleSubmit}>
                             Add entry
                         </Button>
                     </Card.Footer>
