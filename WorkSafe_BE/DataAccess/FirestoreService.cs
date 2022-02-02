@@ -437,7 +437,7 @@ namespace WorkSafe_BE.DataAccess
             var output = new List<string>();
             foreach(var tag in tags)
             {
-                DocumentReference docRef = _db.Collection("Users").Document(tag);
+                DocumentReference docRef = _db.Collection("Tags").Document(tag);
                 Dictionary<string, object> tagDictionary = new Dictionary<string, object>
                 {
                 };

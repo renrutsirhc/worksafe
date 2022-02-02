@@ -157,6 +157,61 @@ namespace WorkSafe_Tests
             entry.Tags.ShouldDeepEqual(result.Tags);
         }
 
+
+        [TestMethod]
+        public void TestGetTags()
+        {
+            var service = new FirestoreService();
+            var tags = service.GetTags().Result;
+            Assert.IsNotNull(tags);
+            var tag = tags.Where(x => x == "tag1");
+            Assert.IsNotNull(tag);
+        }
+
+        [TestMethod]
+        public void TestAddTags()
+        {
+            var service = new FirestoreService();
+            var tagsToAdd = new List<string> { "unitTag1", "unitTag2", "unitTag3" };
+            var tagsAdded = service.AddTags(tagsToAdd).Result;
+            Assert.IsNotNull(tagsAdded);
+            tagsAdded.ShouldDeepEqual(tagsToAdd);
+        }
+
+        [TestMethod]
+        public void TestUpdateTag()
+        {
+            var service = new FirestoreService();
+            var result = service.AddTags(new List<string> { "updateTag" }).Result;
+            var tagsBeforeUpdate = service.GetTags().Result;
+            var updatedTag = service.UpdateTag("updateTag","tagUpdated").Result;
+            var tagsAfterUpdate = service.GetTags().Result;
+
+            Assert.IsTrue(tagsBeforeUpdate.Contains("updateTag"));
+            Assert.IsFalse(tagsAfterUpdate.Contains("updateTag"));
+            Assert.AreEqual("tagUpdated", updatedTag);
+            Assert.IsTrue(tagsAfterUpdate.Contains("tagUpdated"));
+        }
+
+        [TestMethod]
+        public void TestDeleteTag()
+        {
+            var service = new FirestoreService();
+            var result = service.AddTags(new List<string> { "deleteTag" }).Result;
+            var tagsBeforeDelete = service.GetTags().Result;
+            var deletedTag = service.DeleteTag("deleteTag").Result;
+            Console.WriteLine(deletedTag);
+            var tagsAfterDelete = service.GetTags().Result;
+
+            Assert.IsTrue(tagsBeforeDelete.Contains("deleteTag"));
+            Assert.IsFalse(tagsAfterDelete.Contains("deleteTag"));
+            Assert.AreEqual("deleteTag", deletedTag);
+        }
+
+
+
+
+
         private UserModel GenerateUser()
         {
             var user = new UserModel("Unit Test User ID");
