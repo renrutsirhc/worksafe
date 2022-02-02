@@ -97,8 +97,8 @@ class EditEntry extends Component {
     render() {
         return (
             <Form>
-                <Card>
-                    <CardHeader>Add New Entry</CardHeader>
+                <Card className="mt-3">
+                    <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">Add New Entry</CardHeader>
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
@@ -157,8 +157,8 @@ class EditEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <Card.Footer>
-                        <Button variant="success" onClick={this.handleSubmit}>
+                    <Card.Footer className="whitefooter" as="h6">
+                        <Button variant="light" className="grow greenButton" onClick={this.handleSubmit}>
                             Save Changes
                         </Button>
                     </Card.Footer>
