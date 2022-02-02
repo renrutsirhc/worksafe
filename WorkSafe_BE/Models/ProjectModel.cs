@@ -14,13 +14,16 @@ namespace WorkSafe_BE.Models
             _id = id;
         }
 
-        public ProjectModel(string id, Dictionary<string, object> documentDictionary, List<UserModel> collaborators) : this(id)
+        public ProjectModel(string id, Dictionary<string, object> documentDictionary, UserModel owner, UserModel lastUpdatedBy) : this(id)
         {
             _title = (string)documentDictionary["Title"];
             _description = (string)documentDictionary["Description"];
+            _projectGoal = (string)documentDictionary["ProjectGoal"];
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
-            _collaborators = collaborators;
-            _ownerId = (string)documentDictionary["OwnerId"];
+            _creationTime = ((Timestamp)documentDictionary["CreationTime"]).ToDateTime();
+            _pillars = (Dictionary<string, bool>)documentDictionary["Pillars"];
+            _owner = owner;
+            _lastUpdatedBy = lastUpdatedBy;
         }
 
         private string _id = "";
@@ -31,14 +34,6 @@ namespace WorkSafe_BE.Models
             set { _id = value; }
         }
 
-        private string _description = "";
-
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; }
-        }
-
         private string _title = "";
 
         public string Title
@@ -47,6 +42,38 @@ namespace WorkSafe_BE.Models
             set { _title = value; }
         }
 
+        private string _description = "";
+
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
+
+        private string _projectGoal;
+
+        public string ProjectGoal
+        {
+            get { return _projectGoal; }
+            set { _projectGoal = value; }
+        }
+
+        private Dictionary<string, bool> _pillars = new Dictionary<string, bool> {
+            { "Embedding", false},
+            { "Resources", false },
+            { "Needs", false },
+            { "Leadership", false},
+            { "Connection", false },
+        };
+
+        public Dictionary<string, bool> Pillars
+        {
+            get { return _pillars; }
+            set { _pillars = value; }
+        }
+
+
+        //this field is for the last time the project was updated
         private DateTime _timeStamp = DateTime.UtcNow;
 
         public DateTime TimeStamp
@@ -55,22 +82,30 @@ namespace WorkSafe_BE.Models
             set { _timeStamp = value; }
         }
 
-        private string _ownerId="";
+        private DateTime _creationTime = DateTime.UtcNow;
 
-        public string OwnerId
+        public DateTime CreationTime
         {
-            get { return _ownerId; }
-            set { _ownerId = value; }
+            get { return _creationTime; }
+            set { _creationTime = value; }
         }
 
-        private List<UserModel> _collaborators = new List<UserModel>();
 
-        public List<UserModel> Collaborators
+        private UserModel _owner;
+
+        public UserModel Owner
         {
-            get { return _collaborators; }
-            set { _collaborators = value; }
+            get { return _owner; }
+            set { _owner = value; }
         }
 
+        private UserModel _lastUpdatedBy;
+
+        public UserModel LastUpdatedBy
+        {
+            get { return _lastUpdatedBy; }
+            set { _lastUpdatedBy = value; }
+        }
 
 
     }
