@@ -16,8 +16,6 @@ class EditEntry extends Component {
     super(props);
     this.state = {
       Entry: this.props.entry,
-      selectedProject: null,
-      // {projectID1: "Name1", projectID2:"Name2"}
     };
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -27,15 +25,15 @@ class EditEntry extends Component {
     this.handleImpactChange = this.handleImpactChange.bind(this);
     this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
     this.handleProjectChange = this.handleProjectChange.bind(this);
-    this.onChange = this.onChange.bind(this);
+    // this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onChange(selectedProject) {
-    this.setState({ selectedProject }, () =>
-      console.log(`Option selected:`, this.state.selectedProject)
-    );
-  }
+  // onChange(selectedProject) {
+  //   this.setState({ selectedProject }, () =>
+  //     console.log(`Option selected:`, this.state.selectedProject)
+  //   );
+  // }
 
   handleTitleChange(event) {
     this.setState((prevState) => {
@@ -49,8 +47,10 @@ class EditEntry extends Component {
   handleProjectChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
+      console.log("here");
+      console.log(event[0]);
+      console.log("here");
       Entry.Project = this.getProject(event[0].value);
-
       console.log(Entry.Project);
       return { Entry };
     });
@@ -148,11 +148,9 @@ class EditEntry extends Component {
   }
 
   render() {
-    const { selectedOption } = this.state;
+    const placeHolderOption = this.state.Entry.Project.Title;
 
-    var options = this.feedOptions();
-    // var options = [
-    //   { value: "chocolate", label: "Chocolate" },
+    // var options = this.feedOptions();
     //   { value: "strawberry", label: "Strawberry" },
     //   { value: "vanilla", label: "Vanilla" },
     // ];
@@ -188,12 +186,12 @@ class EditEntry extends Component {
               </Col>
             </Row>
             <Row sm={1} md={2}>
-              <Form.Group className="mt-6">
+              <Form.Group className="mt-3">
                 <Form.Label>Project selector</Form.Label>
                 <Select
-                  value={selectedOption}
+                  placeholder={placeHolderOption}
                   onChange={this.handleProjectChange}
-                  options={options}
+                  options={this.feedOptions}
                   // multi={true}
                   // create={true}
                 />
@@ -253,6 +251,7 @@ class EditEntry extends Component {
                   />
                 </Form.Group>
               </Col>
+              onChange
             </Row>
             <Row>
               <Form.Group className="mt-3">

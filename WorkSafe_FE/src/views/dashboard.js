@@ -95,7 +95,7 @@ class Dashboard extends Component {
       return <AddEntry userId={this.state.user.sub} />;
     }
 
-    if (this.state.entries.length > 0 && this.state.projectsLoaded == true) {
+    if (this.state.entries.length > 0 && this.state.projectsLoaded) {
       return (
         <div>
           <Button variant="success" onClick={this.handleAddEntry}>
