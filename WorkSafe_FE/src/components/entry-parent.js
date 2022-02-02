@@ -14,19 +14,17 @@ class EntryParent extends Component {
     this.setExpanded = this.setExpanded.bind(this);
   }
 
-    setEditing() {
-        if (this.state.Editing) {
-            this.setState({
-                Editing: false,
-                Expanded: true,
-            })
-        }
-        else {
-            this.setState({
-                Editing: true,
-                Expanded: true,
-            })
-        }
+  setEditing() {
+    if (this.state.Editing) {
+      this.setState({
+        Editing: false,
+        Expanded: true,
+      });
+    } else {
+      this.setState({
+        Editing: true,
+        Expanded: true,
+      });
     }
   }
 
