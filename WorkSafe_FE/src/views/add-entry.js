@@ -215,7 +215,7 @@ class AddEntry extends Component {
             </Row>
             <Row sm={1} md={2}>
               <Form.Group className="mt-3">
-                <Form.Label>Project selector</Form.Label>
+                <Form.Label>Project</Form.Label>
                 <Select
                   placeholder={placeHolderOption}
                   onChange={this.handleProjectChange}
