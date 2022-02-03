@@ -12,7 +12,25 @@ const MainNav = () => {
       className="nav-link"
       activeClassName="router-link-exact-active"
     >
-      Dashboard
+    Dashboard
+    </NavLink>
+
+    <NavLink
+        to="/project"
+        exact
+        className="nav-link"
+        activeClassName="router-link-exact-active"
+    >
+    Project
+    </NavLink>
+
+    <NavLink
+        to="/profile"
+        exact
+        className="nav-link"
+        activeClassName="router-link-exact-active"
+    >
+        Profile
     </NavLink>
     
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { NavBar, Footer, Loading } from "./components";
-import { Home, Profile, ExternalApi, Login } from "./views";
+import { Home, Profile, Project, ExternalApi, Login } from "./views";
 
 import { withAuth0 } from "@auth0/auth0-react";
 import ProtectedRoute from "./auth/protected-route";
@@ -43,6 +43,7 @@ class App extends Component {
                 <div className="container flex-grow-1">
                     <div className="mt-5">
                         <Switch>
+                            <ProtectedRoute path="/project" component={Project} />
                             <ProtectedRoute path="/profile" component={Profile} />
                             <ProtectedRoute path="/external-api" component={ExternalApi} />
                             <ProtectedRoute path="/" component={Home} />
