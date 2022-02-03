@@ -21,7 +21,11 @@ namespace WorkSafe_BE.Models
             _projectGoal = (string)documentDictionary["ProjectGoal"];
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
             _creationTime = ((Timestamp)documentDictionary["CreationTime"]).ToDateTime();
-            _pillars = (Dictionary<string, bool>)documentDictionary["Pillars"];
+            _pillarConnection = (bool)documentDictionary["PillarConnection"];
+            _pillarEmbedding = (bool)documentDictionary["PillarEmbedding"];
+            _pillarLeadership = (bool)documentDictionary["PillarLeadership"];
+            _pillarNeeds = (bool)documentDictionary["PillarNeeds"];
+            _pillarResources = (bool)documentDictionary["PillarResources"];
             _owner = owner;
             _lastUpdatedBy = lastUpdatedBy;
         }
@@ -58,19 +62,47 @@ namespace WorkSafe_BE.Models
             set { _projectGoal = value; }
         }
 
-        private Dictionary<string, bool> _pillars = new Dictionary<string, bool> {
-            { "Embedding", false},
-            { "Resources", false },
-            { "Needs", false },
-            { "Leadership", false},
-            { "Connection", false },
-        };
 
-        public Dictionary<string, bool> Pillars
+        private bool _pillarEmbedding;
+
+        public bool PillarEmbedding
         {
-            get { return _pillars; }
-            set { _pillars = value; }
+            get { return _pillarEmbedding; }
+            set { _pillarEmbedding = value; }
         }
+
+        private bool _pillarResources;
+
+        public bool PillarResources
+        {
+            get { return _pillarResources; }
+            set { _pillarResources = value; }
+        }
+
+        private bool _pillarNeeds;
+
+        public bool PillarNeeds
+        {
+            get { return _pillarNeeds; }
+            set { _pillarNeeds = value; }
+        }
+
+        private bool _pillarLeadership;
+
+        public bool PillarLeadership
+        {
+            get { return _pillarLeadership; }
+            set { _pillarLeadership = value; }
+        }
+
+        private bool _pillarConnection;
+
+        public bool PillarConnection
+        {
+            get { return _pillarConnection; }
+            set { _pillarConnection = value; }
+        }
+
 
 
         //this field is for the last time the project was updated
