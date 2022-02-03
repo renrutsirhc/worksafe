@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { Select } from "react-dropdown-select";
 import {
   Button,
@@ -128,7 +131,7 @@ class AddEntry extends Component {
     return null;
   }
 
-  feedOptions() {
+  feedProjectsOptions() {
     var options = this.props.projects.map((project) => {
       return {
         value: project.Id,
@@ -136,6 +139,18 @@ class AddEntry extends Component {
       };
     });
     console.log(options);
+    return options;
+  }
+
+  handleTagChange() {}
+
+  feedTagsOptions() {
+    var options = this.props.tags.map((tag) => {
+      return {
+        value: tag,
+        label: tag,
+      };
+    });
     return options;
   }
 
@@ -167,8 +182,9 @@ class AddEntry extends Component {
   }
 
   render() {
-    const placeHolderOption = this.state.Entry.Project.Title;
-    const projectsOptions = this.feedOptions();
+    const placeHolderOption = "";
+    const projectsOptions = this.feedProjectsOptions();
+    const tagsOptions = this.feedTagsOptions();
 
     return (
       // add a button, call this.props.handleShowAddEntry
@@ -291,6 +307,21 @@ class AddEntry extends Component {
                   value={this.state.Entry.NextSteps}
                   onChange={this.handleNextStepsChange}
                   placeholder="Next steps based on this entry"
+                />
+              </Form.Group>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Tag</Form.Label>
+                <Select
+                  placeholder={placeHolderOption}
+                  onChange={this.handleTagChange}
+                  options={tagsOptions}
+                  clearable={true}
+                  dropdownHandle={false}
+                  multi={true}
+                  create={true}
+                  color="#000000"
                 />
               </Form.Group>
             </Row>
