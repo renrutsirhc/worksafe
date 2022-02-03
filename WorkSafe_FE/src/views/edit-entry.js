@@ -9,6 +9,8 @@ import {
   FormControl,
   Card,
 } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 
 class EditEntry extends Component {
@@ -40,10 +42,14 @@ class EditEntry extends Component {
   handleProjectChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
-      console.log("here");
-      console.log(event[0]);
-      console.log("here");
-      Entry.Project = this.getProject(event[0].value);
+      if (event[0] == undefined) {
+        Entry.Project = {
+          Project: {
+            Id: "",
+            Title: "",
+          },
+        };
+      } else Entry.Project = this.getProject(event[0].value);
       console.log(Entry.Project);
       return { Entry };
     });
@@ -148,7 +154,18 @@ class EditEntry extends Component {
     return (
       <Form>
         <Card>
-          <CardHeader>Add New Entry</CardHeader>
+          <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">
+            Update Entry
+            <div className="editButton">
+              <Button
+                className="grow"
+                variant="light"
+                onClick={this.props.setEditing}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </Button>
+            </div>
+          </CardHeader>
           <Card.Body>
             <Row sm={1} md={2}>
               <Col>
@@ -177,12 +194,14 @@ class EditEntry extends Component {
             </Row>
             <Row sm={1} md={2}>
               <Form.Group className="mt-3">
-                <Form.Label>Project selector</Form.Label>
+                <Form.Label>Project</Form.Label>
                 <Select
                   placeholder={placeHolderOption}
                   onChange={this.handleProjectChange}
                   options={projectsOptions}
                   backspaceDelete={false}
+                  clearable={true}
+                  dropdownHandle={false}
                   // multi={true}
                   // create={true}
                 />
