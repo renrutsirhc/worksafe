@@ -51,33 +51,37 @@ namespace WorkSafe_Tests
         public void TestAddGetProject()
         {
             var service = new FirestoreService();
-            var project = GenerateProject();
+            var owner = GenerateUser();
+            var lastUpdatedBy = GenerateUser();
+            var project = GenerateProject(owner, lastUpdatedBy);
 
             var id = service.AddProject(project).Result;
             var result = service.GetProject(id).Result;
 
-            Assert.IsNotNull(result);            
+            Assert.IsNotNull(result);
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            Assert.AreEqual(project.OwnerId, result.OwnerId);
+            Assert.AreEqual(project.Owner.Id, result.Owner.Id);
             result.TimeStamp.TrimMilliseconds().ShouldDeepEqual(project.TimeStamp.TrimMilliseconds());
         }
 
         [TestMethod]
         public void TestGetProjects()
         {
-            var project = GenerateProject();
+            var owner = GenerateUser();
+            var lastUpdatedBy = GenerateUser();
+            var project = GenerateProject(owner, lastUpdatedBy);
 
             var service = new FirestoreService();
             var projects = service.GetProjects().Result;
             Assert.IsNotNull(projects);
-            var result = projects.Where(x => x.Id == "JV6RduagN681MQYB8umm").FirstOrDefault();
+            var result = projects.Where(x => x.Id == project.Id).FirstOrDefault();
             Assert.IsNotNull(result);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(project.Title, result.Title);
             Assert.AreEqual(project.Description, result.Description);
-            Assert.AreEqual(project.OwnerId, result.OwnerId);
+            Assert.AreEqual(project.Owner.Id, result.Owner.Id);
         }
 
         [TestMethod]
@@ -86,7 +90,9 @@ namespace WorkSafe_Tests
             var service = new FirestoreService();
 
             var author = GenerateUser();
-            var project = GenerateProject();
+            var owner = GenerateUser();
+            var lastUpdatedBy = GenerateUser();
+            var project = GenerateProject(owner, lastUpdatedBy);
             var entry = GenerateEntry(author, project);
 
             var entryId = service.AddEntry(entry).Result;
@@ -95,7 +101,7 @@ namespace WorkSafe_Tests
             var result = service.GetEntry(entryId, author.Id, TopCollection.Users).Result;
 
             Assert.AreEqual(author.Id, result.Author.Id);
-            Assert.AreEqual(entry.Description,result.Description);
+            Assert.AreEqual(entry.Description, result.Description);
             entry.Files.ShouldDeepEqual(result.Files);
             Assert.AreEqual(entry.Impact, result.Impact);
             Assert.AreEqual(entry.Learning, result.Learning);
@@ -119,7 +125,9 @@ namespace WorkSafe_Tests
             Assert.IsNotNull(result);
 
             var author = GenerateUser();
-            var project = GenerateProject();
+            var owner = GenerateUser();
+            var lastUpdatedBy = GenerateUser();
+            var project = GenerateProject(owner, lastUpdatedBy);
             var entry = GenerateEntry(author, project);
 
             Assert.AreEqual(author.Id, result.Author.Id);
@@ -137,13 +145,15 @@ namespace WorkSafe_Tests
         public void TestGetProjectEntries()
         {
             var service = new FirestoreService();
-            var entries = service.GetEntries("xJcONkXPANC1452gfEho", TopCollection.Projects).Result;
+            var entries = service.GetEntries("1XZcq5kZCyDLP5HzlYDA", TopCollection.Projects).Result;
             Assert.IsNotNull(entries);
-            var result = entries.Where(x => x.Id == "YmKyaI373sGgzyrxXPMp").FirstOrDefault();
+            var result = entries.Where(x => x.Id == "7354RwFd18w32lTwxJpy").FirstOrDefault();
             Assert.IsNotNull(result);
 
             var author = GenerateUser();
-            var project = GenerateProject();
+            var owner = GenerateUser();
+            var lastUpdatedBy = GenerateUser();
+            var project = GenerateProject(owner, lastUpdatedBy);
             var entry = GenerateEntry(author, project);
 
             Assert.AreEqual(author.Id, result.Author.Id);
@@ -184,7 +194,7 @@ namespace WorkSafe_Tests
             var service = new FirestoreService();
             var result = service.AddTags(new List<string> { "updateTag" }).Result;
             var tagsBeforeUpdate = service.GetTags().Result;
-            var updatedTag = service.UpdateTag("updateTag","tagUpdated").Result;
+            var updatedTag = service.UpdateTag("updateTag", "tagUpdated").Result;
             var tagsAfterUpdate = service.GetTags().Result;
 
             Assert.IsTrue(tagsBeforeUpdate.Contains("updateTag"));
@@ -223,14 +233,22 @@ namespace WorkSafe_Tests
             return user;
         }
 
-        private ProjectModel GenerateProject()
+        private ProjectModel GenerateProject(UserModel owner, UserModel lastUpdatedBy)
         {
             var project = new ProjectModel();
-            project.Id = "xJcONkXPANC1452gfEho";
+            project.Id = "1XZcq5kZCyDLP5HzlYDA";
             project.Title = "Unit Test Project Title";
             project.Description = "Unit Test Project Description";
+            project.ProjectGoal = "Unit Test Project Goal";
             project.TimeStamp = DateTime.UtcNow;
-            project.OwnerId = "Unit Test User ID";
+            project.CreationTime = DateTime.UtcNow;
+            project.Owner = owner;
+            project.LastUpdatedBy = lastUpdatedBy;
+            project.PillarConnection = false;
+            project.PillarEmbedding = true;
+            project.PillarLeadership = false;
+            project.PillarNeeds = true;
+            project.PillarResources = false;
 
             return project;
         }
@@ -242,7 +260,7 @@ namespace WorkSafe_Tests
             entry.Project = project;
             entry.Title = "Unit Test Entry Title";
             entry.Description = "Unit Test Entry Description";
-            entry.Files = new List<string>{ "file1.jpg", "file2.jpg", "file3.jpg" };
+            entry.Files = new List<string> { "file1.jpg", "file2.jpg", "file3.jpg" };
             entry.Impact = "Unit Test Entry Impact";
             entry.Learning = "Unit Test Entry Learning";
             entry.MindSet = "Unit Test Entry MindSet";
