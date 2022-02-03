@@ -44,6 +44,8 @@ class EntryParent extends Component {
           projects={this.props.projects}
           setEditing={this.setEditing}
           handleUpdateEntry={this.props.handleUpdateEntry}
+          setEditing={this.setEditing}
+          setExpanded={this.setExpanded}
         />
       );
     }

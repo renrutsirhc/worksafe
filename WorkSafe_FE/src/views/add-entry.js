@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackward } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Select } from "react-dropdown-select";
 import {
   Button,
@@ -61,10 +61,14 @@ class AddEntry extends Component {
   handleProjectChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
-      console.log("here");
-      console.log(event[0]);
-      console.log("here");
-      Entry.Project = this.getProject(event[0].value);
+      if (event[0] == undefined) {
+        Entry.Project = {
+          Project: {
+            Id: "",
+            Title: "",
+          },
+        };
+      } else Entry.Project = this.getProject(event[0].value);
       console.log(Entry.Project);
       return { Entry };
     });
@@ -179,7 +183,7 @@ class AddEntry extends Component {
                 variant="light"
                 onClick={this.props.handleShowAddEntry}
               >
-                <FontAwesomeIcon icon={faBackward} />
+                <FontAwesomeIcon icon={faXmark} />
               </Button>
             </div>
           </CardHeader>
@@ -217,6 +221,8 @@ class AddEntry extends Component {
                   onChange={this.handleProjectChange}
                   options={projectsOptions}
                   backspaceDelete={false}
+                  clearable={true}
+                  dropdownHandle={false}
                   // multi={true}
                   // create={true}
                 />
