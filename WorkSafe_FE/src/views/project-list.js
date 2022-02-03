@@ -31,8 +31,6 @@ class ProjectList extends Component {
 
     async getProjects() {
         let result = await fetch("/api/projects");
-     
-        //let result = await fetch("/api/users/" + this.state.user.sub + " /projects");
         
         let data = await result.json();
         this.setState({ projects: data });
