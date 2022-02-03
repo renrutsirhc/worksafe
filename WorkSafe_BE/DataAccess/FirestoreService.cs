@@ -138,8 +138,17 @@ namespace WorkSafe_BE.DataAccess
             {
                 { "Title", project.Title },
                 { "Description", project.Description },
+                { "ProjectGoal", project.ProjectGoal },
+                { "PillarConnection", project.PillarConnection },
+                { "PillarEmbedding", project.PillarEmbedding },
+                { "PillarLeadership", project.PillarLeadership },
+                { "PillarNeeds", project.PillarNeeds },
+                { "PillarResources", project.PillarResources },
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
-                { "OwnerId", project.OwnerId }
+                { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
+                { "OwnerId", project.Owner.Id },
+                { "LastUpdatedById", project.LastUpdatedBy.Id }
+
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -158,11 +167,16 @@ namespace WorkSafe_BE.DataAccess
             if (document.Exists == true)
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
-                var owner = await GetUser((string)documentDictionary["OwnerId"]);
+                Task<UserModel?> ownerTask = GetUser((string)documentDictionary["OwnerId"]);
+                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["OwnerId"]);
+                await Task.WhenAll(ownerTask, lastUpdatedByTask);
+                var owner = await ownerTask;
+                var lastUpdatedBy = await lastUpdatedByTask;
+
 
                 //replace empty list of collaborators with actual list at some point
                 var collaborators = new List<UserModel>();
-                var project = new ProjectModel(document.Id, documentDictionary, collaborators);
+                var project = new ProjectModel(document.Id, documentDictionary, owner, lastUpdatedBy);
                 return project;
             }
             else
@@ -184,8 +198,12 @@ namespace WorkSafe_BE.DataAccess
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
-                var owner = await GetUser((string)documentDictionary["OwnerId"]);
-                var project = new ProjectModel(document.Id, documentDictionary, new List<UserModel>());
+                Task<UserModel?> ownerTask = GetUser((string)documentDictionary["OwnerId"]);
+                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["OwnerId"]);
+                await Task.WhenAll(ownerTask, lastUpdatedByTask);
+                var owner = await ownerTask;
+                var lastUpdatedBy = await lastUpdatedByTask;
+                var project = new ProjectModel(document.Id, documentDictionary, owner, lastUpdatedBy);
                 output.Add(project);
             }
 
@@ -204,8 +222,16 @@ namespace WorkSafe_BE.DataAccess
             {
                 { "Title", project.Title },
                 { "Description", project.Description },
+                { "ProjectGoal", project.ProjectGoal },
+                { "PillarConnection", project.PillarConnection },
+                { "PillarEmbedding", project.PillarEmbedding },
+                { "PillarLeadership", project.PillarLeadership },
+                { "PillarNeeds", project.PillarNeeds },
+                { "PillarResources", project.PillarResources },
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
-                { "OwnerId", project.OwnerId }
+                { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
+                { "OwnerId", project.Owner.Id },
+                { "LastUpdatedById", project.LastUpdatedBy.Id }
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -268,12 +294,13 @@ namespace WorkSafe_BE.DataAccess
                 { "MindSet", entry.MindSet },
                 { "NextSteps", entry.NextSteps },
                 { "Tags", entry.Tags },
+                {"ProjectId", "" },
             };
 
 
             if (!entry.Project.Id.Equals(""))
             {
-                entryDictionary.Add("ProjectId", entry.Project.Id);
+                entryDictionary["ProjectId"] = entry.Project.Id;
                 DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(userDocRef.Id);
                 //add to the project if a project id has been set that matches a project in the db
                 if (await ProjectExists(entry.Project.Id))
@@ -345,11 +372,12 @@ namespace WorkSafe_BE.DataAccess
                 { "MindSet", entry.MindSet },
                 { "NextSteps", entry.NextSteps },
                 { "Tags", entry.Tags },
+                {"ProjectId", "" },
             };
 
             if (!entry.Project.Id.Equals(""))
             {
-                entryDictionary.Add("ProjectId", entry.Project.Id);
+                entryDictionary["ProjectId"] = entry.Project.Id;
                 DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(entry.Id);
                 //add to the project if a project id has been set that matches a project in the db
                 if (await ProjectExists(entry.Project.Id))
