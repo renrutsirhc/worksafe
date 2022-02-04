@@ -36,7 +36,6 @@ class EditEntry extends Component {
       Entry.Title = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleProjectChange(event) {
@@ -53,7 +52,6 @@ class EditEntry extends Component {
       console.log(Entry.Project);
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleDescriptionChange(event) {
@@ -62,7 +60,6 @@ class EditEntry extends Component {
       Entry.Description = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleLearningChange(event) {
@@ -71,7 +68,6 @@ class EditEntry extends Component {
       Entry.Learning = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleMindsetChange(event) {
@@ -80,7 +76,6 @@ class EditEntry extends Component {
       Entry.MindSet = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleImpactChange(event) {
@@ -89,7 +84,6 @@ class EditEntry extends Component {
       Entry.Impact = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
   handleNextStepsChange(event) {
     this.setState((prevState) => {
@@ -97,7 +91,6 @@ class EditEntry extends Component {
       Entry.NextSteps = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleSubmit = async (event) => {
@@ -135,8 +128,7 @@ class EditEntry extends Component {
     return null;
   }
 
-  feedOptions() {
-    console.log("here");
+  feedProjectsOptions() {
     var options = this.props.projects.map((project) => {
       return {
         value: project.Id,
@@ -147,9 +139,36 @@ class EditEntry extends Component {
     return options;
   }
 
+  handleTagChange(values) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Tags = values.map((tag) => tag.value);
+      return { Entry };
+    });
+  }
+
+  feedTagsOptions() {
+    var options = this.props.tags.map((tag) => {
+      return {
+        label: tag,
+        value: tag,
+      };
+    });
+    return options;
+  }
+
+  entryTagsValue() {
+    var value = this.props.entry.Tags.map((tag) => {
+      return { label: tag, value: tag };
+    });
+    return value;
+  }
+
   render() {
     const placeHolderOption = this.state.Entry.Project.Title;
-    const projectsOptions = this.feedOptions();
+    const projectsOptions = this.feedProjectsOptions();
+    const tagsOptions = this.feedTagsOptions();
+    const tagsValue = this.entryTagsValue();
 
     return (
       <Form>
@@ -202,8 +221,6 @@ class EditEntry extends Component {
                   backspaceDelete={false}
                   clearable={true}
                   dropdownHandle={false}
-                  // multi={true}
-                  // create={true}
                 />
               </Form.Group>
             </Row>
@@ -270,6 +287,21 @@ class EditEntry extends Component {
                   value={this.state.Entry.NextSteps}
                   onChange={this.handleNextStepsChange}
                   placeholder="Next steps based on this entry"
+                />
+              </Form.Group>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Tag</Form.Label>
+                <Select
+                  values={tagsValue}
+                  options={tagsOptions}
+                  onChange={(values) => this.handleTagChange(values)}
+                  clearable={true}
+                  dropdownHandle={false}
+                  multi={true}
+                  create={true}
+                  color="#AAAAAA"
                 />
               </Form.Group>
             </Row>

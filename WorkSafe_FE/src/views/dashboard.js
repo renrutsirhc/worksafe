@@ -18,6 +18,7 @@ class Dashboard extends Component {
       projectsLoaded: false,
       entries: [],
       projects: [],
+      tags: [],
       addEntry: false,
       user: props.auth0.user,
     };
@@ -28,8 +29,15 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.getTags();
     this.getProjects();
     this.getEntries();
+  }
+
+  async getTags() {
+    let result = await fetch("api/tags");
+    let data = await result.json();
+    this.setState({ tags: data });
   }
 
   async getProjects() {
@@ -84,6 +92,7 @@ class Dashboard extends Component {
 
   render() {
     var projects = this.state.projects;
+    var tags = this.state.tags;
     class ProjectOption {
       constructor(label, value) {
         this.label = label;
@@ -100,6 +109,7 @@ class Dashboard extends Component {
         key={entry.Id}
         entry={entry}
         projects={projects}
+        tags={tags}
         handleUpdateEntry={this.handleUpdateEntry}
       />
     ));
@@ -118,6 +128,7 @@ class Dashboard extends Component {
           handleShowAddEntry={this.handleShowAddEntry}
           handleAddEntry={this.handleAddEntry}
           projects={projects}
+          tags={tags}
           currentUser={this.state.user}
         />
       );

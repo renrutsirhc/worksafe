@@ -46,6 +46,7 @@ class AddEntry extends Component {
     this.handleImpactChange = this.handleImpactChange.bind(this);
     this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
     this.handleProjectChange = this.handleProjectChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -55,7 +56,6 @@ class AddEntry extends Component {
       Entry.Title = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleProjectChange(event) {
@@ -72,7 +72,6 @@ class AddEntry extends Component {
       console.log(Entry.Project);
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleDescriptionChange(event) {
@@ -81,7 +80,6 @@ class AddEntry extends Component {
       Entry.Description = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleLearningChange(event) {
@@ -90,7 +88,6 @@ class AddEntry extends Component {
       Entry.Learning = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleMindsetChange(event) {
@@ -99,7 +96,6 @@ class AddEntry extends Component {
       Entry.MindSet = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleImpactChange(event) {
@@ -108,7 +104,6 @@ class AddEntry extends Component {
       Entry.Impact = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
   handleNextStepsChange(event) {
     this.setState((prevState) => {
@@ -116,7 +111,6 @@ class AddEntry extends Component {
       Entry.NextSteps = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   getProject(id) {
@@ -128,14 +122,32 @@ class AddEntry extends Component {
     return null;
   }
 
-  feedOptions() {
+  feedProjectsOptions() {
     var options = this.props.projects.map((project) => {
       return {
         value: project.Id,
         label: project.Title,
       };
     });
-    console.log(options);
+    // console.log(options);
+    return options;
+  }
+
+  handleTagChange(values) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Tags = values.map((tag) => tag.value);
+      return { Entry };
+    });
+  }
+
+  feedTagsOptions() {
+    var options = this.props.tags.map((tag) => {
+      return {
+        label: tag,
+        value: tag,
+      };
+    });
     return options;
   }
 
@@ -167,8 +179,9 @@ class AddEntry extends Component {
   }
 
   render() {
-    const placeHolderOption = this.state.Entry.Project.Title;
-    const projectsOptions = this.feedOptions();
+    const placeHolderOption = "";
+    const projectsOptions = this.feedProjectsOptions();
+    const tagsOptions = this.feedTagsOptions();
 
     return (
       // add a button, call this.props.handleShowAddEntry
@@ -223,8 +236,6 @@ class AddEntry extends Component {
                   backspaceDelete={false}
                   clearable={true}
                   dropdownHandle={false}
-                  // multi={true}
-                  // create={true}
                 />
               </Form.Group>
             </Row>
@@ -291,6 +302,21 @@ class AddEntry extends Component {
                   value={this.state.Entry.NextSteps}
                   onChange={this.handleNextStepsChange}
                   placeholder="Next steps based on this entry"
+                />
+              </Form.Group>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Tag</Form.Label>
+                <Select
+                  placeholder={placeHolderOption}
+                  options={tagsOptions}
+                  onChange={(values) => this.handleTagChange(values)}
+                  clearable={true}
+                  dropdownHandle={false}
+                  multi={true}
+                  create={true}
+                  color="#AAAAAA"
                 />
               </Form.Group>
             </Row>
