@@ -59,7 +59,7 @@ namespace WorkSafe_BE.Models
             set { _author = value; }
         }
 
-        private ProjectModel? _project = null;
+        private ProjectModel? _project = new ProjectModel();
 
         public ProjectModel? Project
         {
