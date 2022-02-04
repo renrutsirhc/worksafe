@@ -6,6 +6,6 @@ import EditEntry from "./edit-entry";
 import ViewEntry from "./view-entry";
 import ViewFullEntry from "./view-full-entry"
 import ViewProject from "./view-project";
-import Project from "./project";
+import Projects from "./projects";
 
-export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, Project};
+export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, Projects};

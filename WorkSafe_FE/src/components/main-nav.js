@@ -16,12 +16,12 @@ const MainNav = () => {
     </NavLink>
 
     <NavLink
-        to="/project"
+        to="/projects"
         exact
         className="nav-link"
         activeClassName="router-link-exact-active"
     >
-    Project
+    Projects
     </NavLink>
 
     <NavLink
