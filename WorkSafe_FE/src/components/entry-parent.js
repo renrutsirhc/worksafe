@@ -42,6 +42,7 @@ class EntryParent extends Component {
         <EditEntry
           entry={this.props.entry}
           projects={this.props.projects}
+          tags={this.props.tags}
           handleUpdateEntry={this.props.handleUpdateEntry}
           setEditing={this.setEditing}
           setExpanded={this.setExpanded}

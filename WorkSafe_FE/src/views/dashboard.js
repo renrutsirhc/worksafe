@@ -109,6 +109,7 @@ class Dashboard extends Component {
         key={entry.Id}
         entry={entry}
         projects={projects}
+        tags={tags}
         handleUpdateEntry={this.handleUpdateEntry}
       />
     ));

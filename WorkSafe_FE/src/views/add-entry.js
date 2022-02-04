@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTriangleExclamation,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Select } from "react-dropdown-select";
 import {
   Button,
@@ -59,7 +56,6 @@ class AddEntry extends Component {
       Entry.Title = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleProjectChange(event) {
@@ -76,7 +72,6 @@ class AddEntry extends Component {
       console.log(Entry.Project);
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleDescriptionChange(event) {
@@ -85,7 +80,6 @@ class AddEntry extends Component {
       Entry.Description = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleLearningChange(event) {
@@ -94,7 +88,6 @@ class AddEntry extends Component {
       Entry.Learning = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleMindsetChange(event) {
@@ -103,7 +96,6 @@ class AddEntry extends Component {
       Entry.MindSet = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   handleImpactChange(event) {
@@ -112,7 +104,6 @@ class AddEntry extends Component {
       Entry.Impact = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
   handleNextStepsChange(event) {
     this.setState((prevState) => {
@@ -120,7 +111,6 @@ class AddEntry extends Component {
       Entry.NextSteps = event.target.value;
       return { Entry };
     });
-    console.log(this.state);
   }
 
   getProject(id) {
@@ -139,17 +129,23 @@ class AddEntry extends Component {
         label: project.Title,
       };
     });
-    console.log(options);
+    // console.log(options);
     return options;
   }
 
-  handleTagChange(event) {}
+  handleTagChange(values) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Tags = values.map((tag) => tag.value);
+      return { Entry };
+    });
+  }
 
   feedTagsOptions() {
     var options = this.props.tags.map((tag) => {
       return {
-        value: tag,
         label: tag,
+        value: tag,
       };
     });
     return options;
@@ -240,8 +236,6 @@ class AddEntry extends Component {
                   backspaceDelete={false}
                   clearable={true}
                   dropdownHandle={false}
-                  // multi={true}
-                  // create={true}
                 />
               </Form.Group>
             </Row>
@@ -316,16 +310,13 @@ class AddEntry extends Component {
                 <Form.Label>Tag</Form.Label>
                 <Select
                   placeholder={placeHolderOption}
-                  onChange={(values) => {
-                    this.setValues(values);
-                    console.log(values);
-                  }}
                   options={tagsOptions}
+                  onChange={(values) => this.handleTagChange(values)}
                   clearable={true}
                   dropdownHandle={false}
                   multi={true}
                   create={true}
-                  color="#000000"
+                  color="#AAAAAA"
                 />
               </Form.Group>
             </Row>

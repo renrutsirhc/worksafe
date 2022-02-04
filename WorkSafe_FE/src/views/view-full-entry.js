@@ -12,6 +12,17 @@ class ViewFullEntry extends Component {
   }
 
   render() {
+    const tagButtons = this.props.entry.Tags.map((tag) => (
+      <Button
+        variant="secondary"
+        size="sm"
+        style={{ marginRight: "10px" }}
+        disabled
+      >
+        {tag}
+      </Button>
+    ));
+
     return (
       <div className="view-entry mt-3">
         <Card className="grow" onClick={this.props.setExpanded}>
@@ -42,6 +53,8 @@ class ViewFullEntry extends Component {
             <Card.Text>{this.props.entry.Impact}</Card.Text>
             <Card.Title>Next Steps</Card.Title>
             <Card.Text>{this.props.entry.NextSteps}</Card.Text>
+            <Card.Title>Tags</Card.Title>
+            {tagButtons}
           </Card.Body>
           <Card.Footer className="footer" as="h6">
             Last Updated{" "}
