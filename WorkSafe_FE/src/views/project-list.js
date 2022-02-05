@@ -7,6 +7,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Button } from "react-bootstrap";
 import ProjectParent from "./project-parent.js"
 import { withAuth0 } from "@auth0/auth0-react";
+import "../styles/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 class ProjectList extends Component {
     constructor(props) {
@@ -22,7 +25,6 @@ class ProjectList extends Component {
         this.handleShowAddProject = this.handleShowAddProject.bind(this);
         this.handleUpdateProject = this.handleUpdateProject.bind(this);
         this.handleAddProject = this.handleAddProject.bind(this);
-
     }
 
     componentDidMount() {
@@ -31,7 +33,7 @@ class ProjectList extends Component {
 
     async getProjects() {
         let result = await fetch("/api/projects");
-        
+
         let data = await result.json();
         this.setState({ projects: data });
         this.setState({ loading: false });
@@ -98,11 +100,14 @@ class ProjectList extends Component {
         if (this.state.projects.length > 0) {
             return (
                 <div>
-                    <Button variant="success" onClick={this.handleShowAddProject}>Add Project</Button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
                                 <h2>Projects</h2>
+                            </div>
+                            <div className="mx-auto"></div>
+                            <div className="ml-auto">
+                                <FontAwesomeIcon icon={faPlusCircle} className="round-button" onClick={this.handleShowAddProject} />
                             </div>
                         </div>
                         {projects}

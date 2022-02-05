@@ -9,9 +9,9 @@
     background-color: #D7E16C;
 }
 
-    .greenButton:hover {
-        background-color: #E0E88F;
-    }
+.greenButton:hover {
+    background-color: #E0E88F;
+}
 
 .header {
     background-color: #E1E5DA;
@@ -24,4 +24,25 @@
 
 .whitefooter {
     background-color: white;
+}
+
+.round-button {
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 80px;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 0 3px gray;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: whitesmoke;
+    border: none;
+    color: black;
+}
+
+.round-button:hover {
+    background-color: white;
+    color: green;
 }
