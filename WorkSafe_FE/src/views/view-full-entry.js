@@ -14,6 +14,7 @@ class ViewFullEntry extends Component {
   render() {
     const tagButtons = this.props.entry.Tags.map((tag) => (
       <Button
+        key={tag}
         variant="secondary"
         size="sm"
         style={{ marginRight: "10px" }}
