@@ -1,4 +1,4 @@
-import { ViewProject } from "../views";
+import { ViewProject, ViewFullProject } from "../views";
 import { Component } from "react";
 
 class ProjectParent extends Component {
@@ -38,6 +38,15 @@ class ProjectParent extends Component {
     }
 
     render() {
+        if (this.state.Expanded) {
+            return (
+                <ViewFullProject
+                    project={this.props.project}
+                    setExpanded={this.setExpanded}
+                    setEditing={this.setEditing}
+                />
+            );
+        }
         return (
             <ViewProject project={this.props.project} setExpanded={this.setExpanded} setEditing={this.setEditing} />
         )

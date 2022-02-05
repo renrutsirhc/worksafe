@@ -46,6 +46,39 @@
         background-color: #A9A8A8;
     }
 
+.pillar-button {
+    background-color: #D7E16C;
+    color: white;
+    margin: 4px;
+    display: flex;
+}
+
+    .pillar-button:hover {
+        background-color: #D7E16C;
+    }
+
+.pillar-button-unselected {
+    background-color: #A9A8A8;
+    color: white;
+    margin: 4px;
+    display: flex;
+}
+
+    .pillar-button-unselected:hover {
+        background-color: #A9A8A8;
+    }
+
+.round-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size:24px;
+}
+
+
 /*cards*/
 .grow {
     transition: all .2s ease-in-out;

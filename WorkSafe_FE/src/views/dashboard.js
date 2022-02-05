@@ -4,7 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import AddEntry from "./add-entry.js";
 import EntryParent from "../components/entry-parent.js";
 import { withAuth0 } from "@auth0/auth0-react";
@@ -161,16 +162,16 @@ class Dashboard extends Component {
         if (this.state.entries.length > 0 && this.state.projectsLoaded) {
             return (
                 <div>
-                    <button
-                        className="button"
-                        onClick={this.handleShowAddEntry}
-                    >
-                        Add Entry
-                    </button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
                                 <h2 className="mt-3">Feed</h2>
+                            </div>
+                            <div className="mx-auto"></div>
+                            <div className="ml-auto">
+                                <button className="button round-button" onClick={this.handleShowAddEntry}>
+                                    <FontAwesomeIcon icon={faPlus} />
+                                </button>
                             </div>
                         </div>
                         {entries}
@@ -181,12 +182,17 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <button
-                    className="button"
-                    onClick={this.handleShowAddEntry}
-                >
-                    Add Entry
-                </button>
+                <div className="d-flex">
+                    <div className="mr-auto">
+                        <h2 className="mt-3">Feed</h2>
+                    </div>
+                    <div className="mx-auto"></div>
+                    <div className="ml-auto">
+                        <button className="button round-button" onClick={this.handleShowAddEntry}>
+                            <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                    </div>
+                </div>
 
                 <h2>No Entries to Display...</h2>
             </div>
