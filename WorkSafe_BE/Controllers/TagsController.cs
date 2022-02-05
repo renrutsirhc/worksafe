@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorkSafe_BE.DataAccess;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,7 +19,7 @@ namespace WorkSafe_BE.Controllers
         // GET: api/<TagsController>
         [HttpGet]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             var tags = await _dbService.GetTags();
@@ -29,7 +30,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<TagsController>
         [HttpPost]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] List<string> tags)
         {
             var addedTags = await _dbService.AddTags(tags);
@@ -46,7 +47,7 @@ namespace WorkSafe_BE.Controllers
         // PUT api/<TagsController>/tag
         [HttpPut("{oldTag}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Put(string oldTag, [FromBody] string newTag)
         {
             var updatedTag = await _dbService.UpdateTag(oldTag, newTag);
@@ -64,7 +65,7 @@ namespace WorkSafe_BE.Controllers
         // DELETE api/<TagsController>/5
         [HttpDelete("{tag}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Delete(string tag)
         {
             var deletedTag = await _dbService.DeleteTag(tag);

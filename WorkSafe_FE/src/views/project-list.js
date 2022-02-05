@@ -30,11 +30,20 @@ class ProjectList extends Component {
     }
 
     async getProjects() {
-        let result = await fetch("/api/projects");
-        
-        let data = await result.json();
-        this.setState({ projects: data });
-        this.setState({ loading: false });
+        const { getAccessTokenSilently } = this.props.auth0;
+        var token = await getAccessTokenSilently();
+        var options = {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        };
+        let response = await fetch("/api/projects", options);
+        if (response.ok) {
+            let result = await response.json();
+            this.setState({ projects: result, loading: false });
+        } else {
+            //error
+        }
     }
 
     handleShowAddProject() {
