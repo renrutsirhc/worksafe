@@ -1,19 +1,15 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Select } from "react-dropdown-select";
 import {
-    Button,
     Form,
-    Alert,
-    FormGroup,
     FormLabel,
     FormControl,
     Row,
     Col,
     Card,
 } from "react-bootstrap";
-import CardHeader from "react-bootstrap/esm/CardHeader";
+import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components";
+
 import { withAuth0 } from "@auth0/auth0-react";
 
 class AddEntry extends Component {
@@ -191,18 +187,7 @@ class AddEntry extends Component {
 
             <Form>
                 <Card>
-                    <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">
-                        Add New Entry
-                        <div className="editButton">
-                            <Button
-                                className="grow"
-                                variant="light"
-                                onClick={this.props.handleShowAddEntry}
-                            >
-                                <FontAwesomeIcon icon={faXmark} />
-                            </Button>
-                        </div>
-                    </CardHeader>
+                    <CardHeaderWithCloseButton title="Add Entry" subTitle="" setEditing={this.props.setEditing} />
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
@@ -255,12 +240,11 @@ class AddEntry extends Component {
                             </Form.Group>
                         </Row>
                         <Row>
-                            <Col xs={5}>
-                                <Form.Group className="mt-3">
-                                    <Form.Label>Upload files</Form.Label>
-                                    <Form.Control type="file" multiple />
-                                </Form.Group>
-                            </Col>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Upload files</Form.Label>
+                                <Form.Control type="file" multiple />
+                            </Form.Group>
+
                         </Row>
                         <Row>
                             <Form.Group className="mt-3">
@@ -325,19 +309,7 @@ class AddEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <Card.Footer
-                        className="text-white"
-                        style={{ backgroundColor: "white" }}
-                        as="h6"
-                    >
-                        <Button
-                            className="grow greenButton"
-                            variant="light"
-                            onClick={this.handleSubmit}
-                        >
-                            Add entry
-                        </Button>
-                    </Card.Footer>
+                    <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name}  handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         );

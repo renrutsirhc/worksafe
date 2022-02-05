@@ -161,13 +161,12 @@ class Dashboard extends Component {
         if (this.state.entries.length > 0 && this.state.projectsLoaded) {
             return (
                 <div>
-                    <Button
-                        className="greenButton"
-                        variant="light"
+                    <button
+                        className="button"
                         onClick={this.handleShowAddEntry}
                     >
                         Add Entry
-                    </Button>
+                    </button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
@@ -182,13 +181,12 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <Button
-                    className="greenButton"
-                    variant="light"
+                <button
+                    className="button"
                     onClick={this.handleShowAddEntry}
                 >
                     Add Entry
-                </Button>
+                </button>
 
                 <h2>No Entries to Display...</h2>
             </div>

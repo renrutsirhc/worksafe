@@ -1,21 +1,121 @@
-.editButton {
-    display: inline-block;
-    justify-content: right;
-    float: right;
-    padding: 5px 20px;
-}
-
-.greenButton {
+/*buttons*/
+.button {
     background-color: #D7E16C;
+    font-family: Verdana;
+    font-weight: 700;
+    color: white;
+    border-style: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
-    .greenButton:hover {
-        background-color: #E0E88F;
+    .button:hover {
+        background-color: #E0E88E;
+        color: white;
     }
 
-.header {
-    background-color: #E1E5DA;
+.logout-button {
+    background-color: #282829;
 }
+    .logout-button:hover {
+        background-color: #7E7E7F;
+    }
+
+
+
+.card-header-button {
+    background-color: #943A7A;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+    .card-header-button:hover {
+        background-color: white;
+        color: #943A7A;
+    }
+
+.tag-button {
+    background-color: #A9A8A8;
+    color:white;
+    margin:4px;
+}
+    .tag-button:disabled {
+        background-color: #A9A8A8;
+    }
+
+/*cards*/
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+    .grow:hover {
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+.card {
+    font-family: Verdana;
+}
+
+.card-header{
+    font-weight: 700;
+    color :white;
+    background-color: #943A7A!important;
+    margin:0px;
+}
+
+.card-title-container {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-bottom: 0px;
+}
+
+.card-title{
+    display:flex;
+    margin-bottom:0px;
+}
+.card-project-title{
+    display:flex;
+}
+
+.card-header-button-container {
+    display: inline-flex;
+    justify-content: right;
+    float: right;
+}
+
+.card-body{
+
+}
+
+.card-footer {
+    background-color: white!important;
+    margin: 0px;
+}
+
+.card-footer-text-container {
+    display: inline-flex;
+    justify-content: left;
+    margin-bottom: 6px;
+}
+
+.card-footer-button-container {
+    display: inline-flex;
+    justify-content: right;
+    float: right;
+}
+
+.card-footer-text {
+    margin: 0px;
+}
+
+
+/*header + footer*/
+
 
 .footer {
     background-color: #272725;

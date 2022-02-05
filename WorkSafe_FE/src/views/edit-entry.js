@@ -3,16 +3,13 @@ import { Select } from "react-dropdown-select";
 import {
     Row,
     Col,
-    Button,
     Form,
     FormLabel,
     FormControl,
     Card,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import CardHeader from "react-bootstrap/esm/CardHeader";
 import { withAuth0 } from "@auth0/auth0-react";
+import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components";
 
 class EditEntry extends Component {
     constructor(props) {
@@ -112,7 +109,7 @@ class EditEntry extends Component {
             this.state.Entry.Author.Id +
             "/entries/" +
             this.state.Entry.Id;
-        var response = await fetch(url, options);       
+        var response = await fetch(url, options);
         if (response.ok) {
             var result = await response.json();
             this.props.handleUpdateEntry();
@@ -176,18 +173,7 @@ class EditEntry extends Component {
         return (
             <Form>
                 <Card>
-                    <CardHeader style={{ backgroundColor: "#D6E06D" }} as="h4">
-                        Update Entry
-                        <div className="editButton">
-                            <Button
-                                className="grow"
-                                variant="light"
-                                onClick={this.props.setEditing}
-                            >
-                                <FontAwesomeIcon icon={faXmark} />
-                            </Button>
-                        </div>
-                    </CardHeader>
+                    <CardHeaderWithCloseButton title={this.state.Entry.Title} subTitle={this.state.Entry.Project.Title} setEditing={this.props.setEditing} />
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
@@ -240,12 +226,10 @@ class EditEntry extends Component {
                             </Form.Group>
                         </Row>
                         <Row>
-                            <Col xs={5}>
-                                <Form.Group className="mt-3">
-                                    <Form.Label>Upload files</Form.Label>
-                                    <Form.Control type="file" multiple />
-                                </Form.Group>
-                            </Col>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Upload files</Form.Label>
+                                <Form.Control className="file-chooser" type="file" multiple />
+                            </Form.Group>
                         </Row>
                         <Row>
                             <Form.Group className="mt-3">
@@ -310,11 +294,7 @@ class EditEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <Card.Footer>
-                        <Button variant="success" onClick={this.handleSubmit}>
-                            Save Changes
-                        </Button>
-                    </Card.Footer>
+                    <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name} handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         );
