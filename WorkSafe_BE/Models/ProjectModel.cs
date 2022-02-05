@@ -14,6 +14,12 @@ namespace WorkSafe_BE.Models
             _id = id;
         }
 
+        public ProjectModel(string id, string title)
+        {
+            _id = id;
+            _title = title;
+        }
+
         public ProjectModel(string id, Dictionary<string, object> documentDictionary, UserModel owner, UserModel lastUpdatedBy) : this(id)
         {
             _title = (string)documentDictionary["Title"];
@@ -54,7 +60,7 @@ namespace WorkSafe_BE.Models
             set { _description = value; }
         }
 
-        private string _projectGoal;
+        private string _projectGoal = "";
 
         public string ProjectGoal
         {
@@ -63,7 +69,7 @@ namespace WorkSafe_BE.Models
         }
 
 
-        private bool _pillarEmbedding;
+        private bool _pillarEmbedding = false;
 
         public bool PillarEmbedding
         {
@@ -71,7 +77,7 @@ namespace WorkSafe_BE.Models
             set { _pillarEmbedding = value; }
         }
 
-        private bool _pillarResources;
+        private bool _pillarResources = false;
 
         public bool PillarResources
         {
@@ -79,7 +85,7 @@ namespace WorkSafe_BE.Models
             set { _pillarResources = value; }
         }
 
-        private bool _pillarNeeds;
+        private bool _pillarNeeds = false;
 
         public bool PillarNeeds
         {
@@ -87,7 +93,7 @@ namespace WorkSafe_BE.Models
             set { _pillarNeeds = value; }
         }
 
-        private bool _pillarLeadership;
+        private bool _pillarLeadership = false;
 
         public bool PillarLeadership
         {
@@ -95,7 +101,7 @@ namespace WorkSafe_BE.Models
             set { _pillarLeadership = value; }
         }
 
-        private bool _pillarConnection;
+        private bool _pillarConnection = false;
 
         public bool PillarConnection
         {
@@ -123,17 +129,17 @@ namespace WorkSafe_BE.Models
         }
 
 
-        private UserModel _owner;
+        private UserModel? _owner = null;
 
-        public UserModel Owner
+        public UserModel? Owner
         {
             get { return _owner; }
             set { _owner = value; }
         }
 
-        private UserModel _lastUpdatedBy;
+        private UserModel? _lastUpdatedBy = null;
 
-        public UserModel LastUpdatedBy
+        public UserModel? LastUpdatedBy
         {
             get { return _lastUpdatedBy; }
             set { _lastUpdatedBy = value; }
