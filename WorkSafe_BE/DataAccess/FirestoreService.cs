@@ -308,6 +308,11 @@ namespace WorkSafe_BE.DataAccess
                     await projDocRef.SetAsync(entryDictionary);
                 }
             }
+
+            if (entry.Tags.Any()) {
+                await AddTags(entry.Tags);
+            }
+            
             await userDocRef.SetAsync(entryDictionary);
             return userDocRef.Id;
         }
@@ -384,6 +389,10 @@ namespace WorkSafe_BE.DataAccess
                 {
                     await projDocRef.SetAsync(entryDictionary);
                 }
+            }
+
+            if (entry.Tags.Any()) {
+                await AddTags(entry.Tags);
             }
 
             await userDocRef.SetAsync(entryDictionary);
