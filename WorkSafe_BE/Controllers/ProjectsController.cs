@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WorkSafe_BE.DataAccess;
 using WorkSafe_BE.Models;
 
@@ -20,7 +21,7 @@ namespace WorkSafe_BE.Controllers
         // GET: api/<ProjectsController>
         [HttpGet]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             var projects = await _dbService.GetProjects();
@@ -37,7 +38,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<ProjectsController>/5
         [HttpGet("{projectid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get(string projectid)
         {
             var project = await _dbService.GetProject(projectid);
@@ -54,7 +55,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<ProjectsController>
         [HttpPost]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] ProjectModel project)
         {
             var projectId = await _dbService.AddProject(project);
@@ -67,7 +68,7 @@ namespace WorkSafe_BE.Controllers
         // PUT api/<ProjectsController>/5
         [HttpPut("{projectid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Put(string projectid, [FromBody] ProjectModel project)
         {
             project.Id = projectid;
@@ -87,7 +88,7 @@ namespace WorkSafe_BE.Controllers
         // DELETE api/<ProjectsController>/5
         [HttpDelete("{projectid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Delete(string projectid)
         {
             var projectId = await _dbService.DeleteProject(projectid);
@@ -106,7 +107,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<UsersController>/{projectid}/entries
         [HttpGet("{projectid}/entries")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetEntries(string projectid)
         {
             var entries = await _dbService.GetEntries(projectid, TopCollection.Projects);
@@ -123,7 +124,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<UsersController>/{projectid}/entries/{entryid}
         [HttpGet("{projectid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetEntries(string projectid, string entryid)
         {
             var entry = await _dbService.GetEntry(entryid, projectid, TopCollection.Projects);
@@ -140,7 +141,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>/{projectid}/entries
         [HttpPost("{projectid}/entries")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
         {
             var entryId = await _dbService.AddEntry(entry);
@@ -157,7 +158,7 @@ namespace WorkSafe_BE.Controllers
         // PUT api/<UsersController>/{projectid}/entries/{entryid}
         [HttpPut("{projectid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public void PutEntry(int projectid, [FromBody] string value)
         {
 
@@ -166,7 +167,7 @@ namespace WorkSafe_BE.Controllers
         // DELETE api/<UsersController>/{projectid}/entries/{entryid}
         [HttpDelete("{projectid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public void DeleteEntry(int projectid)
         {
         }

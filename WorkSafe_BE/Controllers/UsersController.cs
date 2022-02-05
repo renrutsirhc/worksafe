@@ -20,7 +20,7 @@ namespace WorkSafe_BE.Controllers
         // GET: api/<UsersController>
         [HttpGet]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             var users = await _dbService.GetUsers();
@@ -37,7 +37,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<UsersController>/{userid}
         [HttpGet("{userid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Get(string userid)
         {
             var user = await _dbService.GetUser(userid);
@@ -54,7 +54,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>
         [HttpPost]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
             var userId = await _dbService.AddUser(user);
@@ -73,7 +73,7 @@ namespace WorkSafe_BE.Controllers
         // PUT api/<UsersController>/{userid}
         [HttpPut("{userid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Put(string userid, [FromBody] UserModel user)
         {
             user.Id = userid;
@@ -93,7 +93,7 @@ namespace WorkSafe_BE.Controllers
         // DELETE api/<UsersController>/{userid}
         [HttpDelete("{userid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Delete(string userid)
         {
             var userId = await _dbService.DeleteUser(userid);
@@ -112,7 +112,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<UsersController>/{userid}/entries
         [HttpGet("{userid}/entries")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetEntries(string userid)
         {
             var entries = await _dbService.GetEntries(userid, TopCollection.Users);
@@ -129,7 +129,7 @@ namespace WorkSafe_BE.Controllers
         // GET api/<UsersController>/{userid}/entries/{entryid}
         [HttpGet("{userid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetEntries(string userid, string entryid)
         {
             var entry = await _dbService.GetEntry(entryid,userid,TopCollection.Users);
@@ -146,7 +146,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>/{userid}/entries
         [HttpPost("{userid}/entries")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
         {
             var entryId = await _dbService.AddEntry(entry);
@@ -165,7 +165,7 @@ namespace WorkSafe_BE.Controllers
         // PUT api/<UsersController>/{userid}/entries/{entryid}
         [HttpPut("{userid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> PutEntry(string userid, string entryid, [FromBody] EntryModel entry)
         {
             entry.Id = entryid;
@@ -186,7 +186,7 @@ namespace WorkSafe_BE.Controllers
         // DELETE api/<UsersController>/{userid}/entries/{entryid}
         [HttpDelete("{userid}/entries/{entryid}")]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> DeleteEntry(string userid, string entryid)
         {
             var entryId = await _dbService.DeleteEntry(userid, entryid);
