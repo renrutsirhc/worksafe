@@ -281,6 +281,7 @@ namespace WorkSafe_BE.DataAccess
             {
                 return "Error";
             }
+
             DocumentReference userDocRef = _db.Collection("Users").Document(entry.Author.Id).Collection("Entries").Document();
             Dictionary<string, object> entryDictionary = new Dictionary<string, object>
             {
@@ -323,8 +324,17 @@ namespace WorkSafe_BE.DataAccess
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
             Dictionary<string, object> documentDictionary = document.ToDictionary();
             var author = await GetUser((string)documentDictionary["AuthorId"]);
-            var project = await GetProject((string)documentDictionary["ProjectId"]);
-            var entry = new EntryModel(id, documentDictionary, author, project);
+            var projectId = (string)documentDictionary["ProjectId"];
+            EntryModel entry;
+            if (!projectId.Equals(""))
+            {
+                var project = await GetProject(projectId);
+                entry = new EntryModel(document.Id, documentDictionary, author, project);
+            }
+            else
+            {
+                entry = new EntryModel(document.Id, documentDictionary, author);
+            }
             return entry;
         }
 
@@ -338,8 +348,17 @@ namespace WorkSafe_BE.DataAccess
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 var author = await GetUser((string)documentDictionary["AuthorId"]);
-                var project = await GetProject((string)documentDictionary["ProjectId"]);
-                var entry = new EntryModel(document.Id, documentDictionary, author, project);
+                var projectId = (string)documentDictionary["ProjectId"];
+                EntryModel entry;
+                if (!projectId.Equals(""))
+                {
+                    var project = await GetProject(projectId);
+                    entry = new EntryModel(document.Id, documentDictionary, author, project);
+                }
+                else
+                {
+                    entry = new EntryModel(document.Id, documentDictionary, author);
+                }
                 output.Add(entry);
             }
 
