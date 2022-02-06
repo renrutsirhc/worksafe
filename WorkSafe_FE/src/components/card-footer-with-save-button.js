@@ -1,5 +1,7 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import { Card } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 import "../styles/styles.css";
 import Moment from "react-moment";
 import "moment-timezone";
@@ -23,7 +25,7 @@ class CardFooterWithSaveButton extends Component {
                 </div>
                 <div className="card-footer-button-container">
                     <button className="button" onClick={this.props.handleSubmit}>
-                        Save Changes
+                        <FontAwesomeIcon icon={faSave}/>  Save
                     </button>
                 </div>
             </Card.Footer>
