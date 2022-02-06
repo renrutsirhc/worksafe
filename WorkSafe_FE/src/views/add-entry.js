@@ -187,7 +187,7 @@ class AddEntry extends Component {
 
             <Form>
                 <Card>
-                    <CardHeaderWithCloseButton title="Add Entry" subTitle="" setEditing={this.props.setEditing} />
+                    <CardHeaderWithCloseButton title="Add Entry" subTitle="" setEditing={this.props.handleShowAddEntry} />
                     <Card.Body>
                         <Row sm={1} md={2}>
                             <Col>
