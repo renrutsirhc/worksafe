@@ -22,10 +22,13 @@ class Home extends Component {
             TimeStamp: this.props.auth0.user.updated_at,
         }
 
+        const { getAccessTokenSilently } = this.props.auth0;
+        var token = await getAccessTokenSilently();
         var options = {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token
             },
             body: JSON.stringify(user)
         }

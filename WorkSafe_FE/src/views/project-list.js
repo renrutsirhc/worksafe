@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { Button } from "react-bootstrap";
 import ProjectParent from "./project-parent.js"
 import { withAuth0 } from "@auth0/auth0-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 class ProjectList extends Component {
     constructor(props) {
@@ -107,11 +108,16 @@ class ProjectList extends Component {
         if (this.state.projects.length > 0) {
             return (
                 <div>
-                    <Button variant="success" onClick={this.handleShowAddProject}>Add Project</Button>
                     <div className="list-group">
                         <div className="d-flex">
                             <div className="mr-auto">
                                 <h2>Projects</h2>
+                            </div>
+                            <div className="mx-auto"></div>
+                            <div className="ml-auto">
+                                <button className="button round-button" onClick={this.handleShowAddProject}>
+                                    <FontAwesomeIcon icon={faPlus} />
+                                </button>
                             </div>
                         </div>
                         {projects}
@@ -122,7 +128,7 @@ class ProjectList extends Component {
 
         return (
             <div>
-                <Button variant="success" onClick={this.handleShowAddProject}>Add Project</Button>
+                <button className="button" onClick={this.handleShowAddProject}>Add Project</button>
                 <h2>No Entries to Display...</h2>
             </div>
         );
