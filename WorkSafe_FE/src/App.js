@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { NavBar, Footer, Loading } from "./components";
+import { Header, Footer, Loading } from "./components";
 import { Home, Profile, Projects, ExternalApi, Login } from "./views";
 
 import { withAuth0 } from "@auth0/auth0-react";
@@ -39,7 +39,7 @@ class App extends Component {
 
         return (
             <div id="app" className="d-flex flex-column h-100">
-                <NavBar />
+                <Header />
                 <div className="container flex-grow-1">
                     <div className="mt-5">
                         <Switch>

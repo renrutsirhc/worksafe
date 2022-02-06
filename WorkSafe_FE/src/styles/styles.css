@@ -18,12 +18,38 @@
 
 .logout-button {
     background-color: #282829;
+    height:100%;
+    vertical-align:middle;
+    margin-top:auto;
+    margin-bottom:auto;
 }
     .logout-button:hover {
         background-color: #7E7E7F;
     }
 
+.nav-button {
+    font-family: Verdana;
+    font-weight: 700;
+    font-style: normal;
+    text-decoration:none;
+    background-color: white;
+    color: #282829;
+    padding-top: 0.5em!important;
+    padding-bottom: 0.5em!important;
+    padding-left: 1em!important;
+    padding-right: 1em!important;
+}
+    .nav-button:hover {
+        background-color: #7E7E7F;
+        color: white !important;
+    }
 
+.nav-avatar {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+}
 
 .card-header-button {
     background-color: #943A7A;
@@ -148,7 +174,12 @@
 
 
 /*header + footer*/
-
+.header {
+    background-color: white;
+}
+.header-logo{
+    min-width:254px;
+}
 
 .footer {
     background-color: #272725;

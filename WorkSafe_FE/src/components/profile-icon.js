@@ -6,13 +6,18 @@ import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Image from "react-bootstrap/Image";
 
-const ProfileIcon = () => {
+const ProfileIcon = (props) => {
   const { user, isAuthenticated } = useAuth0();
 
   console.log(user);
 
   return isAuthenticated ? (
-    <NavLink to="/profile" exact activeClassName="router-link-exact-active">
+      <NavLink
+          to="/profile"
+          exact
+          activeClassName="router-link-exact-active"
+          className="nav-avatar"
+          onClick={() => props.setExpanded(false)}>
       <div className="avatar-icon">
         <Avatar
           src={

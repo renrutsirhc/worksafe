@@ -7,11 +7,10 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
   return (
     <button
-      className="button logout-button btn-block"
+      className="button logout-button"
       onClick={() => logout({
           returnTo: window.location.origin,
       })}
-      id="qsLogoutBtn"
     >
       Log Out
     </button>
