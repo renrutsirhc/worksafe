@@ -1,7 +1,8 @@
 import React from "react"
 
 const PillarButtonClickable = props => {
-  function toggle() {
+    function toggle(event) {
+        event.preventDefault();
     if (props.checked == true) {
       props.toggleChecked(false)
     } else {

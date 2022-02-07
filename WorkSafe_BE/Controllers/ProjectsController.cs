@@ -55,7 +55,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<ProjectsController>
         [HttpPost]
         [Produces("application/json")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] ProjectModel project)
         {
             var projectId = await _dbService.AddProject(project);

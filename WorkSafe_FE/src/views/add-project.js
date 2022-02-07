@@ -17,8 +17,6 @@ class AddProject extends Component {
             Title: "",
             Description: "",
             ProjectGoal: "",
-            TimeStamp: "",
-            CreationTime: "",
             LastUpdatedBy: {
                 Id: this.props.currentUser.sub,
                 Name: this.props.currentUser.name
@@ -38,6 +36,10 @@ class AddProject extends Component {
         this.handleProjectGoalChange = this.handleProjectGoalChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handlePillarEmbeddingChange = this.handlePillarEmbeddingChange.bind(this)
+        this.handlePillarResourcesChange = this.handlePillarResourcesChange.bind(this)
+        this.handlePillarNeedsChange = this.handlePillarNeedsChange.bind(this)
+        this.handlePillarLeadershipChange = this.handlePillarLeadershipChange.bind(this)
+        this.handlePillarConnectionChange = this.handlePillarConnectionChange.bind(this)
     }
 
     handleTitleChange(event) {
@@ -68,13 +70,43 @@ class AddProject extends Component {
     }
 
     handlePillarEmbeddingChange(checked) {
-        console.log(checked)
         this.setState(prevState => {
             let Project = Object.assign({}, prevState.Project)
             Project.PillarEmbedding = checked
             return { Project }
         })
-        console.log(this.state)
+    }
+
+    handlePillarResourcesChange(checked) {
+        this.setState(prevState => {
+            let Project = Object.assign({}, prevState.Project)
+            Project.PillarResources = checked
+            return { Project }
+        })
+    }
+
+    handlePillarNeedsChange(checked) {
+        this.setState(prevState => {
+            let Project = Object.assign({}, prevState.Project)
+            Project.PillarNeeds = checked
+            return { Project }
+        })
+    }
+
+    handlePillarLeadershipChange(checked) {
+        this.setState(prevState => {
+            let Project = Object.assign({}, prevState.Project)
+            Project.PillarLeadership = checked
+            return { Project }
+        })
+    }
+
+    handlePillarConnectionChange(checked) {
+        this.setState(prevState => {
+            let Project = Object.assign({}, prevState.Project)
+            Project.PillarConnection = checked
+            return { Project }
+        })
     }
 
     async handleSubmit(event) {
@@ -111,13 +143,11 @@ class AddProject extends Component {
                 <Card>
                     <CardHeaderWithCloseButton title="Add Project" subTitle="" setEditing={this.props.handleShowAddProject} />
                     <Card.Body>
-                        <Row sm={1} md={2}>
-                            <Col>
-                                <Form.Group>
-                                    <FormLabel>Title</FormLabel>
-                                    <FormControl type="text" value={this.state.Project.Title} onChange={this.handleTitleChange} placeholder="Project title" />
-                                </Form.Group>
-                            </Col>
+                        <Row>
+                            <Form.Group>
+                                <FormLabel>Title</FormLabel>
+                                <FormControl type="text" value={this.state.Project.Title} onChange={this.handleTitleChange} placeholder="Project title" />
+                            </Form.Group>
                         </Row>
                         <Row>
                             <Form.Group className="mt-3">
@@ -132,13 +162,16 @@ class AddProject extends Component {
                             </Form.Group>
                         </Row>
                         <Row>
-                            <ButtonGroup className="mb-2 d-flex flex-wrap">
-                                <PillarButtonClickable checked={this.state.Project.PillarEmbedding} disabled={false} pillarname={"Embedding"} toggleChecked={this.handlePillarEmbeddingChange} />
-                                <PillarButtonClickable checked={this.state.Project.PillarResources} disabled={false} pillarname={"Resources"} toggleChecked={this.handlePillarEmbeddingChange} />
-                                <PillarButtonClickable checked={this.state.Project.PillarNeeds} disabled={false} pillarname={"Needs"} toggleChecked={this.handlePillarEmbeddingChange} />
-                                <PillarButtonClickable checked={this.state.Project.PillarLeadership} disabled={false} pillarname={"Leadership"} toggleChecked={this.handlePillarEmbeddingChange} />
-                                <PillarButtonClickable checked={this.state.Project.PillarConnection} disabled={false} pillarname={"Connection"} toggleChecked={this.handlePillarEmbeddingChange} />
-                            </ButtonGroup>
+                            <Form.Group className="mt-3">
+                                <Form.Label>Pillars</Form.Label>
+                                <div className="mb-2 d-flex flex-wrap">
+                                    <PillarButtonClickable checked={this.state.Project.PillarEmbedding} disabled={false} pillarname={"Embedding"} toggleChecked={this.handlePillarEmbeddingChange} />
+                                    <PillarButtonClickable checked={this.state.Project.PillarResources} disabled={false} pillarname={"Resources"} toggleChecked={this.handlePillarResourcesChange} />
+                                    <PillarButtonClickable checked={this.state.Project.PillarNeeds} disabled={false} pillarname={"Needs"} toggleChecked={this.handlePillarNeedsChange} />
+                                    <PillarButtonClickable checked={this.state.Project.PillarLeadership} disabled={false} pillarname={"Leadership"} toggleChecked={this.handlePillarLeadershipChange} />
+                                    <PillarButtonClickable checked={this.state.Project.PillarConnection} disabled={false} pillarname={"Connection"} toggleChecked={this.handlePillarConnectionChange} />
+                                </div>
+                            </Form.Group>
                         </Row>
                     </Card.Body>
                     <CardFooterWithSaveButton timeStamp={this.state.Project.TimeStamp} authorName={this.state.Project.Owner.Name} handleSubmit={this.handleSubmit} />
