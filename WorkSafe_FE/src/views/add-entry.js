@@ -1,319 +1,256 @@
-import React, { Component } from "react";
-import { Select } from "react-dropdown-select";
-import {
-    Form,
-    FormLabel,
-    FormControl,
-    Row,
-    Col,
-    Card,
-} from "react-bootstrap";
-import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components";
+import React, { Component } from "react"
+import { Select } from "react-dropdown-select"
+import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap"
+import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components"
 
-import { withAuth0 } from "@auth0/auth0-react";
+import { withAuth0 } from "@auth0/auth0-react"
 
 class AddEntry extends Component {
-    constructor(props) {
-        super(props);
-        var entry = {
-            Author: {
-                Id: this.props.currentUser.sub,
-                Name: this.props.currentUser.name,
-            },
-            Project: {
-                Id: "",
-                Title: "",
-            },
-            Description: "",
-            Files: [],
-            Impact: "",
-            Learning: "",
-            MindSet: "",
-            NextSteps: "",
-            Tags: [],
-        };
-        this.state = {
-            Entry: entry,
-        };
-
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleLearningChange = this.handleLearningChange.bind(this);
-        this.handleMindsetChange = this.handleMindsetChange.bind(this);
-        this.handleImpactChange = this.handleImpactChange.bind(this);
-        this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
-        this.handleProjectChange = this.handleProjectChange.bind(this);
-        this.handleTagChange = this.handleTagChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props)
+    var entry = {
+      Author: {
+        Id: this.props.currentUser.sub,
+        Name: this.props.currentUser.name
+      },
+      Project: {
+        Id: "",
+        Title: ""
+      },
+      Description: "",
+      Files: [],
+      Impact: "",
+      Learning: "",
+      MindSet: "",
+      NextSteps: "",
+      Tags: []
+    }
+    this.state = {
+      Entry: entry
     }
 
-    handleTitleChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Title = event.target.value;
-            return { Entry };
-        });
-    }
+    this.handleTitleChange = this.handleTitleChange.bind(this)
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+    this.handleLearningChange = this.handleLearningChange.bind(this)
+    this.handleMindsetChange = this.handleMindsetChange.bind(this)
+    this.handleImpactChange = this.handleImpactChange.bind(this)
+    this.handleNextStepsChange = this.handleNextStepsChange.bind(this)
+    this.handleProjectChange = this.handleProjectChange.bind(this)
+    this.handleTagChange = this.handleTagChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-    handleProjectChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            if (event[0] == undefined) {
-                Entry.Project = {
-                    Project: {
-                        Id: "",
-                        Title: "",
-                    },
-                };
-            } else Entry.Project = this.getProject(event[0].value);
-            console.log(Entry.Project);
-            return { Entry };
-        });
-    }
+  handleTitleChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.Title = event.target.value
+      return { Entry }
+    })
+  }
 
-    handleDescriptionChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Description = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleLearningChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Learning = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleMindsetChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.MindSet = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleImpactChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Impact = event.target.value;
-            return { Entry };
-        });
-    }
-    handleNextStepsChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.NextSteps = event.target.value;
-            return { Entry };
-        });
-    }
-
-    getProject(id) {
-        for (var i = 0; i < this.props.projects.length; i++) {
-            if (this.props.projects[i].Id == id) {
-                return this.props.projects[i];
-            }
+  handleProjectChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      if (event[0] == undefined) {
+        Entry.Project = {
+          Project: {
+            Id: "",
+            Title: ""
+          }
         }
-        return null;
+      } else Entry.Project = this.getProject(event[0].value)
+      console.log(Entry.Project)
+      return { Entry }
+    })
+  }
+
+  handleDescriptionChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.Description = event.target.value
+      return { Entry }
+    })
+  }
+
+  handleLearningChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.Learning = event.target.value
+      return { Entry }
+    })
+  }
+
+  handleMindsetChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.MindSet = event.target.value
+      return { Entry }
+    })
+  }
+
+  handleImpactChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.Impact = event.target.value
+      return { Entry }
+    })
+  }
+  handleNextStepsChange(event) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.NextSteps = event.target.value
+      return { Entry }
+    })
+  }
+
+  getProject(id) {
+    for (var i = 0; i < this.props.projects.length; i++) {
+      if (this.props.projects[i].Id == id) {
+        return this.props.projects[i]
+      }
+    }
+    return null
+  }
+
+  feedProjectsOptions() {
+    var options = this.props.projects.map(project => {
+      return {
+        value: project.Id,
+        label: project.Title
+      }
+    })
+    // console.log(options);
+    return options
+  }
+
+  handleTagChange(values) {
+    this.setState(prevState => {
+      let Entry = Object.assign({}, prevState.Entry)
+      Entry.Tags = values.map(tag => tag.value)
+      return { Entry }
+    })
+  }
+
+  feedTagsOptions() {
+    var options = this.props.tags.map(tag => {
+      return {
+        label: tag,
+        value: tag
+      }
+    })
+    return options
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault()
+    const { getAccessTokenSilently } = this.props.auth0
+    var token = await getAccessTokenSilently()
+    var entry = this.state.Entry
+    var options = {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify(entry)
     }
 
-    feedProjectsOptions() {
-        var options = this.props.projects.map((project) => {
-            return {
-                value: project.Id,
-                label: project.Title,
-            };
-        });
-        // console.log(options);
-        return options;
+    var url = "/api/users/" + this.state.Entry.Author.Id + "/entries"
+    var response = await fetch(url, options)
+    if (response.ok) {
+      var result = await response.json()
+      console.log(result)
+      this.props.handleAddEntry()
+      this.props.handleShowAddEntry()
+    } else {
+      //show error
     }
+  }
 
-    handleTagChange(values) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Tags = values.map((tag) => tag.value);
-            return { Entry };
-        });
-    }
+  render() {
+    const placeHolderOption = ""
+    const projectsOptions = this.feedProjectsOptions()
+    const tagsOptions = this.feedTagsOptions()
 
-    feedTagsOptions() {
-        var options = this.props.tags.map((tag) => {
-            return {
-                label: tag,
-                value: tag,
-            };
-        });
-        return options;
-    }
+    return (
+      // add a button, call this.props.handleShowAddEntry
 
-    async handleSubmit(event) {
-        event.preventDefault();
-        const { getAccessTokenSilently } = this.props.auth0;
-        var token = await getAccessTokenSilently();
-        var entry = this.state.Entry;
-        var options = {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: 'Bearer ' + token
-            },
-            body: JSON.stringify(entry),
-        };
+      <Form>
+        <Card>
+          <CardHeaderWithCloseButton title="Add Entry" subTitle="" setEditing={this.props.handleShowAddEntry} />
+          <Card.Body>
+            <Row sm={1} md={2}>
+              <Col>
+                <Form.Group>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl type="text" value={this.state.Entry.Title} onChange={this.handleTitleChange} placeholder="Summarise the entry" />
+                </Form.Group>
+              </Col>
 
-        var url =
-            "/api/users/" +
-            this.state.Entry.Author.Id +
-            "/entries";
-        var response = await fetch(url, options);
-        if (response.ok) {
-            var result = await response.json();
-            console.log(result);
-            this.props.handleAddEntry();
-            this.props.handleShowAddEntry();
-        } else {
-            //show error
-        }
-    }
+              <Col md={3}>
+                <Form.Group>
+                  <FormLabel>Date</FormLabel>
+                  <FormControl type="date" value={this.state.Title} onChange={this.handleChange} name="date" />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Project</Form.Label>
+                <Select placeholder={placeHolderOption} onChange={this.handleProjectChange} options={projectsOptions} backspaceDelete={false} clearable={true} dropdownHandle={false} />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" type="text" value={this.state.Entry.Description || ""} onChange={this.handleDescriptionChange} placeholder="Decribe the entry" />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Upload files</Form.Label>
+                <Form.Control type="file" multiple />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Learning</Form.Label>
+                <Form.Control as="textarea" value={this.state.Entry.Learning} onChange={this.handleLearningChange} placeholder="Decribe the learning" />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Mindset</Form.Label>
+                <Form.Control type="text" value={this.state.Entry.Mindset} onChange={this.handleMindsetChange} placeholder="Mind set used" />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group className="mt-3">
+                  <Form.Label>Impact</Form.Label>
+                  <Form.Control as="textarea" value={this.state.Entry.Impact} onChange={this.handleImpactChange} placeholder="Impact of entry" />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Next steps</Form.Label>
+                <Form.Control as="textarea" value={this.state.Entry.NextSteps} onChange={this.handleNextStepsChange} placeholder="Next steps based on this entry" />
+              </Form.Group>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Tag</Form.Label>
+                <Select placeholder={placeHolderOption} options={tagsOptions} onChange={values => this.handleTagChange(values)} clearable={true} dropdownHandle={false} multi={true} create={true} color="#AAAAAA" />
+              </Form.Group>
+            </Row>
+          </Card.Body>
 
-    render() {
-        const placeHolderOption = "";
-        const projectsOptions = this.feedProjectsOptions();
-        const tagsOptions = this.feedTagsOptions();
-
-        return (
-            // add a button, call this.props.handleShowAddEntry
-
-            <Form>
-                <Card>
-                    <CardHeaderWithCloseButton title="Add Entry" subTitle="" setEditing={this.props.handleShowAddEntry} />
-                    <Card.Body>
-                        <Row sm={1} md={2}>
-                            <Col>
-                                <Form.Group>
-                                    <FormLabel>Title</FormLabel>
-                                    <FormControl
-                                        type="text"
-                                        value={this.state.Entry.Title}
-                                        onChange={this.handleTitleChange}
-                                        placeholder="Summarise the entry"
-                                    />
-                                </Form.Group>
-                            </Col>
-
-                            <Col md={3}>
-                                <Form.Group>
-                                    <FormLabel>Date</FormLabel>
-                                    <FormControl
-                                        type="date"
-                                        value={this.state.Title}
-                                        onChange={this.handleChange}
-                                        name="date"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row sm={1} md={2}>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Project</Form.Label>
-                                <Select
-                                    placeholder={placeHolderOption}
-                                    onChange={this.handleProjectChange}
-                                    options={projectsOptions}
-                                    backspaceDelete={false}
-                                    clearable={true}
-                                    dropdownHandle={false}
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    type="text"
-                                    value={this.state.Entry.Description || ""}
-                                    onChange={this.handleDescriptionChange}
-                                    placeholder="Decribe the entry"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Upload files</Form.Label>
-                                <Form.Control type="file" multiple />
-                            </Form.Group>
-
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Learning</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    value={this.state.Entry.Learning}
-                                    onChange={this.handleLearningChange}
-                                    placeholder="Decribe the learning"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Mindset</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={this.state.Entry.Mindset}
-                                    onChange={this.handleMindsetChange}
-                                    placeholder="Mind set used"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mt-3">
-                                    <Form.Label>Impact</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        value={this.state.Entry.Impact}
-                                        onChange={this.handleImpactChange}
-                                        placeholder="Impact of entry"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Next steps</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    value={this.state.Entry.NextSteps}
-                                    onChange={this.handleNextStepsChange}
-                                    placeholder="Next steps based on this entry"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row sm={1} md={2}>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Tag</Form.Label>
-                                <Select
-                                    placeholder={placeHolderOption}
-                                    options={tagsOptions}
-                                    onChange={(values) => this.handleTagChange(values)}
-                                    clearable={true}
-                                    dropdownHandle={false}
-                                    multi={true}
-                                    create={true}
-                                    color="#AAAAAA"
-                                />
-                            </Form.Group>
-                        </Row>
-                    </Card.Body>
-
-                    <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name}  handleSubmit={this.handleSubmit} />
-                </Card>
-            </Form>
-        );
-    }
+          <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name} handleSubmit={this.handleSubmit} />
+        </Card>
+      </Form>
+    )
+  }
 }
 
-export default withAuth0(AddEntry);
+export default withAuth0(AddEntry)
