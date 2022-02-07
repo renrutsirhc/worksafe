@@ -8,5 +8,6 @@ import ViewFullEntry from "./view-full-entry"
 import ViewProject from "./view-project";
 import ViewFullProject from "./view-full-project"
 import Projects from "./projects";
+import Reports from "./reports";
 
-export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects};
+export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects, Reports};
