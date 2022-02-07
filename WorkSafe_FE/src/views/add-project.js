@@ -4,7 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { Button, Form, ButtonGroup, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap"
 import CardHeader from "react-bootstrap/esm/CardHeader"
 import { withAuth0 } from "@auth0/auth0-react"
-import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components"
+import { CardHeaderWithCloseButton, CardFooterWithSaveButton, PillarButtonClickable } from "../components"
 
 class AddProject extends Component {
   constructor(props) {
@@ -22,8 +22,15 @@ class AddProject extends Component {
       ProjectGoal: "",
       TimeStamp: "",
       CreationTime: "",
-      LastUpdatedBy: "",
-      Pillar: ""
+      LastUpdatedBy: {
+        Id: "",
+        Name: ""
+      },
+      PillarEmbedding: false,
+      PillarResources: false,
+      PillarNeeds: false,
+      PillarLeadership: false,
+      PillarConnection: false
     }
     this.state = {
       Project: project
@@ -33,6 +40,7 @@ class AddProject extends Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
     this.handleProjectGoalChange = this.handleProjectGoalChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handlePillarEmbeddingChange = this.handlePillarEmbeddingChange.bind(this)
   }
 
   handleTitleChange(event) {
@@ -57,6 +65,16 @@ class AddProject extends Component {
     this.setState(prevState => {
       let Project = Object.assign({}, prevState.Project)
       Project.ProjectGoal = event.target.value
+      return { Project }
+    })
+    console.log(this.state)
+  }
+
+  handlePillarEmbeddingChange(checked) {
+    console.log(checked)
+    this.setState(prevState => {
+      let Project = Object.assign({}, prevState.Project)
+      Project.PillarEmbedding = checked
       return { Project }
     })
     console.log(this.state)
@@ -117,9 +135,13 @@ class AddProject extends Component {
               </Form.Group>
             </Row>
             <Row>
-              <Form.Group className="mt-3">
-                <Form.Label>Pillars</Form.Label>
-              </Form.Group>
+              <ButtonGroup className="mb-2 d-flex flex-wrap">
+                <PillarButtonClickable checked={this.state.Project.PillarEmbedding} disabled={false} pillarname={"Embedding"} toggleChecked={this.handlePillarEmbeddingChange} />
+                <PillarButtonClickable checked={this.state.Project.PillarResources} disabled={false} pillarname={"Resources"} toggleChecked={this.handlePillarEmbeddingChange} />
+                <PillarButtonClickable checked={this.state.Project.PillarNeeds} disabled={false} pillarname={"Needs"} toggleChecked={this.handlePillarEmbeddingChange} />
+                <PillarButtonClickable checked={this.state.Project.PillarLeadership} disabled={false} pillarname={"Leadership"} toggleChecked={this.handlePillarEmbeddingChange} />
+                <PillarButtonClickable checked={this.state.Project.PillarConnection} disabled={false} pillarname={"Connection"} toggleChecked={this.handlePillarEmbeddingChange} />
+              </ButtonGroup>
             </Row>
           </Card.Body>
           <CardFooterWithSaveButton timeStamp={this.state.Project.TimeStamp} authorName={this.state.Project.Owner.Name} handleSubmit={this.handleSubmit} />

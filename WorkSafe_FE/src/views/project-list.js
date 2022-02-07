@@ -8,7 +8,7 @@ import ProjectParent from "./project-parent.js"
 import { withAuth0 } from "@auth0/auth0-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { AddProject } from "./add-project"
+import { AddProject } from "./"
 
 class ProjectList extends Component {
   constructor(props) {
