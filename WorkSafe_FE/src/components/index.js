@@ -8,5 +8,6 @@ import CardFooter from "./card-footer"
 import CardFooterWithSaveButton from "./card-footer-with-save-button"
 import PillarButtonClickable from "./pillar-button-clickable"
 import PillarButton from "./pillar-button"
+import CardHeaderWithViewEntryButton from "./card-header-with-view-entries-button"
 
-export { Footer, Loading, Header, Highlight, CardHeaderWithEditButton, CardHeaderWithCloseButton, CardFooter, CardFooterWithSaveButton, PillarButton, PillarButtonClickable }
+export { Footer, Loading, Header, Highlight, CardHeaderWithEditButton, CardHeaderWithCloseButton, CardFooter, CardFooterWithSaveButton, PillarButton, PillarButtonClickable, CardHeaderWithViewEntryButton }
