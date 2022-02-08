@@ -89,13 +89,7 @@ class ProjectList extends Component {
   }
 
   render() {
-      var projects = this.state.projects.map(project =>
-          <ProjectParent
-              key={project.Id}
-              project={project}
-              handleUpdateProject={this.handleUpdateProject}
-              handleUpdateSelectedProject={this.handleUpdateSelectedProject}
-          />)
+    var projects = this.state.projects.map(project => <ProjectParent key={project.Id} project={project} handleUpdateProject={this.handleUpdateProject} handleUpdateSelectedProject={this.handleUpdateSelectedProject} />)
 
     if (this.state.loading) {
       return (
@@ -110,7 +104,7 @@ class ProjectList extends Component {
     }
 
     if (this.state.viewProjectEntries) {
-      return <ViewProjectEntries project={this.state.selectedProject} handleShowProjectEntries={this.handleShowProjectEntries} />
+      return <ViewProjectEntries project={this.state.selectedProject} projects={this.state.projects} handleShowProjectEntries={this.handleShowProjectEntries} />
     }
 
     if (this.state.projects.length > 0) {

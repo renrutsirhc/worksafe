@@ -10,8 +10,15 @@ class ViewProjectEntries extends Component {
     super(props)
     this.state = {
       Project: this.props.project,
-      entries: []
+      entries: [],
+      tags: [],
+      projectsLoaded: false
     }
+  }
+
+  componentDidMount() {
+    this.getTags()
+    this.getEntriesByProject()
   }
 
   async getEntriesByProject() {
@@ -22,7 +29,8 @@ class ViewProjectEntries extends Component {
         Authorization: "Bearer " + token
       }
     }
-    let response = await fetch("/api/projects/" + this.state.project.id + "/entries", options)
+    var url = "/api/projects/" + this.state.project.id + "/entries"
+    let response = await fetch(url, options)
     if (response.ok) {
       let result = await response.json()
       this.setState({ projects: result, projectsLoaded: true })
@@ -31,8 +39,25 @@ class ViewProjectEntries extends Component {
     }
   }
 
+  async getTags() {
+    const { getAccessTokenSilently } = this.props.auth0
+    var token = await getAccessTokenSilently()
+    var options = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+    let response = await fetch("api/tags", options)
+    if (response.ok) {
+      let result = await response.json()
+      this.setState({ tags: result })
+    } else {
+      //error
+    }
+  }
+
   render() {
-    var entries = this.state.entries.map(entry => <EntryParent key={entry.Id} entry={entry} projects={projects} tags={tags} handleUpdateEntry={this.handleUpdateEntry} />)
+    var entries = this.state.entries.map(entry => <EntryParent key={entry.Id} entry={entry} projects={this.props.projects} tags={this.state.tags} handleUpdateEntry={this.handleUpdateEntry} />)
 
     if (this.state.entries.length > 0 && this.state.projectsLoaded) {
       return (
@@ -55,7 +80,6 @@ class ViewProjectEntries extends Component {
           <div className="mx-auto"></div>
           <div className="ml-auto"></div>
         </div>
-
         <h2>No Entries to Display...</h2>
       </div>
     )
