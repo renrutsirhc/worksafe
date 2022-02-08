@@ -18,7 +18,7 @@ class CardHeaderWithViewEntryButton extends Component {
             <h6 className="card-project-title">{this.props.subTitle}</h6>
           </div>
           <div className="card-header-button-container">
-            <button className="button grow card-header-button" onClick={this.props.setViewEntries}>
+            <button className="button grow card-header-button" onClick={this.props.handleUpdateSelectedProject}>
               <FontAwesomeIcon icon={faListAlt} />
             </button>
             <button className="button grow card-header-button" onClick={this.props.setEditing}>

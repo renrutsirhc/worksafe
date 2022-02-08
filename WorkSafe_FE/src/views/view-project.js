@@ -7,13 +7,18 @@ import { CardHeaderWithViewEntryButton, CardFooter } from "../components"
 class ViewProject extends Component {
   constructor(props) {
     super(props)
+    this.updateSelectedProject = this.updateSelectedProject.bind(this)
+  }
+
+  updateSelectedProject() {
+    this.props.handleUpdateSelectedProject(this.props.project)
   }
 
   render() {
     return (
       <div className="mt-3">
         <Card className="grow" onClick={this.props.setExpanded}>
-          <CardHeaderWithViewEntryButton title={this.props.project.Title} subTitle={this.props.project.Owner.Name} setEditing={this.props.setEditing} />
+          <CardHeaderWithViewEntryButton title={this.props.project.Title} subTitle={this.props.project.Owner.Name} setEditing={this.props.setEditing} handleUpdateSelectedProject={this.handleUpdateSelectedProject} />
 
           <Card.Body>
             <Card.Text> {this.props.project.Description}</Card.Text>

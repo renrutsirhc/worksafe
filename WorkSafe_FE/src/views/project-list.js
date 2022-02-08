@@ -18,12 +18,16 @@ class ProjectList extends Component {
       loading: true,
       projects: [],
       addProject: false,
-      user: props.auth0.user
+      user: props.auth0.user,
+      viewProjectEntries: false,
+      selectedProject: {}
     }
 
     this.handleShowAddProject = this.handleShowAddProject.bind(this)
     this.handleUpdateProject = this.handleUpdateProject.bind(this)
     this.handleAddProject = this.handleAddProject.bind(this)
+    this.handleShowProjectEntries = this.handleShowProjectEntries.bind(this)
+    this.handleUpdateSelectedProject = this.handleUpdateSelectedProject.bind(this)
   }
 
   componentDidMount() {
@@ -60,18 +64,32 @@ class ProjectList extends Component {
   }
 
   handleUpdateProject(project) {
-    var projects = this.state.projects
-    for (let i = 0; i < entries.length; i++) {
-      if (projects[i].Id == project.Id) {
-        projects[i] = project
-        this.setState({ projects: projects })
-        break
-      }
+    this.getProjects()
+  }
+
+  handleUpdateSelectedProject(project) {
+    this.setState(
+      {
+        selectedProject: project
+      },
+      this.handleShowProjectEntries
+    )
+  }
+
+  handleShowProjectEntries() {
+    if (this.state.viewProjectEntries) {
+      this.setState({
+        viewProjectEntries: false
+      })
+    } else {
+      this.setState({
+        viewProjectEntries: true
+      })
     }
   }
 
   render() {
-    var projects = this.state.projects.map(project => <ProjectParent key={project.Id} project={project} handleUpdateProject={this.handleUpdateProject} />)
+    var projects = this.state.projects.map(project => <ProjectParent key={project.Id} project={project} handleUpdateProject={this.handleUpdateProject} handleUpdateSelectedProject={this.handleUpdateSelectedProject} />)
 
     if (this.state.loading) {
       return (
@@ -83,6 +101,10 @@ class ProjectList extends Component {
 
     if (this.state.addProject) {
       return <AddProject currentUser={this.state.user} handleShowAddProject={this.handleShowAddProject} handleAddProject={this.handleAddProject} />
+    }
+
+    if (this.state.viewProjectEntries) {
+      return <ViewProjectEntries project={this.state.selectedProject} handleShowProjectEntries={this.handleShowProjectEntries} />
     }
 
     if (this.state.projects.length > 0) {
