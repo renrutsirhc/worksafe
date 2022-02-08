@@ -97,7 +97,7 @@ class EditProject extends Component {
         var token = await getAccessTokenSilently()
         var project = this.state.Project
         var options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + token
