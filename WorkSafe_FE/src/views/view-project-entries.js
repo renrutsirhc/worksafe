@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import { Card } from "react-bootstrap"
 import "../styles/styles.css"
-import { CardHeaderWithEditButton, CardFooter } from "../components"
+import { CardHeaderWithEditButton, CardFooter, EntryParent } from "../components"
 import { ViewFullProject } from "../views"
+import { withAuth0 } from "@auth0/auth0-react"
 
 // Display view-project-entries
 class ViewProjectEntries extends Component {
@@ -29,11 +30,11 @@ class ViewProjectEntries extends Component {
         Authorization: "Bearer " + token
       }
     }
-    var url = "/api/projects/" + this.state.project.id + "/entries"
+    var url = "/api/projects/" + this.props.project.Id + "/entries"
     let response = await fetch(url, options)
     if (response.ok) {
       let result = await response.json()
-      this.setState({ projects: result, projectsLoaded: true })
+      this.setState({ entries: result, projectsLoaded: true })
     } else {
       //error
     }
@@ -86,4 +87,4 @@ class ViewProjectEntries extends Component {
   }
 }
 
-export default ViewProjectEntries
+export default withAuth0(ViewProjectEntries)
