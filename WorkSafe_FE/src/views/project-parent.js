@@ -1,4 +1,4 @@
-import { ViewProject, ViewFullProject, EditProject } from "../views";
+import { ViewProject, ViewFullProject, EditProject } from "./";
 import { Component } from "react";
 
 class ProjectParent extends Component {
