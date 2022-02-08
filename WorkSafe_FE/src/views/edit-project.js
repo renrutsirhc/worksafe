@@ -107,7 +107,7 @@ class EditProject extends Component {
     if (this.state.ShowError) {
       this.setState({ ShowError: false });
     } else {
-      [this.setState({ ShowError: true })];
+      this.setState({ ShowError: true });
     }
   }
 

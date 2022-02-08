@@ -109,7 +109,7 @@ class EditEntry extends Component {
     if (this.state.ShowError) {
       this.setState({ ShowError: false });
     } else {
-      [this.setState({ ShowError: true })];
+      this.setState({ ShowError: true });
     }
   }
 
@@ -287,7 +287,7 @@ class EditEntry extends Component {
                 <Form.Label>Mindset</Form.Label>
                 <Form.Control
                   type="text"
-                  value={this.state.Entry.Mindset}
+                  value={this.state.Entry.MindSet}
                   onChange={this.handleMindsetChange}
                   placeholder="Mind set used"
                 />
