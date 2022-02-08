@@ -1,193 +1,228 @@
 /*buttons*/
 .button {
-    background-color: #D7E16C;
-    font-family: Verdana;
-    font-weight: 700;
-    color: white;
-    border-style: none;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: 1em;
-    padding-right: 1em;
+  background-color: #d7e16c;
+  font-family: Verdana;
+  font-weight: 700;
+  color: white;
+  border-style: none;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
-    .button:hover {
-        background-color: #E0E88E;
-        color: white;
-    }
+.button:hover {
+  background-color: #e0e88e;
+  color: white;
+}
 
 .logout-button {
-    background-color: #282829;
-    height:100%;
-    vertical-align:middle;
-    margin-top:auto;
-    margin-bottom:auto;
+  background-color: #282829;
+  height: 100%;
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
 }
-    .logout-button:hover {
-        background-color: #7E7E7F;
-    }
+.logout-button:hover {
+  background-color: #7e7e7f;
+}
 
 .nav-button {
-    font-family: Verdana;
-    font-weight: 700;
-    font-style: normal;
-    text-decoration:none;
-    background-color: white;
-    color: #282829;
-    padding-top: 0.5em!important;
-    padding-bottom: 0.5em!important;
-    padding-left: 1em!important;
-    padding-right: 1em!important;
+  font-family: Verdana;
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+  background-color: white;
+  color: #282829;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
-    .nav-button:hover {
-        background-color: #7E7E7F;
-        color: white !important;
-    }
+.nav-button:hover {
+  background-color: #7e7e7f;
+  color: white !important;
+}
 
 .nav-avatar {
-    padding-top: 0.5em !important;
-    padding-bottom: 0.5em !important;
-    padding-left: 1em !important;
-    padding-right: 1em !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
 
 .card-header-button {
-    background-color: #943A7A;
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+  background-color: #943a7a;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
-    .card-header-button:hover {
-        background-color: white;
-        color: #943A7A;
-    }
+.card-header-button:hover {
+  background-color: white;
+  color: #943a7a;
+}
 
 .tag-button {
-    background-color: #A9A8A8;
-    color:white;
-    margin:4px;
+  background-color: #a9a8a8;
+  color: white;
+  margin: 4px;
 }
-    .tag-button:disabled {
-        background-color: #A9A8A8;
-    }
+.tag-button:disabled {
+  background-color: #a9a8a8;
+}
 
 .pillar-button {
-    background-color: #D7E16C;
-    color: white;
-    margin: 4px;
-    display: flex;
+  background-color: #d7e16c;
+  color: white;
+  margin: 4px;
+  display: flex;
 }
 
-    .pillar-button:hover {
-        background-color: #D7E16C;
-    }
+.pillar-button:hover {
+  background-color: #d7e16c;
+}
 
 .pillar-button-unselected {
-    background-color: #A9A8A8;
-    color: white;
-    margin: 4px;
-    display: flex;
+  background-color: #a9a8a8;
+  color: white;
+  margin: 4px;
+  display: flex;
 }
 
 .pillar-button-unselected:hover {
-    background-color: #A9A8A8;
+  background-color: #a9a8a8;
 }
 
 .round-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size:24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
 }
 
 .round-button:hover {
-    background-color: #943A7A;
+  background-color: #943a7a;
 }
-    /*cards*/
-    .grow {
-    transition: all .2s ease-in-out;
+/*cards*/
+.grow {
+  transition: all 0.2s ease-in-out;
 }
 
-    .grow:hover {
-        transform: scale(1.02);
-        cursor: pointer;
-    }
+.grow:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}
 
 .card {
-    font-family: Verdana;
+  font-family: Verdana;
 }
 
-.card-header{
-    font-weight: 700;
-    color :white;
-    background-color: #943A7A!important;
-    margin:0px;
+.card-header {
+  font-weight: 700;
+  color: white;
+  background-color: #943a7a !important;
+  margin: 0px;
 }
 
 .card-title-container {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: left;
-    margin-bottom: 0px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-bottom: 0px;
 }
 
-.card-title{
-    display:flex;
-    margin-bottom:0px;
+.card-title {
+  display: flex;
+  margin-bottom: 0px;
 }
-.card-project-title{
-    display:flex;
+.card-project-title {
+  display: flex;
 }
 
 .card-header-button-container {
-    display: inline-flex;
-    justify-content: right;
-    float: right;
+  display: inline-flex;
+  justify-content: right;
+  float: right;
 }
 
-.card-body{
-
+.card-body {
 }
 
 .card-footer {
-    background-color: white!important;
-    margin: 0px;
+  background-color: white !important;
+  margin: 0px;
 }
 
 .card-footer-text-container {
-    display: inline-flex;
-    justify-content: left;
-    margin-bottom: 6px;
+  display: inline-flex;
+  justify-content: left;
+  margin-bottom: 6px;
 }
 
 .card-footer-button-container {
-    display: inline-flex;
-    justify-content: right;
-    float: right;
+  display: inline-flex;
+  justify-content: right;
+  float: right;
 }
 
 .card-footer-text {
-    margin: 0px;
+  margin: 0px;
 }
 
+/* Error messaging */
+.error-card {
+  background-color: #dc3e38 !important;
+}
+
+.error-text {
+  color: white;
+}
+
+.error-btn {
+  background-color: #dc3e38;
+  color: white;
+  font-size: 1rem;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.error-btn:hover {
+  color: #dc3e38;
+  background-color: white;
+}
+
+.error-heading {
+  display: flex;
+  flex-direction: row;
+}
+
+.alert-primary {
+  background-image: none;
+}
+
+.container-fluid {
+  justify-content: flex-start;
+}
 
 /*header + footer*/
 .header {
-    background-color: white;
+  background-color: white;
 }
-.header-logo{
-    min-width:254px;
+.header-logo {
+  min-width: 254px;
 }
 
 .footer {
-    background-color: #272725;
-    color: white;
+  background-color: #272725;
+  color: white;
 }
 
 .whitefooter {
-    background-color: white;
+  background-color: white;
 }
