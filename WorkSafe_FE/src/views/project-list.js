@@ -8,7 +8,7 @@ import ProjectParent from "./project-parent.js"
 import { withAuth0 } from "@auth0/auth0-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { AddProject } from "./"
+import { AddProject, ViewProjectEntries } from "./"
 
 class ProjectList extends Component {
   constructor(props) {
@@ -89,7 +89,13 @@ class ProjectList extends Component {
   }
 
   render() {
-    var projects = this.state.projects.map(project => <ProjectParent key={project.Id} project={project} handleUpdateProject={this.handleUpdateProject} handleUpdateSelectedProject={this.handleUpdateSelectedProject} />)
+      var projects = this.state.projects.map(project =>
+          <ProjectParent
+              key={project.Id}
+              project={project}
+              handleUpdateProject={this.handleUpdateProject}
+              handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+          />)
 
     if (this.state.loading) {
       return (

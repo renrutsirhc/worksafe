@@ -7,10 +7,10 @@ import { CardHeaderWithViewEntryButton, CardFooter } from "../components"
 class ViewProject extends Component {
   constructor(props) {
     super(props)
-    this.updateSelectedProject = this.updateSelectedProject.bind(this)
+      this.handleUpdateSelectedProject = this.handleUpdateSelectedProject.bind(this)
   }
 
-  updateSelectedProject() {
+  handleUpdateSelectedProject() {
     this.props.handleUpdateSelectedProject(this.props.project)
   }
 
