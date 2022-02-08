@@ -17,7 +17,7 @@ class ViewEntry extends Component {
                     <Card.Body className="card-body">
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>
-                    <CardFooter entry={this.props.entry}/>
+                    <CardFooter timeStamp={this.props.entry.TimeStamp} authorName={this.props.entry.Author.Name}/>
                 </Card>
             </div>
         );

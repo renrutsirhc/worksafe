@@ -308,7 +308,17 @@ namespace WorkSafe_BE.DataAccess
                 if (await ProjectExists(entry.Project.Id))
                 {
                     await projDocRef.SetAsync(entryDictionary);
+
+                    //update the project timestamp
+                    var project = await GetProject(entry.Project.Id);
+                    if (project != null)
+                    {
+                        project.TimeStamp = DateTime.UtcNow;
+                        project.LastUpdatedBy.Id = entry.Author.Id;
+                        await UpdateProject(project);
+                    }
                 }
+
             }
 
             if (entry.Tags.Any()) {
@@ -409,6 +419,14 @@ namespace WorkSafe_BE.DataAccess
                 if (await ProjectExists(entry.Project.Id))
                 {
                     await projDocRef.SetAsync(entryDictionary);
+                    //need to update the project timestamp here
+                    var project = await GetProject(entry.Project.Id);
+                    if (project != null)
+                    {
+                        project.TimeStamp = DateTime.UtcNow;
+                        project.LastUpdatedBy.Id = entry.Project.LastUpdatedBy.Id;
+                        await UpdateProject(project);
+                    }                    
                 }
             }
 
