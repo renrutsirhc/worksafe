@@ -50,10 +50,11 @@ class AddEntry extends Component {
     }
 
     handleEntryDateChange(event) {
-        console.log(event.target.value);
+        let date = event.target.value + "T12:00:00.0Z"
+        console.log(date);
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
-            Entry.EntryDate = event.target.value
+            Entry.EntryDate = date
             return { Entry }
         })
     }

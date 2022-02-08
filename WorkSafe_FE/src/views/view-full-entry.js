@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import "../styles/dashboard.css";
 import { CardHeaderWithEditButton, CardFooter } from "../components"
+import Moment from "react-moment";
+import "moment-timezone";
 
 class ViewFullEntry extends Component {
     constructor(props) {
@@ -25,7 +27,10 @@ class ViewFullEntry extends Component {
                     <CardHeaderWithEditButton title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} />
                     <Card.Body>
                         <Card.Title>Date</Card.Title>
-                        <Card.Text></Card.Text>
+                        <Card.Text>
+                            <Moment format="D MMM YYYY" withTitle>
+                                {this.props.entry.EntryDate}
+                            </Moment>{" "}</Card.Text>
                         <Card.Title>Project</Card.Title>
                         <Card.Text>{this.props.entry.Project.Title}</Card.Text>
                         <Card.Title>Description</Card.Title>
@@ -43,7 +48,7 @@ class ViewFullEntry extends Component {
                         <Card.Title>Tags</Card.Title>
                         {tagButtons}
                     </Card.Body>
-                    <CardFooter timeStamp={this.props.entry.TimeStamp} authorName={this.props.entry.Author.Name}  />
+                    <CardFooter timeStamp={this.props.entry.TimeStamp} authorName={this.props.entry.Author.Name} />
                 </Card>
             </div>
         );

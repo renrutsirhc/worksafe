@@ -14,11 +14,15 @@ import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../componen
 class EditEntry extends Component {
     constructor(props) {
         super(props);
+        let entry = this.props.entry;
+        let dateTime = this.props.entry.EntryDate.split('T');
+        entry.EntryDate = dateTime[0];
         this.state = {
-            Entry: this.props.entry,
+            Entry: entry,
         };
 
         this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleEntryDateChange = this.handleEntryDateChange.bind(this)
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleLearningChange = this.handleLearningChange.bind(this);
         this.handleMindsetChange = this.handleMindsetChange.bind(this);
@@ -34,6 +38,15 @@ class EditEntry extends Component {
             Entry.Title = event.target.value;
             return { Entry };
         });
+    }
+
+    handleEntryDateChange(event) {
+
+        this.setState(prevState => {
+            let Entry = Object.assign({}, prevState.Entry)
+            Entry.EntryDate = event.target.value
+            return { Entry }
+        })
     }
 
     handleProjectChange(event) {
@@ -93,6 +106,8 @@ class EditEntry extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
+        var entry = this.state.Entry
+        entry.EntryDate = this.state.Entry.EntryDate + "T12:00:00.0Z"
         const { getAccessTokenSilently } = this.props.auth0;
         var token = await getAccessTokenSilently();
         var options = {
@@ -101,7 +116,7 @@ class EditEntry extends Component {
                 "Content-Type": "application/json",
                 Authorization: 'Bearer ' + token
             },
-            body: JSON.stringify(this.state.Entry),
+            body: JSON.stringify(entry),
         };
 
         var url =
@@ -193,8 +208,8 @@ class EditEntry extends Component {
                                     <FormLabel>Date</FormLabel>
                                     <FormControl
                                         type="date"
-                                        value={this.state.Title}
-                                        onChange={this.handleChange}
+                                        value={this.state.Entry.EntryDate}
+                                        onChange={this.handleEntryDateChange}
                                         name="date"
                                     />
                                 </Form.Group>
