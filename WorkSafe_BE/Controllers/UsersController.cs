@@ -54,7 +54,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>
         [HttpPost]
         [Produces("application/json")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
             var userId = await _dbService.AddUser(user);
@@ -147,8 +147,9 @@ namespace WorkSafe_BE.Controllers
         [HttpPost("{userid}/entries")]
         [Produces("application/json")]
         [Authorize]
-        public async Task<IActionResult> PostEntry([FromBody] EntryModel entry)
+        public async Task<IActionResult> PostEntry(string userid, [FromBody] EntryModel entry)
         {
+            entry.Author.Id = userid;
             var entryId = await _dbService.AddEntry(entry);
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("Id", entryId);
@@ -169,6 +170,7 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> PutEntry(string userid, string entryid, [FromBody] EntryModel entry)
         {
             entry.Id = entryid;
+            entry.TimeStamp = DateTime.UtcNow;
             entry.Author.Id = userid;
             var entryId = await _dbService.UpdateEntry(entry);
             Dictionary<string, string> data = new Dictionary<string, string>();

@@ -1,5 +1,5 @@
-import { ViewProject, ViewFullProject } from "../views"
-import { Component } from "react"
+import { ViewProject, ViewFullProject, EditProject } from "./";
+import { Component } from "react";
 
 class ProjectParent extends Component {
   constructor(props) {
@@ -35,12 +35,33 @@ class ProjectParent extends Component {
     }
   }
 
-  render() {
-    if (this.state.Expanded) {
-      return <ViewFullProject project={this.props.project} setExpanded={this.setExpanded} setEditing={this.setEditing} handleUpdateSelectedProject={this.props.handleUpdateSelectedProject} />
+    render() {
+        if (this.state.Editing) {
+            return (
+                <EditProject
+                    project={this.props.project}
+                    handleUpdateProject={this.props.handleUpdateProject}
+                    setEditing={this.setEditing}
+                    setExpanded={this.setExpanded}
+                />
+            );
+        }
+        if (this.state.Expanded) {
+            return (
+                <ViewFullProject
+                    project={this.props.project}
+                    setExpanded={this.setExpanded}
+                    setEditing={this.setEditing}
+                />
+            );
+        }
+        return (
+            <ViewProject project={this.props.project} setExpanded={this.setExpanded} setEditing={this.setEditing} />
+        )
     }
-    return <ViewProject project={this.props.project} setExpanded={this.setExpanded} setEditing={this.setEditing} handleUpdateSelectedProject={this.props.handleUpdateSelectedProject} />
-  }
+
+
+
 }
 
 export default ProjectParent

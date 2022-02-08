@@ -9,6 +9,7 @@ import ViewProject from "./view-project"
 import ViewFullProject from "./view-full-project"
 import Projects from "./projects"
 import AddProject from "./add-project"
+import EditProject from "./edit-project"
 import ViewProjectEntries from "./view-project-entries"
 
-export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects, AddProject, ViewProjectEntries }
+export { ExternalApi, Home, Profile, Login, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects, AddProject, EditProject, ViewProjectEntries }

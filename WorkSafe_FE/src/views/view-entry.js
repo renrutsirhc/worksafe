@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import "../styles/styles.css";
 import { CardHeaderWithEditButton, CardFooter } from "../components"
+import { DateTime } from "luxon";
 
 // Display view-entry card
 class ViewEntry extends Component {
@@ -10,6 +11,7 @@ class ViewEntry extends Component {
     }
 
     render() {
+        const timeStamp = DateTime.fromISO(this.props.entry.TimeStamp);
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
@@ -17,7 +19,7 @@ class ViewEntry extends Component {
                     <Card.Body className="card-body">
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>
-                    <CardFooter entry={this.props.entry}/>
+                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.entry.Author.Name} handleSubmit={this.handleSubmit}/>
                 </Card>
             </div>
         );

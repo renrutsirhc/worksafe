@@ -64,28 +64,7 @@ class ProjectList extends Component {
   }
 
   handleUpdateProject(project) {
-    this.getProjects()
-  }
-
-  handleUpdateSelectedProject(project) {
-    this.setState(
-      {
-        selectedProject: project
-      },
-      this.handleShowProjectEntries
-    )
-  }
-
-  handleShowProjectEntries() {
-    if (this.state.viewProjectEntries) {
-      this.setState({
-        viewProjectEntries: false
-      })
-    } else {
-      this.setState({
-        viewProjectEntries: true
-      })
-    }
+      this.getProjects()
   }
 
   render() {
@@ -133,7 +112,7 @@ class ProjectList extends Component {
         <button className="button" onClick={this.handleShowAddProject}>
           Add Project
         </button>
-        <h2>No Entries to Display...</h2>
+        <h2>No Projects to Display...</h2>
       </div>
     )
   }
