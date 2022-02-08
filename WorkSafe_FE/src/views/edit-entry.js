@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Select } from "react-dropdown-select";
 import { Row, Col, Form, FormLabel, FormControl, Card } from "react-bootstrap";
+import ErrorCard from "./error-card";
+
 import { withAuth0 } from "@auth0/auth0-react";
 import {
   CardHeaderWithCloseButton,
@@ -14,6 +16,10 @@ class EditEntry extends Component {
     let entry = this.props.entry;
     this.state = {
       Entry: entry,
+      ShowError: false,
+      ErrorTitle: "Error",
+      ErrorText:
+        "An error has occurred while trying to get data from the API. Please contact your developer.",
     };
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -25,6 +31,7 @@ class EditEntry extends Component {
     this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
     this.handleProjectChange = this.handleProjectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleShowError = this.handleShowError.bind(this);
   }
 
   handleTitleChange(event) {
@@ -44,7 +51,7 @@ class EditEntry extends Component {
     });
   }
 
-  handleProjectChange(event) {
+handleProjectChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       if (event[0] == undefined) {
@@ -60,7 +67,7 @@ class EditEntry extends Component {
     });
   }
 
-  handleDescriptionChange(event) {
+handleDescriptionChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Description = event.target.value;
@@ -68,7 +75,7 @@ class EditEntry extends Component {
     });
   }
 
-  handleLearningChange(event) {
+handleLearningChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Learning = event.target.value;
@@ -76,7 +83,7 @@ class EditEntry extends Component {
     });
   }
 
-  handleMindsetChange(event) {
+handleMindsetChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.MindSet = event.target.value;
@@ -84,7 +91,7 @@ class EditEntry extends Component {
     });
   }
 
-  handleImpactChange(event) {
+handleImpactChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Impact = event.target.value;
@@ -98,6 +105,14 @@ class EditEntry extends Component {
       return { Entry };
     });
   }
+
+handleShowError() {
+    if (this.state.ShowError) {
+      this.setState({ ShowError: false });
+    } else {
+      this.setState({ ShowError: true });
+    }
+}
 
   handleSubmit = async (event) => {
     event.preventDefault();
@@ -124,7 +139,7 @@ class EditEntry extends Component {
       this.props.handleUpdateEntry();
       this.props.setEditing();
     } else {
-      ///some kind of error message
+      this.handleShowError();
     }
   };
 
@@ -174,6 +189,16 @@ class EditEntry extends Component {
   }
 
   render() {
+    if (this.state.ShowError) {
+      return (
+        <ErrorCard
+          title={this.state.ErrorTitle}
+          text={this.state.ErrorText}
+          handleShowError={this.handleShowError}
+        />
+      );
+    }
+
     const placeHolderOption = this.state.Entry.Project.Title;
     const projectsOptions = this.feedProjectsOptions();
     const tagsOptions = this.feedTagsOptions();
