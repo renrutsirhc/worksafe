@@ -61,7 +61,7 @@ class ProjectList extends Component {
 
   handleUpdateProject(project) {
     var projects = this.state.projects
-    for (let i = 0; i < entries.length; i++) {
+    for (let i = 0; i < projects.length; i++) {
       if (projects[i].Id == project.Id) {
         projects[i] = project
         this.setState({ projects: projects })
