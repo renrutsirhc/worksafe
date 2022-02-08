@@ -25,6 +25,7 @@ namespace WorkSafe_BE.Models
             _nextSteps = (string)documentDictionary["NextSteps"];
             _tags = ((List<object>)documentDictionary["Tags"]).Select(i => i.ToString()).ToList();
             _timeStamp = ((Timestamp)documentDictionary["TimeStamp"]).ToDateTime();
+            _entryDate = ((Timestamp)documentDictionary["EntryDate"]).ToDateTime();
             _author = author;
         }
 
@@ -132,6 +133,12 @@ namespace WorkSafe_BE.Models
             set { _timeStamp = value; }
         }
 
+        private DateTime _entryDate = DateTime.UtcNow;
 
+        public DateTime EntryDate
+        {
+            get { return _entryDate; }
+            set { _entryDate = value; }
+        }
     }
 }

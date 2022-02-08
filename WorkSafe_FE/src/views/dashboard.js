@@ -104,15 +104,9 @@ class Dashboard extends Component {
         this.getTags();
     }
 
-    handleUpdateEntry(entry) {
-        var entries = this.state.entries;
-        for (let i = 0; i < entries.length; i++) {
-            if (entries[i].Id == entry.Id) {
-                entries[i] = entry;
-                this.setState({ entries: entries });
-                break;
-            }
-        }
+    handleUpdateEntry() {
+        this.getEntries();
+        this.getTags();
     }
 
     render() {

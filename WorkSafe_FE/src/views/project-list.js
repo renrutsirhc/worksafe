@@ -60,14 +60,7 @@ class ProjectList extends Component {
   }
 
   handleUpdateProject(project) {
-    var projects = this.state.projects
-    for (let i = 0; i < entries.length; i++) {
-      if (projects[i].Id == project.Id) {
-        projects[i] = project
-        this.setState({ projects: projects })
-        break
-      }
-    }
+      this.getProjects()
   }
 
   render() {
@@ -111,7 +104,7 @@ class ProjectList extends Component {
         <button className="button" onClick={this.handleShowAddProject}>
           Add Project
         </button>
-        <h2>No Entries to Display...</h2>
+        <h2>No Projects to Display...</h2>
       </div>
     )
   }

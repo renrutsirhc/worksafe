@@ -1,32 +1,14 @@
 import React, { Component } from "react"
-import { Form, FormLabel, FormControl, Row, Card } from "react-bootstrap"
+import {  Form, FormLabel, FormControl, Row, Card } from "react-bootstrap"
 import { withAuth0 } from "@auth0/auth0-react"
 import { CardHeaderWithCloseButton, CardFooterWithSaveButton, PillarButtonClickable } from "../components"
 import { DateTime } from "luxon";
 
-class AddProject extends Component {
+class EditProject extends Component {
     constructor(props) {
         super(props)
-        var project = {
-            Owner: {
-                Id: this.props.currentUser.sub,
-                Name: this.props.currentUser.name
-            },
-            Title: "",
-            Description: "",
-            ProjectGoal: "",
-            LastUpdatedBy: {
-                Id: this.props.currentUser.sub,
-                Name: this.props.currentUser.name
-            },
-            PillarEmbedding: false,
-            PillarResources: false,
-            PillarNeeds: false,
-            PillarLeadership: false,
-            PillarConnection: false
-        }
         this.state = {
-            Project: project
+            Project: this.props.project
         }
 
         this.handleTitleChange = this.handleTitleChange.bind(this)
@@ -113,7 +95,7 @@ class AddProject extends Component {
         var token = await getAccessTokenSilently()
         var project = this.state.Project
         var options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + token
@@ -121,26 +103,25 @@ class AddProject extends Component {
             body: JSON.stringify(project)
         }
 
-        var url = "/api/projects"
+        var url = "/api/projects/" + this.state.Project.Id;
         var response = await fetch(url, options)
         if (response.ok) {
             var result = await response.json()
             console.log(result)
-            this.props.handleAddProject()
-            this.props.handleShowAddProject()
+            this.props.handleUpdateProject()
+            this.props.setEditing()
         } else {
             //show error
         }
     }
 
     render() {
-
+        const timeStamp = DateTime.fromISO(this.state.Project.TimeStamp);
         return (
-            // add a button, call this.props.handleShowAddProject
-
+       
             <Form>
                 <Card>
-                    <CardHeaderWithCloseButton title="Add Project" subTitle="" setEditing={this.props.handleShowAddProject} />
+                    <CardHeaderWithCloseButton title="Update Project" subTitle="" setEditing={this.props.setEditing} />
                     <Card.Body>
                         <Row>
                             <Form.Group>
@@ -173,11 +154,11 @@ class AddProject extends Component {
                             </Form.Group>
                         </Row>
                     </Card.Body>
-                    <CardFooterWithSaveButton text="" handleSubmit={this.handleSubmit} />
+                    <CardFooterWithSaveButton text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.state.Project.LastUpdatedBy.Name} handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         )
     }
 }
 
-export default withAuth0(AddProject)
+export default withAuth0(EditProject)

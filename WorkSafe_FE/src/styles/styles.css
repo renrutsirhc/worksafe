@@ -90,9 +90,9 @@
     display: flex;
 }
 
-    .pillar-button-unselected:hover {
-        background-color: #A9A8A8;
-    }
+.pillar-button-unselected:hover {
+    background-color: #A9A8A8;
+}
 
 .round-button {
     display: flex;
@@ -104,9 +104,11 @@
     font-size:24px;
 }
 
-
-/*cards*/
-.grow {
+.round-button:hover {
+    background-color: #943A7A;
+}
+    /*cards*/
+    .grow {
     transition: all .2s ease-in-out;
 }
 
