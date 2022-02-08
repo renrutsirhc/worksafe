@@ -10,13 +10,13 @@ import {
 } from "react-bootstrap";
 import { withAuth0 } from "@auth0/auth0-react";
 import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components";
+import { DateTime } from "luxon";
+
 
 class EditEntry extends Component {
     constructor(props) {
         super(props);
         let entry = this.props.entry;
-        let dateTime = this.props.entry.EntryDate.split('T');
-        entry.EntryDate = dateTime[0];
         this.state = {
             Entry: entry,
         };
@@ -41,10 +41,10 @@ class EditEntry extends Component {
     }
 
     handleEntryDateChange(event) {
-
+        var entryDate = DateTime.fromISO(event.target.value).toUTC();
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
-            Entry.EntryDate = event.target.value
+            Entry.EntryDate = entryDate.toISO();
             return { Entry }
         })
     }
@@ -107,7 +107,6 @@ class EditEntry extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         var entry = this.state.Entry
-        entry.EntryDate = this.state.Entry.EntryDate + "T12:00:00.0Z"
         const { getAccessTokenSilently } = this.props.auth0;
         var token = await getAccessTokenSilently();
         var options = {
@@ -184,8 +183,13 @@ class EditEntry extends Component {
         const projectsOptions = this.feedProjectsOptions();
         const tagsOptions = this.feedTagsOptions();
         const tagsValue = this.entryTagsValue();
+        const timeStamp = DateTime.fromISO(this.state.Entry.TimeStamp);
+        const entryDate = DateTime.fromISO(this.state.Entry.EntryDate);
+        const localEntryDate = entryDate.toLocal().toISODate();
+
 
         return (
+
             <Form>
                 <Card>
                     <CardHeaderWithCloseButton title={this.state.Entry.Title} subTitle={this.state.Entry.Project.Title} setEditing={this.props.setEditing} />
@@ -208,7 +212,7 @@ class EditEntry extends Component {
                                     <FormLabel>Date</FormLabel>
                                     <FormControl
                                         type="date"
-                                        value={this.state.Entry.EntryDate}
+                                        value={localEntryDate}
                                         onChange={this.handleEntryDateChange}
                                         name="date"
                                     />
@@ -309,7 +313,7 @@ class EditEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name} handleSubmit={this.handleSubmit} />
+                    <CardFooterWithSaveButton text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.state.Entry.Author.Name} handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         );

@@ -1,10 +1,8 @@
 import React, { Component } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import { Button, Form, ButtonGroup, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap"
-import CardHeader from "react-bootstrap/esm/CardHeader"
+import { Form, FormLabel, FormControl, Row, Card } from "react-bootstrap"
 import { withAuth0 } from "@auth0/auth0-react"
 import { CardHeaderWithCloseButton, CardFooterWithSaveButton, PillarButtonClickable } from "../components"
+import { DateTime } from "luxon";
 
 class AddProject extends Component {
     constructor(props) {
@@ -136,6 +134,7 @@ class AddProject extends Component {
     }
 
     render() {
+
         return (
             // add a button, call this.props.handleShowAddProject
 
@@ -174,7 +173,7 @@ class AddProject extends Component {
                             </Form.Group>
                         </Row>
                     </Card.Body>
-                    <CardFooterWithSaveButton timeStamp={this.state.Project.TimeStamp} authorName={this.state.Project.Owner.Name} handleSubmit={this.handleSubmit} />
+                    <CardFooterWithSaveButton text="" handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         )

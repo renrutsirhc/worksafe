@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Card, ButtonGroup } from "react-bootstrap";
 import "../styles/dashboard.css";
-import Moment from "react-moment";
 import PillarButton from "../components/pillar-button"
-import "moment-timezone";
+import { DateTime } from "luxon";
 import { CardHeaderWithEditButton, CardFooter } from "../components"
 
 class ViewFullProject extends Component {
@@ -12,6 +11,10 @@ class ViewFullProject extends Component {
     }
 
     render() {
+        const timeStamp = DateTime.fromISO(this.props.project.TimeStamp);
+        const creationTime = DateTime.fromISO(this.props.project.CreationTime);
+        const localCreationTime = creationTime.toLocaleString(DateTime.DATE_FULL)
+
         return (
             <div className="mt-3 d-flex flex-wrap">
                 <Card className="grow" onClick={this.props.setExpanded}>
@@ -33,12 +36,10 @@ class ViewFullProject extends Component {
                         </Card.Text>
                         <Card.Title>Creation Date</Card.Title>
                         <Card.Text>
-                            <Moment format="HH:MM, D MMM YYYY" withTitle>
-                                {this.props.project.CreationDate}
-                            </Moment>{" "}
+                            {localCreationTime}
                         </Card.Text>
                     </Card.Body>
-                    <CardFooter timeStamp={this.props.project.TimeStamp} authorName={this.props.project.LastUpdatedBy.Name} />
+                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.project.LastUpdatedBy.Name} />
                 </Card>
             </div>
         );

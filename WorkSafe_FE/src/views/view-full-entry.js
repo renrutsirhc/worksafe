@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import "../styles/dashboard.css";
 import { CardHeaderWithEditButton, CardFooter } from "../components"
-import Moment from "react-moment";
-import "moment-timezone";
+import { DateTime } from "luxon";
 
 class ViewFullEntry extends Component {
     constructor(props) {
@@ -11,6 +10,9 @@ class ViewFullEntry extends Component {
     }
 
     render() {
+        const timeStamp = DateTime.fromISO(this.props.entry.TimeStamp);
+        const entryDate = DateTime.fromISO(this.props.entry.EntryDate);
+
         const tagButtons = this.props.entry.Tags.map((tag) => (
             <button
                 className="button tag-button"
@@ -27,10 +29,7 @@ class ViewFullEntry extends Component {
                     <CardHeaderWithEditButton title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} />
                     <Card.Body>
                         <Card.Title>Date</Card.Title>
-                        <Card.Text>
-                            <Moment format="D MMM YYYY" withTitle>
-                                {this.props.entry.EntryDate}
-                            </Moment>{" "}</Card.Text>
+                        <Card.Text>{entryDate.toLocaleString(DateTime.DATE_FULL)}</Card.Text>
                         <Card.Title>Project</Card.Title>
                         <Card.Text>{this.props.entry.Project.Title}</Card.Text>
                         <Card.Title>Description</Card.Title>
@@ -48,7 +47,7 @@ class ViewFullEntry extends Component {
                         <Card.Title>Tags</Card.Title>
                         {tagButtons}
                     </Card.Body>
-                    <CardFooter timeStamp={this.props.entry.TimeStamp} authorName={this.props.entry.Author.Name} />
+                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.entry.Author.Name} handleSubmit={this.handleSubmit} />
                 </Card>
             </div>
         );

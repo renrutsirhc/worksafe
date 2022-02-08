@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import { Select } from "react-dropdown-select"
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap"
 import { CardHeaderWithCloseButton, CardFooterWithSaveButton } from "../components"
-
 import { withAuth0 } from "@auth0/auth0-react"
+import { DateTime } from "luxon";
 
 class AddEntry extends Component {
     constructor(props) {
@@ -50,11 +50,10 @@ class AddEntry extends Component {
     }
 
     handleEntryDateChange(event) {
-        let date = event.target.value + "T12:00:00.0Z"
-        console.log(date);
+        var entryDate = DateTime.fromISO(event.target.value).toUTC();
         this.setState(prevState => {
             let Entry = Object.assign({}, prevState.Entry)
-            Entry.EntryDate = date
+            Entry.EntryDate = entryDate.toISO();
             return { Entry }
         })
     }
@@ -182,6 +181,8 @@ class AddEntry extends Component {
         const placeHolderOption = ""
         const projectsOptions = this.feedProjectsOptions()
         const tagsOptions = this.feedTagsOptions()
+        const entryDate = DateTime.fromISO(this.state.Entry.EntryDate);
+        const localEntryDate = entryDate.toLocal().toISODate();
 
         return (
             // add a button, call this.props.handleShowAddEntry
@@ -201,7 +202,10 @@ class AddEntry extends Component {
                             <Col md={3}>
                                 <Form.Group>
                                     <FormLabel>Date</FormLabel>
-                                    <FormControl type="date" value={this.state.Title} onChange={this.handleEntryDateChange} name="date" />
+                                    <FormControl type="date"
+                                        value={localEntryDate}
+                                        onChange={this.handleEntryDateChange}
+                                        name="date" />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -257,7 +261,7 @@ class AddEntry extends Component {
                         </Row>
                     </Card.Body>
 
-                    <CardFooterWithSaveButton timeStamp={this.state.Entry.TimeStamp} authorName={this.state.Entry.Author.Name} handleSubmit={this.handleSubmit} />
+                    <CardFooterWithSaveButton text={""} handleSubmit={this.handleSubmit} />
                 </Card>
             </Form>
         )
