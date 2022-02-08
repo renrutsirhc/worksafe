@@ -104,7 +104,7 @@ class ProjectList extends Component {
         <button className="button" onClick={this.handleShowAddProject}>
           Add Project
         </button>
-        <h2>No Entries to Display...</h2>
+        <h2>No Projects to Display...</h2>
       </div>
     )
   }

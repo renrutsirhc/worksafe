@@ -54,7 +54,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>
         [HttpPost]
         [Produces("application/json")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
             var userId = await _dbService.AddUser(user);
