@@ -20,6 +20,7 @@ class ErrorCard extends Component {
               <h3>{this.props.title}</h3>
               <div md="auto"></div>
               <button
+                type="button"
                 className="error-btn button"
                 onClick={this.props.handleShowError}
               >
