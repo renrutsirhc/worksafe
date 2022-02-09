@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
-import "bootstrap/dist/js/bootstrap.js";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import ProjectParent from "./project-parent.js";
-import { withAuth0 } from "@auth0/auth0-react";
+import React, { Component } from "react"
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+import "bootstrap/dist/js/bootstrap.js"
+import "bootstrap/dist/js/bootstrap.bundle.min"
+import ProjectParent from "./project-parent.js"
+import { withAuth0 } from "@auth0/auth0-react"
 import ErrorCard from "./error-card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { AddProject } from "./";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { AddProject, ViewProjectEntries } from "./"
+
 
 class ProjectList extends Component {
   constructor(props) {
@@ -20,15 +21,20 @@ class ProjectList extends Component {
       projects: [],
       addProject: false,
       user: props.auth0.user,
-      ShowError: false,
+      viewProjectEntries: false,
+      selectedProject: {}
+          ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
         "An error has occurred while trying to get data from the API. Please contact your developer.",
     };
+    
 
-    this.handleShowAddProject = this.handleShowAddProject.bind(this);
-    this.handleUpdateProject = this.handleUpdateProject.bind(this);
-    this.handleAddProject = this.handleAddProject.bind(this);
+    this.handleShowAddProject = this.handleShowAddProject.bind(this)
+    this.handleUpdateProject = this.handleUpdateProject.bind(this)
+    this.handleAddProject = this.handleAddProject.bind(this)
+    this.handleShowProjectEntries = this.handleShowProjectEntries.bind(this)
+    this.handleUpdateSelectedProject = this.handleUpdateSelectedProject.bind(this)
     this.handleShowError = this.handleShowError.bind(this);
   }
 
@@ -77,7 +83,32 @@ class ProjectList extends Component {
     }
   }
 
+    handleUpdateSelectedProject(project) {
+        this.setState(
+            {
+                selectedProject: project
+            },
+            this.handleShowProjectEntries
+        )
+    }
+
+    handleShowProjectEntries() {
+        if (this.state.viewProjectEntries) {
+            this.setState({
+                viewProjectEntries: false
+            })
+        } else {
+            this.setState({
+                viewProjectEntries: true
+            })
+        }
+    }
+
+
   render() {
+
+    var projects = this.state.projects.map(project => <ProjectParent key={project.Id} project={project} handleUpdateProject={this.handleUpdateProject} handleUpdateSelectedProject={this.handleUpdateSelectedProject} />)
+
     if (this.state.ShowError) {
       return (
         <ErrorCard
@@ -88,13 +119,6 @@ class ProjectList extends Component {
       );
     }
 
-    var projects = this.state.projects.map((project) => (
-      <ProjectParent
-        key={project.Id}
-        project={project}
-        handleUpdateProject={this.handleUpdateProject}
-      />
-    ));
 
     if (this.state.loading) {
       return (
@@ -105,13 +129,11 @@ class ProjectList extends Component {
     }
 
     if (this.state.addProject) {
-      return (
-        <AddProject
-          currentUser={this.state.user}
-          handleShowAddProject={this.handleShowAddProject}
-          handleAddProject={this.handleAddProject}
-        />
-      );
+        return <AddProject currentUser={this.props.auth0.user} handleShowAddProject={this.handleShowAddProject} handleAddProject={this.handleAddProject} />
+    }
+
+    if (this.state.viewProjectEntries) {
+        return <ViewProjectEntries project={this.state.selectedProject} user={this.state.user} projects={this.state.projects} handleShowProjectEntries={this.handleShowProjectEntries} />
     }
 
     if (this.state.projects.length > 0) {

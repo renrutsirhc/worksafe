@@ -124,24 +124,16 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (this.state.ShowError) {
-      return (
-        <ErrorCard
-          title={this.state.ErrorTitle}
-          text={this.state.ErrorText}
-          handleShowError={this.handleShowError}
-        />
-      );
-    }
-
     var projects = this.state.projects;
     var tags = this.state.tags;
+    
     class ProjectOption {
       constructor(label, value) {
         this.label = label;
         this.value = value;
       }
     }
+    
     var projectOptions = [];
     projects.map(function (project, index) {
       const po = new ProjectOption(project.Title, project.Id);
@@ -156,6 +148,16 @@ class Dashboard extends Component {
         handleUpdateEntry={this.handleUpdateEntry}
       />
     ));
+
+    if (this.state.ShowError) {
+      return (
+        <ErrorCard
+          title={this.state.ErrorTitle}
+          text={this.state.ErrorText}
+          handleShowError={this.handleShowError}
+        />
+      );
+    }
 
     if (this.state.loading) {
       return (
@@ -198,7 +200,7 @@ class Dashboard extends Component {
             {entries}
           </div>
         </div>
-      );
+      )
     }
 
     return (
@@ -220,8 +222,8 @@ class Dashboard extends Component {
 
         <h2>No Entries to Display...</h2>
       </div>
-    );
+    )
   }
 }
 
-export default withAuth0(Dashboard);
+export default withAuth0(Dashboard)
