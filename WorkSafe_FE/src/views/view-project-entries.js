@@ -150,9 +150,9 @@ class ViewProjectEntries extends Component {
         <div>
           <div>
             <h1>Project: {this.props.project.Title}</h1>
-            <p>Description: {this.props.project.Description}</p>
-            <p>Goal: {this.props.project.ProjectGoal}</p>
-            <p>Pillars: {pillars}</p>
+            <h6>Description: {this.props.project.Description}</h6>
+            <h6>Goal: {this.props.project.ProjectGoal}</h6>
+            <h6>Pillars: {pillars}</h6>
             <div className="d-flex">
               <div className="mr-auto"></div>
               <div className="mx-auto"></div>
@@ -183,9 +183,9 @@ class ViewProjectEntries extends Component {
         <div>
           <h1>Project Entries</h1>
           <h2>{this.props.project.Title}</h2>
-          <p>Descrition: {this.props.project.Description}</p>
-          <p>Goal: {this.props.project.ProjectGoal}</p>
-          <p>Pillars: {pillars}</p>
+          <h6>Descrition: {this.props.project.Description}</h6>
+          <h6>Goal: {this.props.project.ProjectGoal}</h6>
+          <h6>Pillars: {pillars}</h6>
         </div>
         <div className="d-flex">
           <div className="mx-auto"></div>
