@@ -43,6 +43,7 @@ class ProjectParent extends Component {
                     handleUpdateProject={this.props.handleUpdateProject}
                     setEditing={this.setEditing}
                     setExpanded={this.setExpanded}
+                    
                 />
             );
         }
@@ -52,11 +53,17 @@ class ProjectParent extends Component {
                     project={this.props.project}
                     setExpanded={this.setExpanded}
                     setEditing={this.setEditing}
+                    handleUpdateSelectedProject={this.props.handleUpdateSelectedProject}
                 />
             );
         }
         return (
-            <ViewProject project={this.props.project} setExpanded={this.setExpanded} setEditing={this.setEditing} />
+            <ViewProject
+                project={this.props.project}
+                setExpanded={this.setExpanded}
+                setEditing={this.setEditing}
+                handleUpdateSelectedProject={this.props.handleUpdateSelectedProject}
+            />
         )
     }
 
