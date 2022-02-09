@@ -3,8 +3,6 @@ import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import "../styles/styles.css";
-import Moment from "react-moment";
-import "moment-timezone";
 
 class CardFooterWithSaveButton extends Component {
     constructor(props) {
@@ -16,11 +14,7 @@ class CardFooterWithSaveButton extends Component {
             <Card.Footer>
                 <div className="card-footer-text-container">
                     <h6 className="card-footer-text">
-                        Last Updated{" "}
-                        <Moment format="HH:MM, D MMM YYYY" withTitle>
-                            {this.props.timeStamp}
-                        </Moment>{" "}
-                        by {this.props.authorName}
+                        {this.props.text}
                     </h6>
                 </div>
                 <div className="card-footer-button-container">

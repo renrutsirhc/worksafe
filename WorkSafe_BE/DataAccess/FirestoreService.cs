@@ -168,7 +168,7 @@ namespace WorkSafe_BE.DataAccess
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 Task<UserModel?> ownerTask = GetUser((string)documentDictionary["OwnerId"]);
-                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["OwnerId"]);
+                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["LastUpdatedById"]);
                 await Task.WhenAll(ownerTask, lastUpdatedByTask);
                 var owner = await ownerTask;
                 var lastUpdatedBy = await lastUpdatedByTask;
@@ -194,12 +194,13 @@ namespace WorkSafe_BE.DataAccess
         {
             var output = new List<ProjectModel>();
             CollectionReference projectsRef = _db.Collection("Projects");
-            QuerySnapshot snapshot = await projectsRef.GetSnapshotAsync();
+            Query query = projectsRef.OrderByDescending("CreationTime");
+            QuerySnapshot snapshot = await query.GetSnapshotAsync();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 Task<UserModel?> ownerTask = GetUser((string)documentDictionary["OwnerId"]);
-                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["OwnerId"]);
+                Task<UserModel?> lastUpdatedByTask = GetUser((string)documentDictionary["LastUpdatedById"]);
                 await Task.WhenAll(ownerTask, lastUpdatedByTask);
                 var owner = await ownerTask;
                 var lastUpdatedBy = await lastUpdatedByTask;
@@ -288,6 +289,7 @@ namespace WorkSafe_BE.DataAccess
                 { "Title", entry.Title },
                 { "Description", entry.Description },
                 { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
+                { "EntryDate", Timestamp.FromDateTime(entry.EntryDate) },
                 { "AuthorId", entry.Author.Id },
                 { "Files", entry.Files },
                 { "Impact", entry.Impact },
@@ -307,7 +309,17 @@ namespace WorkSafe_BE.DataAccess
                 if (await ProjectExists(entry.Project.Id))
                 {
                     await projDocRef.SetAsync(entryDictionary);
+
+                    //update the project timestamp
+                    var project = await GetProject(entry.Project.Id);
+                    if (project != null)
+                    {
+                        project.TimeStamp = DateTime.UtcNow;
+                        project.LastUpdatedBy.Id = entry.Author.Id;
+                        await UpdateProject(project);
+                    }
                 }
+
             }
 
             if (entry.Tags.Any()) {
@@ -389,6 +401,7 @@ namespace WorkSafe_BE.DataAccess
                 { "Title", entry.Title },
                 { "Description", entry.Description },
                 { "TimeStamp", Timestamp.FromDateTime(entry.TimeStamp) },
+                { "EntryDate", Timestamp.FromDateTime(entry.EntryDate) },
                 { "AuthorId", entry.Author.Id },
                 { "Files", entry.Files },
                 { "Impact", entry.Impact },
@@ -396,7 +409,7 @@ namespace WorkSafe_BE.DataAccess
                 { "MindSet", entry.MindSet },
                 { "NextSteps", entry.NextSteps },
                 { "Tags", entry.Tags },
-                {"ProjectId", "" },
+                { "ProjectId", "" },
             };
 
             if (!entry.Project.Id.Equals(""))
@@ -404,9 +417,26 @@ namespace WorkSafe_BE.DataAccess
                 entryDictionary["ProjectId"] = entry.Project.Id;
                 DocumentReference projDocRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(entry.Id);
                 //add to the project if a project id has been set that matches a project in the db
+
+                //if the project id in the passed in entry is not the same as the one in the database, we delete the entry from the projectId stored in the db - avoiding orphaned entries
+                var dbEntry = await GetEntry(entry.Id, entry.Author.Id, TopCollection.Users);
+                if (!dbEntry.Project.Id.Equals(entry.Project.Id))
+                {
+                    var projectEntryRef = _db.Collection("Projects").Document(dbEntry.Project.Id).Collection("Entries").Document(dbEntry.Id);
+                    await projectEntryRef.DeleteAsync();
+                }
+
                 if (await ProjectExists(entry.Project.Id))
                 {
                     await projDocRef.SetAsync(entryDictionary);
+                    //need to update the project timestamp here
+                    var project = await GetProject(entry.Project.Id);
+                    if (project != null)
+                    {
+                        project.TimeStamp = DateTime.UtcNow;
+                        project.LastUpdatedBy.Id = entry.Author.Id;
+                        await UpdateProject(project);
+                    }                    
                 }
             }
 

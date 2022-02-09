@@ -55,7 +55,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<ProjectsController>
         [HttpPost]
         [Produces("application/json")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Post([FromBody] ProjectModel project)
         {
             var projectId = await _dbService.AddProject(project);
@@ -72,6 +72,7 @@ namespace WorkSafe_BE.Controllers
         public async Task<IActionResult> Put(string projectid, [FromBody] ProjectModel project)
         {
             project.Id = projectid;
+            project.TimeStamp = DateTime.UtcNow;
             var projectId = await _dbService.UpdateProject(project);
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("Id", projectId);
