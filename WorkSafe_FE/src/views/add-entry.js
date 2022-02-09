@@ -214,6 +214,8 @@ class AddEntry extends Component {
     return (
       // add a button, call this.props.handleShowAddEntry
 
+
+
       <Form>
         <Card>
           <CardHeaderWithCloseButton
@@ -234,6 +236,7 @@ class AddEntry extends Component {
                   />
                 </Form.Group>
               </Col>
+
 
               <Col md={3}>
                 <Form.Group>
@@ -268,7 +271,7 @@ class AddEntry extends Component {
                   type="text"
                   value={this.state.Entry.Description || ""}
                   onChange={this.handleDescriptionChange}
-                  placeholder="Decribe the entry"
+                  placeholder="Describe the entry"
                 />
               </Form.Group>
             </Row>
@@ -285,7 +288,7 @@ class AddEntry extends Component {
                   as="textarea"
                   value={this.state.Entry.Learning}
                   onChange={this.handleLearningChange}
-                  placeholder="Decribe the learning"
+                  placeholder="Describe the learning"
                 />
               </Form.Group>
             </Row>
