@@ -22,8 +22,8 @@ class ProjectList extends Component {
       addProject: false,
       user: props.auth0.user,
       viewProjectEntries: false,
-      selectedProject: {}
-          ShowError: false,
+      selectedProject: {},
+      ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
         "An error has occurred while trying to get data from the API. Please contact your developer.",
