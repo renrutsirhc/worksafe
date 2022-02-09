@@ -234,7 +234,6 @@ class AddEntry extends Component {
                   />
                 </Form.Group>
               </Col>
-
               <Col md={3}>
                 <Form.Group>
                   <FormLabel>Date</FormLabel>

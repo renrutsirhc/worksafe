@@ -193,7 +193,6 @@ class AddProject extends Component {
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   as="textarea"
-                  type="text"
                   value={this.state.Project.Description || ""}
                   onChange={this.handleDescriptionChange}
                   placeholder="Short description"
