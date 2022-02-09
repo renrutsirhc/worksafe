@@ -1,18 +1,19 @@
-import React, { Component } from "react"
-import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
-import "bootstrap/dist/js/bootstrap.js"
-import "bootstrap/dist/js/bootstrap.bundle.min"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import AddEntry from "./add-entry.js"
-import EntryParent from "../components/entry-parent.js"
-import { withAuth0 } from "@auth0/auth0-react"
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+import "bootstrap/dist/js/bootstrap.js";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import AddEntry from "./add-entry.js";
+import EntryParent from "../components/entry-parent.js";
+import { withAuth0 } from "@auth0/auth0-react";
+import ErrorCard from "./error-card";
 
 class Dashboard extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       loading: true,
@@ -21,117 +22,161 @@ class Dashboard extends Component {
       projects: [],
       tags: [],
       addEntry: false,
-      user: props.auth0.user
-    }
+      user: props.auth0.user,
+      ShowError: false,
+      ErrorTitle: "Error",
+      ErrorText:
+        "An error has occurred while trying to get data from the API. Please contact your developer.",
+    };
 
-    this.handleShowAddEntry = this.handleShowAddEntry.bind(this)
-    this.handleUpdateEntry = this.handleUpdateEntry.bind(this)
-    this.handleAddEntry = this.handleAddEntry.bind(this)
+    this.handleShowAddEntry = this.handleShowAddEntry.bind(this);
+    this.handleUpdateEntry = this.handleUpdateEntry.bind(this);
+    this.handleAddEntry = this.handleAddEntry.bind(this);
+    this.handleShowError = this.handleShowError.bind(this);
   }
 
   componentDidMount() {
-    this.getTags()
-    this.getProjects()
-    this.getEntries()
+    this.getTags();
+    this.getProjects();
+    this.getEntries();
   }
 
   async getTags() {
-    const { getAccessTokenSilently } = this.props.auth0
-    var token = await getAccessTokenSilently()
+    const { getAccessTokenSilently } = this.props.auth0;
+    var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-    let response = await fetch("api/tags", options)
+        Authorization: "Bearer " + token,
+      },
+    };
+    let response = await fetch("api/tags", options);
     if (response.ok) {
-      let result = await response.json()
-      this.setState({ tags: result })
+      let result = await response.json();
+      this.setState({ tags: result });
     } else {
-      //error
+      this.handleShowError();
     }
   }
 
   async getProjects() {
-    const { getAccessTokenSilently } = this.props.auth0
-    var token = await getAccessTokenSilently()
+    const { getAccessTokenSilently } = this.props.auth0;
+    var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-    let response = await fetch("/api/projects", options)
+        Authorization: "Bearer " + token,
+      },
+    };
+    let response = await fetch("/api/projects", options);
     if (response.ok) {
-      let result = await response.json()
-      this.setState({ projects: result, projectsLoaded: true })
+      let result = await response.json();
+      this.setState({ projects: result, projectsLoaded: true });
     } else {
-      //error
+      this.handleShowError();
     }
   }
 
   async getEntries() {
-    const { getAccessTokenSilently } = this.props.auth0
-    var token = await getAccessTokenSilently()
+    const { getAccessTokenSilently } = this.props.auth0;
+    var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-    let response = await fetch("/api/users/" + this.state.user.sub + "/entries", options)
+        Authorization: "Bearer " + token,
+      },
+    };
+    let response = await fetch(
+      "/api/users/" + this.state.user.sub + "/entries",
+      options
+    );
     if (response.ok) {
-      let result = await response.json()
-      console.log(result)
-      this.setState({ entries: result })
-      this.setState({ loading: false })
+      let result = await response.json();
+      console.log(result);
+      this.setState({ entries: result });
+      this.setState({ loading: false });
     } else {
-      //error
+      this.handleShowError();
+    }
+  }
+
+  handleShowError() {
+    if (this.state.ShowError) {
+      this.setState({ ShowError: false });
+    } else {
+      this.setState({ ShowError: true });
     }
   }
 
   handleShowAddEntry() {
     if (this.state.addEntry == true) {
-      this.setState({ addEntry: false })
+      this.setState({ addEntry: false });
     } else {
-      this.setState({ addEntry: true })
+      this.setState({ addEntry: true });
     }
   }
 
   handleAddEntry() {
-    this.getEntries()
-    this.getTags()
+    this.getEntries();
+    this.getTags();
   }
 
-    handleUpdateEntry() {
-        this.getEntries();
-        this.getTags();
-    }
+  handleUpdateEntry() {
+    this.getEntries();
+    this.getTags();
+  }
 
   render() {
-    var projects = this.state.projects
-    var tags = this.state.tags
+    var projects = this.state.projects;
+    var tags = this.state.tags;
+    
     class ProjectOption {
       constructor(label, value) {
-        this.label = label
-        this.value = value
+        this.label = label;
+        this.value = value;
       }
     }
-    var projectOptions = []
+    
+    var projectOptions = [];
     projects.map(function (project, index) {
-      const po = new ProjectOption(project.Title, project.Id)
-      projectOptions[index] = po
-    })
-    var entries = this.state.entries.map(entry => <EntryParent key={entry.Id} entry={entry} projects={projects} tags={tags} handleUpdateEntry={this.handleUpdateEntry} />)
+      const po = new ProjectOption(project.Title, project.Id);
+      projectOptions[index] = po;
+    });
+    var entries = this.state.entries.map((entry) => (
+      <EntryParent
+        key={entry.Id}
+        entry={entry}
+        projects={projects}
+        tags={tags}
+        handleUpdateEntry={this.handleUpdateEntry}
+      />
+    ));
+
+    if (this.state.ShowError) {
+      return (
+        <ErrorCard
+          title={this.state.ErrorTitle}
+          text={this.state.ErrorText}
+          handleShowError={this.handleShowError}
+        />
+      );
+    }
 
     if (this.state.loading) {
       return (
         <div>
           <h2>Loading...</h2>
         </div>
-      )
+      );
     }
 
     if (this.state.addEntry) {
-      return <AddEntry handleShowAddEntry={this.handleShowAddEntry} handleAddEntry={this.handleAddEntry} projects={projects} tags={tags} currentUser={this.state.user} />
+      return (
+        <AddEntry
+          handleShowAddEntry={this.handleShowAddEntry}
+          handleAddEntry={this.handleAddEntry}
+          projects={projects}
+          tags={tags}
+          currentUser={this.state.user}
+        />
+      );
     }
 
     if (this.state.entries.length > 0 && this.state.projectsLoaded) {
@@ -144,7 +189,10 @@ class Dashboard extends Component {
               </div>
               <div className="mx-auto"></div>
               <div className="ml-auto">
-                <button className="button round-button" onClick={this.handleShowAddEntry}>
+                <button
+                  className="button round-button"
+                  onClick={this.handleShowAddEntry}
+                >
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </div>
@@ -163,7 +211,10 @@ class Dashboard extends Component {
           </div>
           <div className="mx-auto"></div>
           <div className="ml-auto">
-            <button className="button round-button" onClick={this.handleShowAddEntry}>
+            <button
+              className="button round-button"
+              onClick={this.handleShowAddEntry}
+            >
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
