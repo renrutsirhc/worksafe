@@ -43,6 +43,17 @@ const Header = () => {
                         >
                             Projects
                         </NavLink>
+
+
+                        <NavLink
+                            to="/reports"
+                            exact
+                            activeClassName="router-link-exact-active"
+                            className="nav-button"
+                            onClick={() => setExpanded(false)}
+                        >
+                            Reports
+                        </NavLink>
                     </Nav>
                     <Nav className="ms-auto">
                         <ProfileIcon expanded={expanded} setExpanded={setExpanded}/>
