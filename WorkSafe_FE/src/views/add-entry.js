@@ -218,7 +218,7 @@ class AddEntry extends Component {
                         <Row>
                             <Form.Group className="mt-3">
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control as="textarea" type="text" value={this.state.Entry.Description || ""} onChange={this.handleDescriptionChange} placeholder="Decribe the entry" />
+                                <Form.Control as="textarea" type="text" value={this.state.Entry.Description || ""} onChange={this.handleDescriptionChange} placeholder="Describe the entry" />
                             </Form.Group>
                         </Row>
                         <Row>
@@ -230,7 +230,7 @@ class AddEntry extends Component {
                         <Row>
                             <Form.Group className="mt-3">
                                 <Form.Label>Learning</Form.Label>
-                                <Form.Control as="textarea" value={this.state.Entry.Learning} onChange={this.handleLearningChange} placeholder="Decribe the learning" />
+                                <Form.Control as="textarea" value={this.state.Entry.Learning} onChange={this.handleLearningChange} placeholder="Describe the learning" />
                             </Form.Group>
                         </Row>
                         <Row>
