@@ -10,10 +10,14 @@ class ProjectEntriesReport extends Component {
   }
 
   render() {
+    var entries = this.props.entries.map((entry) => (
+      <UserReportBody key={entry.Id} entry={entry} />
+    ));
+
     return (
       <div>
         <ProjectReportHeader></ProjectReportHeader>
-        <UserReportBody></UserReportBody>
+        {entries}
         <ProjectReportFooter></ProjectReportFooter>
       </div>
     );
