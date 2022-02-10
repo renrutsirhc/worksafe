@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
 import "../styles/styles.css";
 
@@ -12,8 +12,16 @@ class CardHeaderWithEditButton extends Component {
 
 
     render() {
-
-
+        var deletebutton;
+        // only apply delete button to entry cards
+        if (!!this.props.allowDelete && this.props.allowDelete == true) {
+            deletebutton=  <button
+                className="button grow card-header-button"
+                onClick={this.props.deleteEntry}
+            >
+                <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+        }
         if (this.props.subTitle != "") {
             return (
                 <Card.Header>
@@ -26,6 +34,7 @@ class CardHeaderWithEditButton extends Component {
                         </h6>
                     </div>
                     <div className="card-header-button-container">
+                        {deletebutton}
                         <button
                             className="button grow card-header-button"
                             onClick={this.props.setEditing}
@@ -44,6 +53,7 @@ class CardHeaderWithEditButton extends Component {
                         </h4>
                     </div>
                     <div className="card-header-button-container">
+                        {deletebutton}
                         <button
                             className="button grow card-header-button"
                             onClick={this.props.setEditing}
