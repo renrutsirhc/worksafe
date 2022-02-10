@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import UserReportFooter from "./user-report-footer"
-import UserReportHeader from "./user-report-header"
-import UserReportBody from "./user-report-body"
-import "../styles/report-styles.css"
+import React, { Component } from "react";
+import UserReportFooter from "./user-report-footer";
+import UserReportHeader from "./user-report-header";
+import UserReportBody from "./user-report-body";
+import "../styles/report-styles.css";
 
 class UserEntriesReport extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -19,11 +19,10 @@ class UserEntriesReport extends Component {
         <UserReportHeader></UserReportHeader>
         <hr></hr>
         {entries}
-        <hr></hr>
         <UserReportFooter></UserReportFooter>
       </div>
-    )
+    );
   }
 }
 
-export default UserEntriesReport
+export default UserEntriesReport;

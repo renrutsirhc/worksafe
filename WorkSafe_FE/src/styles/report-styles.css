@@ -1,5 +1,5 @@
 .report-table {
-  width: 100;
+  width: 100%;
   background-color: aliceblue;
   text-align: justify;
 }
@@ -12,14 +12,12 @@
 }
 
 .report-td-28 {
-  column-span: 2;
   vertical-align: top;
   width: 28%;
   height: 22;
 }
 
 .report-td-72 {
-  column-span: 2;
   vertical-align: top;
   width: 72%;
   height: 22;

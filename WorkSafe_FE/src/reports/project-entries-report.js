@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProjectReportFooter from "./project-report-footer";
 import ProjectReportHeader from "./project-report-header";
 import UserReportBody from "./user-report-body";
+import "../styles/report-styles.css";
 
 class ProjectEntriesReport extends Component {
   constructor(props) {
