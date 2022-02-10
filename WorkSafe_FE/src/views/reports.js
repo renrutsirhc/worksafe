@@ -1,16 +1,115 @@
 import React, { Component } from "react";
+import { Select } from "react-dropdown-select";
 import { Document, Packer, Paragraph, TextRun, SectionType, HeadingLevel, AlignmentType, Table, TableRow, TableCell } from "docx";
 import { saveAs } from "file-saver";
+import { ProjectEntriesReport, UserEntriesReport } from "../reports"
+import { withAuth0 } from "@auth0/auth0-react";
 
 
 
 class Reports extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showReport: false,
+            isUser: true,
+            entries: [],
+            user: {},
+            project: {},
+            projectsLoaded: false,
+        }
+
         this.generateDOCX = this.generateDOCX.bind(this);
         this.renderElement = this.renderElement.bind(this);
+        this.generateReport = this.generateReport.bind(this);
+        this.setReportType = this.setReportType.bind(this);
+        this.handleProjectChange = this.handleProjectChange.bind(this);
+    }
 
+    componentDidMount() {
+        this.getTags();
+        this.getProjects();
+        this.getEntries();
+    }
 
+    async getTags() {
+        const { getAccessTokenSilently } = this.props.auth0;
+        var token = await getAccessTokenSilently();
+        var options = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+        let response = await fetch("api/tags", options);
+        if (response.ok) {
+            let result = await response.json();
+            this.setState({ tags: result });
+        } else {
+            this.handleShowError();
+        }
+    }
+
+    async getProjects() {
+        const { getAccessTokenSilently } = this.props.auth0;
+        var token = await getAccessTokenSilently();
+        var options = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+        let response = await fetch("/api/projects", options);
+        if (response.ok) {
+            let result = await response.json();
+            this.setState({ projects: result, projectsLoaded: true });
+        } else {
+            this.handleShowError();
+        }
+    }
+
+    async getEntries() {
+        const { getAccessTokenSilently } = this.props.auth0;
+        var token = await getAccessTokenSilently();
+        var options = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+        let response = await fetch(
+            "/api/users/" + this.state.user.sub + "/entries",
+            options
+        );
+        if (response.ok) {
+            let result = await response.json();
+            console.log(result);
+            this.setState({ entries: result });
+            this.setState({ loading: false });
+        } else {
+            this.handleShowError();
+        }
+    }
+
+    handleProjectChange(event) {
+        this.setState((prevState) => {
+            let Entry = Object.assign({}, prevState.Entry);
+            if (event[0] == undefined) {
+                Entry.project = {
+                    project: {
+                        Id: "",
+                        Title: "",
+                    },
+                };
+            } else Entry.project = this.getProject(event[0].value);
+            return { Entry };
+        });
+    }
+
+    getProject(id) {
+        for (var i = 0; i < this.state.projects.length; i++) {
+            if (this.state.projects[i].Id == id) {
+                return this.state.projects[i];
+            }
+        }
+        return null;
     }
 
     renderElement(paragraphs, element) {
@@ -196,43 +295,126 @@ class Reports extends Component {
     };
 
 
+    generateReport() {
+        this.setState({
+            showReport: true,
+        })
+    }
+
+    setReportType(event) {
+        if (event.target.value == "User") {
+            this.setState({
+                isUser: true,
+            })
+        } else {
+            this.setState({
+                isUser: false,
+            })
+        }
+    }
+
+    feedProjectsOptions() {
+        var options = this.state.projects.map((project) => {
+            return {
+                value: project.Id,
+                label: project.Title,
+            };
+        });
+        // console.log(options);
+        return options;
+    }
 
 
 
     render() {
+
+
+        if (!this.state.projectsLoaded) {
+            return <h1>Loading...</h1>;
+        }
+
+        const placeHolderOption = "";
+        const projectsOptions = this.feedProjectsOptions();
+
+        if (this.state.showReport && this.state.isUser) {
+            return (
+                <div>
+                    <div>
+                        <div onChange={this.setReportType}>
+                            <input type="radio" value="User" name="reportType" /> User
+                            <input type="radio" value="Project" name="reportType" /> Project
+                        </div>
+                        <div>
+                        <Select
+                            placeholder={placeHolderOption}
+                            onChange={this.handleProjectChange}
+                            options={projectsOptions}
+                            backspaceDelete={false}
+                            clearable={true}
+                            dropdownHandle={false}
+                            />
+                        </div>
+                    </div>
+
+                    <button className="button" onClick={this.generateReport}>Generate Report</button>
+                    <div id="report">
+                        <UserEntriesReport entries={this.state.entries}/>
+                    </div>
+                </div>
+            )
+        }
+
+        if (this.state.showReport && !this.state.isUser) {
+            return (
+                <div>
+                    <div>
+                        <div onChange={this.setReportType}>
+                            <input type="radio" value="User" name="reportType" /> User
+                            <input type="radio" value="Project" name="reportType" /> Project
+                        </div>
+                        <div>
+                            <Select
+                                placeholder={placeHolderOption}
+                                onChange={this.handleProjectChange}
+                                options={projectsOptions}
+                                backspaceDelete={false}
+                                clearable={true}
+                                dropdownHandle={false}
+                            />
+                        </div>
+                    </div>
+
+                    <button className="button" onClick={this.generateReport}>Generate Report</button>
+                    <div id="report">
+                        <ProjectEntriesReport entries={this.state.entries} />
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div>
-                <button className="button" onClick={this.generateDOCX}>DOCX Report test</button>
-                <div id="report">
-                    <h1>H1 Title</h1>
-                    <h2>sub-title</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida pharetra nisl eu ullamcorper. Aenean interdum varius felis, sed lacinia magna iaculis at. Sed consequat ante eget imperdiet porttitor. Quisque posuere, elit id blandit aliquam, nisl augue viverra lectus, eget posuere dui leo in sapien. Aliquam ultricies odio a est lacinia imperdiet. Sed eget tellus in risus pulvinar semper. In eu fringilla quam, euismod scelerisque est. Cras nec efficitur purus.</p>
-                    <p>Suspendisse pulvinar dignissim fermentum. Ut interdum dui dui, sed pellentesque nisl vestibulum quis. Etiam eget imperdiet ligula. Aliquam turpis tellus, tincidunt eget ex vel, congue tempus orci. Nullam aliquet non turpis in lacinia. Vestibulum lobortis leo eros, sed consectetur dolor sodales ut. Ut et nulla et sapien lacinia molestie vitae volutpat est. Quisque suscipit ex vitae magna tempus, sed faucibus sem tincidunt. Nunc et posuere ante. </p>
-                    <p>Quisque lacinia ex ac scelerisque gravida. Vivamus mollis augue eget tellus volutpat ullamcorper. Etiam volutpat arcu vitae urna blandit blandit. Vivamus erat arcu, mattis id nisl eget, accumsan mollis lectus. Cras malesuada erat nec bibendum ullamcorper. Mauris ultrices eleifend purus at vestibulum. Aenean feugiat justo eget lacinia blandit. Nulla ac ipsum eget mauris tincidunt hendrerit. Proin pellentesque finibus massa id bibendum. In ultricies, sapien sed vestibulum facilisis, ipsum est lacinia ligula, et lacinia augue augue at est. Integer interdum nulla sit amet commodo fringilla. Suspendisse potenti. </p>
-                    <p>Cras tempor interdum arcu malesuada finibus. Phasellus id felis porttitor, lacinia lorem congue, porttitor sapien. Vestibulum imperdiet nisl a tortor malesuada, dapibus dapibus nulla fringilla. Etiam at ex orci. Pellentesque eu vulputate odio. In hac habitasse platea dictumst. Pellentesque ullamcorper, dolor ac placerat maximus, ipsum diam efficitur justo, sit amet venenatis purus sem id lectus. Curabitur et justo in arcu lacinia consequat. Pellentesque eget leo ornare, blandit odio non, tempor dui. Suspendisse ipsum augue, elementum in pulvinar eget, ullamcorper pellentesque augue. Morbi fermentum metus eget mi mollis, nec venenatis augue sodales. Maecenas pellentesque tortor sit amet laoreet dapibus. Suspendisse augue orci, elementum eget augue vitae, volutpat pretium urna.</p>
-                    <p>Pellentesque ac pellentesque enim. Donec tincidunt tortor dolor, eu porttitor urna luctus ultricies. Mauris quis pretium ipsum. Nullam eget mollis mi. Pellentesque laoreet eros nisl, quis commodo ipsum elementum in. Curabitur quam mauris, convallis at bibendum at, maximus et ipsum. Donec dictum, elit eu sollicitudin varius, ex sem mattis urna, hendrerit tristique lectus ex at nisl. Sed a bibendum ante, ut venenatis nulla. Sed faucibus bibendum felis non hendrerit. Proin in neque ac velit pellentesque vulputate ac eu massa. Vestibulum sit amet erat id ante porta tincidunt id non elit. Maecenas ante erat, suscipit in tortor a, suscipit auctor lectus. Aliquam et urna ut turpis hendrerit mollis quis at nulla. Nullam volutpat nec dui non faucibus. </p>
-                    <table>
-                        <tr>
-                            <th>Company</th>
-                            <th>Contact</th>
-                            <th>Country</th>
-                        </tr>
-                        <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                        </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-
-                    </table>
+                <div>
+                    <div onChange={this.setReportType}>
+                        <input type="radio" value="User" name="reportType" /> User
+                        <input type="radio" value="Project" name="reportType" /> Project
+                    </div>
+                    <div>
+                        <Select
+                            placeholder={placeHolderOption}
+                            onChange={this.handleProjectChange}
+                            options={projectsOptions}
+                            backspaceDelete={false}
+                            clearable={true}
+                            dropdownHandle={false}
+                        />
+                    </div>
                 </div>
+
+                <button className="button" onClick={this.generateReport}>Generate Report</button>
             </div>
         );
     }
 }
 
-export default Reports;
+export default withAuth0(Reports);
