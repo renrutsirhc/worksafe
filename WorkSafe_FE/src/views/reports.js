@@ -23,7 +23,7 @@ class Reports extends Component {
       showReport: false,
       isUser: true,
       entries: [],
-      user: {},
+      user: props.auth0.user,
       project: {},
       projectsLoaded: false,
     };
@@ -342,6 +342,9 @@ class Reports extends Component {
     const projectsOptions = this.feedProjectsOptions();
 
     if (this.state.showReport && this.state.isUser) {
+      console.log("Here");
+      console.log(this.state.entries);
+      console.log("Here");
       return (
         <div>
           <div>
