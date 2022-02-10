@@ -10,8 +10,6 @@ import PillarButtonClickable from "./pillar-button-clickable";
 import PillarButton from "./pillar-button";
 import CardHeaderWithViewEntryButton from "./card-header-with-view-entries-button";
 import EntryParent from "./entry-parent";
-import UserReportHeader from "./user-report-header";
-import UserReportFooter from "./user-report-footer";
 
 export {
   Footer,
@@ -26,6 +24,4 @@ export {
   PillarButtonClickable,
   CardHeaderWithViewEntryButton,
   EntryParent,
-  UserReportHeader,
-  UserReportFooter,
 };
