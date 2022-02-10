@@ -4,7 +4,7 @@ const UserReportFooter = (props) => {
   return (
     <div>
       <h6>Summary:</h6>
-      <input type="text" placeholder="Describe the entry"></input>
+      <input type="text" placeholder="Summary for user monthly report"></input>
     </div>
   );
 };
