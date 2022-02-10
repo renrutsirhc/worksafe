@@ -419,6 +419,7 @@ class Reports extends Component {
 
         var reportOptions = <div>
             <Form>
+                <div>Report Type</div>
                 <Row sm={1} md={2}>
 
                     <Form.Group onChange={this.setReportType}>
@@ -428,7 +429,7 @@ class Reports extends Component {
                                 <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
                                 User
                             </label>
-                            
+
 
                         </div>
                         <div>
@@ -436,7 +437,7 @@ class Reports extends Component {
                                 <input type="radio" value="Project" name="reportType" id="radio-project" />
                                 Project
                             </label>
-                          
+
                         </div>
                     </Form.Group>
                     <Select
@@ -447,6 +448,7 @@ class Reports extends Component {
                         backspaceDelete={false}
                         clearable={true}
                         dropdownHandle={false}
+                        disabled={this.state.isUser}
                     />
                 </Row>
                 <Row>
@@ -491,9 +493,16 @@ class Reports extends Component {
                         />
                     </Form.Group>
                 </Row>
+                <Row className="d-flex justify-content-between">
+                    <Col />
+                    <Col />
+                    <Col>
+                        <button className="button" onClick={this.generateReport}>Generate Report</button>
+                    </Col>
+                </Row>
             </Form>
 
-            <button className="button" onClick={this.generateReport}>Generate Report</button>
+
         </div>
 
 
