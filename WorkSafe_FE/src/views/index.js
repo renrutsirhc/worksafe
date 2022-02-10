@@ -12,5 +12,6 @@ import Projects from "./projects"
 import AddProject from "./add-project"
 import EditProject from "./edit-project"
 import ViewProjectEntries from "./view-project-entries"
+import Reports from "./reports";
 
-export { ExternalApi, Home, Profile, Login, AddEntry, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects, AddProject, EditProject, ViewProjectEntries }
+export { ExternalApi, Home, Profile, Login, AddEntry, EditEntry, ViewEntry, ViewFullEntry, ViewProject, ViewFullProject, Projects, AddProject, EditProject, ViewProjectEntries, Reports }
