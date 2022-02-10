@@ -14,6 +14,8 @@ class Reports extends Component {
             showReport: false,
             isUser: true,
             entries: [],
+            tags: [],
+            selectedTags: [],
             user: props.auth0.user,
             project: null,
             projectsLoaded: false,
@@ -28,6 +30,7 @@ class Reports extends Component {
         this.handleProjectChange = this.handleProjectChange.bind(this);
         this.handleStartDateChange = this.handleStartDateChange.bind(this);
         this.handleEndDateChange = this.handleEndDateChange.bind(this);
+        this.handleTagChange = this.handleTagChange.bind(this);
     }
 
     componentDidMount() {
@@ -70,6 +73,10 @@ class Reports extends Component {
     }
 
     async getEntries() {
+        if (!this.state.isUser && this.state.project == null) {
+            return;
+        }
+
         const { getAccessTokenSilently } = this.props.auth0;
         var token = await getAccessTokenSilently();
         var options = {
@@ -96,7 +103,7 @@ class Reports extends Component {
         var url = "";
         if (this.state.isUser) {
             url = "/api/users/" + this.state.user.sub + "/entries";
-        } else if (this.state.project != null){
+        } else if (this.state.project != null) {
             url = "/api/projects/" + this.state.project.Id + "/entries";
         }
 
@@ -113,6 +120,12 @@ class Reports extends Component {
 
         if (this.state.endDate != null) {
             query = query + "endDate=" + this.state.endDate + "&"
+        }
+
+        if (this.state.selectedTags.length > 0) {
+            for (var i = 0; i < this.state.selectedTags.length; i++) {
+                query = query + "tags=" + this.state.selectedTags[i] + "&"
+            }
         }
 
         if (query.length != 0) {
@@ -157,6 +170,12 @@ class Reports extends Component {
             }
         }
         return null;
+    }
+
+    handleTagChange(values) {
+        this.setState({
+            selectedTags: values.map((tag) => tag.value)
+        });
     }
 
     renderElement(paragraphs, element) {
@@ -350,10 +369,12 @@ class Reports extends Component {
         if (event.target.value == "User") {
             this.setState({
                 isUser: true,
+                showReport: false,
             })
         } else {
             this.setState({
                 isUser: false,
+                showReport: false,
             })
         }
     }
@@ -366,6 +387,16 @@ class Reports extends Component {
             };
         });
         // console.log(options);
+        return options;
+    }
+
+    feedTagsOptions() {
+        var options = this.state.tags.map((tag) => {
+            return {
+                label: tag,
+                value: tag,
+            };
+        });
         return options;
     }
 
@@ -384,59 +415,93 @@ class Reports extends Component {
 
         const placeHolderOption = "";
         const projectsOptions = this.feedProjectsOptions();
+        const tagsOptions = this.feedTagsOptions();
+
+        var reportOptions = <div>
+            <Form>
+                <Row sm={1} md={2}>
+                    <Form.Group onChange={this.setReportType}>
+                        <FormLabel>Report Type: </FormLabel>
+                        <input type="radio" value="User" name="reportType" defaultChecked="checked" /> User  
+                        <input type="radio" value="Project" name="reportType" /> Project
+                    </Form.Group>
+                </Row>
+                <Row>
+                    <Select
+                        placeholder="Select Project"
+                        onChange={this.handleProjectChange}
+                        options={projectsOptions}
+                        backspaceDelete={false}
+                        clearable={true}
+                        dropdownHandle={false}
+                    />
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group>
+                            <FormLabel>Start Date</FormLabel>
+                            <FormControl
+                                type="date"
+                                value={localStartDate}
+                                onChange={this.handleStartDateChange}
+                                name="date"
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group>
+                            <FormLabel>End Date</FormLabel>
+                            <FormControl
+                                type="date"
+                                value={localEndDate}
+                                onChange={this.handleEndDateChange}
+                                name="date"
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Form.Group className="mt-3">
+                        <Form.Label>Tags</Form.Label>
+                        <Select
+                            placeholder="Select Tag"
+                            options={tagsOptions}
+                            onChange={(values) => this.handleTagChange(values)}
+                            clearable={true}
+                            dropdownHandle={false}
+                            multi={true}
+                            create={false}
+                            color="#AAAAAA"
+                        />
+                    </Form.Group>
+                </Row>
+            </Form>
+
+            <button className="button" onClick={this.generateReport}>Generate Report</button>
+        </div>
+
+
+        if (!this.state.isUser && this.state.project == null) {
+            return (
+                <div>
+                    {reportOptions}
+                    <h2>Please select a project...</h2>
+                </div>
+            )
+        }
 
         if (this.state.showReport && this.state.isUser) {
             var entries = this.state.entries.map((entry) => <h1 key={entry.Id}>{entry.Title} - {new DateTime.fromISO(entry.EntryDate).toLocaleString(DateTime.DATETIME_FULL)}</h1>)
-            
-
-
             return (
                 <div>
-                    <div>
-                        <div onChange={this.setReportType}>
-                            <input type="radio" value="User" name="reportType" checked="checked"/> User
-                            <input type="radio" value="Project" name="reportType" /> Project
-                        </div>
-                        <div>
-                        <Select
-                            placeholder={placeHolderOption}
-                            onChange={this.handleProjectChange}
-                            options={projectsOptions}
-                            backspaceDelete={false}
-                            clearable={true}
-                            dropdownHandle={false}
-                            />
-                        </div>
-                        <div>
-                            <Form.Group>
-                                <FormLabel>Start Date</FormLabel>
-                                <FormControl
-                                    type="date"
-                                    value={localStartDate}
-                                    onChange={this.handleStartDateChange}
-                                    name="date"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <FormLabel>End Date</FormLabel>
-                                <FormControl
-                                    type="date"
-                                    value={localEndDate}
-                                    onChange={this.handleEndDateChange}
-                                    name="date"
-                                />
-                            </Form.Group>
-                        </div>
-                    </div>
-
-                    <button className="button" onClick={this.generateReport}>Generate Report</button>
+                    {reportOptions}
                     <div id="report">
-                        <UserEntriesReport entries={this.state.entries} user={this.state.user}/>
+                        <UserEntriesReport entries={this.state.entries} user={this.state.user} />
                     </div>
                     <div>
                         {/*this is temporary testing*/}
                         {entries}
-                     </div>
+                    </div>
                 </div>
             )
         }
@@ -445,46 +510,9 @@ class Reports extends Component {
             var entries = this.state.entries.map((entry) => <h1 key={entry.Id}>{entry.Title} - {new DateTime.fromISO(entry.EntryDate).toLocaleString(DateTime.DATETIME_FULL)}</h1>)
             return (
                 <div>
-                    <div>
-                        <div onChange={this.setReportType}>
-                            <input type="radio" value="User" name="reportType" checked="checked"/> User
-                            <input type="radio" value="Project" name="reportType" /> Project
-                        </div>
-                        <div>
-                            <Select
-                                placeholder={placeHolderOption}
-                                onChange={this.handleProjectChange}
-                                options={projectsOptions}
-                                backspaceDelete={false}
-                                clearable={true}
-                                dropdownHandle={false}
-                            />
-                        </div>
-                        <div>
-                            <Form.Group>
-                                <FormLabel>Start Date</FormLabel>
-                                <FormControl
-                                    type="date"
-                                    value={localStartDate}
-                                    onChange={this.handleStartDateChange}
-                                    name="date"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <FormLabel>End Date</FormLabel>
-                                <FormControl
-                                    type="date"
-                                    value={localEndDate}
-                                    onChange={this.handleEndDateChange}
-                                    name="date"
-                                />
-                            </Form.Group>
-                        </div>
-                    </div>
-
-                    <button className="button" onClick={this.generateReport}>Generate Report</button>
+                    {reportOptions}
                     <div id="report">
-                        <ProjectEntriesReport entries={this.state.entries} project={this.state.project}/>
+                        <ProjectEntriesReport entries={this.state.entries} project={this.state.project} />
                     </div>
                     <div>
                         {/*this is temporary testing*/}
@@ -496,44 +524,7 @@ class Reports extends Component {
 
         return (
             <div>
-                <div>
-                    <div onChange={this.setReportType}>
-                        <input type="radio" value="User" name="reportType" checked="checked"/> User
-                        <input type="radio" value="Project" name="reportType" /> Project
-                    </div>
-                    <div>
-                        <Select
-                            placeholder={placeHolderOption}
-                            onChange={this.handleProjectChange}
-                            options={projectsOptions}
-                            backspaceDelete={false}
-                            clearable={true}
-                            dropdownHandle={false}
-                        />
-                    </div>
-                    <div>
-                        <Form.Group>
-                            <FormLabel>Start Date</FormLabel>
-                            <FormControl
-                                type="date"
-                                value={localStartDate}
-                                onChange={this.handleStartDateChange}
-                                name="date"
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <FormLabel>End Date</FormLabel>
-                            <FormControl
-                                type="date"
-                                value={localEndDate}
-                                onChange={this.handleEndDateChange}
-                                name="date"
-                            />
-                        </Form.Group>
-                    </div>
-                </div>
-
-                <button className="button" onClick={this.generateReport}>Generate Report</button>
+                {reportOptions}
             </div>
         );
     }
