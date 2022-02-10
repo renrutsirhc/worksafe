@@ -355,11 +355,48 @@ namespace WorkSafe_BE.DataAccess
             return entry;
         }
 
-        public async Task<List<EntryModel>> GetEntries(string id, TopCollection topCollection)
+        public async Task<List<EntryModel>> GetEntries(string id, TopCollection topCollection, DateTime? startDate = null, DateTime? endDate = null, int? startEntryNum = null, int? numEntries = null, string[]? tags = null, string? orderBy = null)
         {
             var output = new List<EntryModel>();
             CollectionReference entriesRef = _db.Collection(topCollection.ToString()).Document(id).Collection("Entries");
-            Query query = entriesRef.OrderByDescending("TimeStamp");
+
+            Query query = entriesRef;
+
+            if (startDate != null)
+            {
+                query = query.WhereGreaterThanOrEqualTo ("EntryDate", startDate);
+            }
+
+            if (endDate != null)
+            {
+                query = query.WhereLessThanOrEqualTo("EntryDate", endDate);
+            }
+
+            if (startEntryNum != null)
+            {
+                startEntryNum = 0;
+            }
+
+            if (numEntries != null)
+            {
+                query = query.StartAt(startEntryNum).Limit((int)numEntries);
+            }
+
+            if (tags != null && tags.Length > 0)
+            {
+                query = query.WhereArrayContainsAny("tags", tags);
+            }
+
+            if (orderBy != null)
+            {
+                query = query.OrderByDescending(orderBy);
+            }
+            else
+            {
+                //default to sorting by entry date
+                query = query.OrderByDescending("EntryDate");
+            }
+            
             QuerySnapshot snapshot = await query.GetSnapshotAsync();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {

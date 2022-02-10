@@ -109,9 +109,9 @@ namespace WorkSafe_BE.Controllers
         [HttpGet("{projectid}/entries")]
         [Produces("application/json")]
         [Authorize]
-        public async Task<IActionResult> GetEntries(string projectid)
+        public async Task<IActionResult> GetEntries(string projectid, [FromQuery] DateTime? startDate = null, [FromQuery] DateTime? endDate = null, [FromQuery] int? startEntryNum = null, [FromQuery] int? numEntries = null, [FromQuery] string[]? tags = null, [FromQuery] string? orderBy = null)
         {
-            var entries = await _dbService.GetEntries(projectid, TopCollection.Projects);
+            var entries = await _dbService.GetEntries(projectid, TopCollection.Projects, startDate, endDate, startEntryNum, numEntries, tags, orderBy);
             if (entries != null)
             {
                 return Ok(entries);
