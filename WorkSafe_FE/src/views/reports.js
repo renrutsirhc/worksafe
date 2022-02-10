@@ -420,14 +420,27 @@ class Reports extends Component {
         var reportOptions = <div>
             <Form>
                 <Row sm={1} md={2}>
+
                     <Form.Group onChange={this.setReportType}>
-                        <FormLabel>Report Type: </FormLabel>
-                        <input type="radio" value="User" name="reportType" defaultChecked="checked" /> User  
-                        <input type="radio" value="Project" name="reportType" /> Project
+
+                        <div className="radio-label-column">
+                            <label className="radio-label" for="radio-user">
+                                <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
+                                User
+                            </label>
+                            
+
+                        </div>
+                        <div>
+                            <label className="radio-label" for="radio-project">
+                                <input type="radio" value="Project" name="reportType" id="radio-project" />
+                                Project
+                            </label>
+                          
+                        </div>
                     </Form.Group>
-                </Row>
-                <Row>
                     <Select
+                        className="project-select"
                         placeholder="Select Project"
                         onChange={this.handleProjectChange}
                         options={projectsOptions}
@@ -435,6 +448,9 @@ class Reports extends Component {
                         clearable={true}
                         dropdownHandle={false}
                     />
+                </Row>
+                <Row>
+
                 </Row>
                 <Row>
                     <Col>
