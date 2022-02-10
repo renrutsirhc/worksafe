@@ -1,8 +1,47 @@
-.report-body-title {
-  color: aqua;
-  background-color: white;
+.report-table {
+  width: 100;
+  background-color: aliceblue;
+  text-align: justify;
+}
+
+.report-td {
   column-span: 2;
+  vertical-align: top;
+  width: 100%;
+  height: 22;
+}
+
+.report-td-28 {
+  column-span: 2;
+  vertical-align: top;
+  width: 28%;
+  height: 22;
+}
+
+.report-td-72 {
+  column-span: 2;
+  vertical-align: top;
+  width: 72%;
+  height: 22;
+}
+
+.span-dark {
+  color: #282828;
+}
+
+.span-light {
+  color: beige;
+}
+
+.report-body-title {
+  color: #282829;
+  column-span: 2;
+  vertical-align: top;
+  width: 100%;
+  height: fit-content;
 }
 
 .report-h2 {
+  width: fit-content;
+  height: fit-content;
 }
