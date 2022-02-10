@@ -36,7 +36,7 @@ class ViewFullProject extends Component {
             <Card.Title>Goal</Card.Title>
             <Card.Text>{this.props.project.ProjectGoal}</Card.Text>
             <Card.Title>Pillars</Card.Title>
-            <Card.Text>
+            <>
               <div className="mb-2 d-flex flex-wrap">
                 <PillarButton
                   checked={this.props.project.PillarEmbedding}
@@ -64,7 +64,7 @@ class ViewFullProject extends Component {
                   pillarname={"Connection"}
                 />
               </div>
-            </Card.Text>
+            </>
             <Card.Title>Creation Date</Card.Title>
             <Card.Text>{localCreationTime}</Card.Text>
           </Card.Body>
