@@ -51,7 +51,7 @@ class EditEntry extends Component {
     });
   }
 
-handleProjectChange(event) {
+  handleProjectChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       if (event[0] == undefined) {
@@ -67,7 +67,7 @@ handleProjectChange(event) {
     });
   }
 
-handleDescriptionChange(event) {
+  handleDescriptionChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Description = event.target.value;
@@ -75,7 +75,7 @@ handleDescriptionChange(event) {
     });
   }
 
-handleLearningChange(event) {
+  handleLearningChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Learning = event.target.value;
@@ -83,7 +83,7 @@ handleLearningChange(event) {
     });
   }
 
-handleMindsetChange(event) {
+  handleMindsetChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.MindSet = event.target.value;
@@ -91,7 +91,7 @@ handleMindsetChange(event) {
     });
   }
 
-handleImpactChange(event) {
+  handleImpactChange(event) {
     this.setState((prevState) => {
       let Entry = Object.assign({}, prevState.Entry);
       Entry.Impact = event.target.value;
@@ -106,13 +106,13 @@ handleImpactChange(event) {
     });
   }
 
-handleShowError() {
+  handleShowError() {
     if (this.state.ShowError) {
       this.setState({ ShowError: false });
     } else {
       this.setState({ ShowError: true });
     }
-}
+  }
 
   handleSubmit = async (event) => {
     event.preventDefault();

@@ -111,7 +111,7 @@ class EditProject extends Component {
     }
   }
 
-  async handleSubmit(event) {
+  handleSubmit = async (event) => {
     event.preventDefault();
     const { getAccessTokenSilently } = this.props.auth0;
     var token = await getAccessTokenSilently();
@@ -135,7 +135,7 @@ class EditProject extends Component {
     } else {
       this.handleShowError();
     }
-  }
+  };
 
   render() {
     if (this.state.ShowError) {

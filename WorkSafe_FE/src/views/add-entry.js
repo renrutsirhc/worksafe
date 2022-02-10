@@ -214,8 +214,6 @@ class AddEntry extends Component {
     return (
       // add a button, call this.props.handleShowAddEntry
 
-
-
       <Form>
         <Card>
           <CardHeaderWithCloseButton
@@ -236,8 +234,6 @@ class AddEntry extends Component {
                   />
                 </Form.Group>
               </Col>
-
-
               <Col md={3}>
                 <Form.Group>
                   <FormLabel>Date</FormLabel>

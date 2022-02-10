@@ -1,27 +1,37 @@
-import React from "react"
+import React from "react";
 
-const PillarButtonClickable = props => {
-    function toggle(event) {
-        event.preventDefault();
+const PillarButtonClickable = (props) => {
+  function toggle(event) {
+    event.preventDefault();
     if (props.checked == true) {
-      props.toggleChecked(false)
+      props.toggleChecked(false);
     } else {
-      props.toggleChecked(true)
+      props.toggleChecked(true);
     }
   }
 
   if (props.checked) {
     return (
-      <button className="button pillar-button" disabled={props.disabled} onClick={toggle}>
+      <button
+        className="button pillar-button"
+        disabled={props.disabled}
+        onClick={toggle}
+        type="button"
+      >
         {props.pillarname}
       </button>
-    )
+    );
   } else {
     return (
-      <button className="button pillar-button-unselected" disabled={props.disabled} onClick={toggle}>
+      <button
+        className="button pillar-button-unselected"
+        disabled={props.disabled}
+        onClick={toggle}
+        type="button"
+      >
         {props.pillarname}
       </button>
-    )
+    );
   }
-}
-export default PillarButtonClickable
+};
+export default PillarButtonClickable;

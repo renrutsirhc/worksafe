@@ -126,14 +126,14 @@ class Dashboard extends Component {
   render() {
     var projects = this.state.projects;
     var tags = this.state.tags;
-    
+
     class ProjectOption {
       constructor(label, value) {
         this.label = label;
         this.value = value;
       }
     }
-    
+
     var projectOptions = [];
     projects.map(function (project, index) {
       const po = new ProjectOption(project.Title, project.Id);
@@ -190,6 +190,7 @@ class Dashboard extends Component {
               <div className="mx-auto"></div>
               <div className="ml-auto">
                 <button
+                  type="button"
                   className="button round-button"
                   onClick={this.handleShowAddEntry}
                 >
@@ -200,7 +201,7 @@ class Dashboard extends Component {
             {entries}
           </div>
         </div>
-      )
+      );
     }
 
     return (
@@ -212,6 +213,7 @@ class Dashboard extends Component {
           <div className="mx-auto"></div>
           <div className="ml-auto">
             <button
+              type="button"
               className="button round-button"
               onClick={this.handleShowAddEntry}
             >
@@ -222,8 +224,8 @@ class Dashboard extends Component {
 
         <h2>No Entries to Display...</h2>
       </div>
-    )
+    );
   }
 }
 
-export default withAuth0(Dashboard)
+export default withAuth0(Dashboard);
