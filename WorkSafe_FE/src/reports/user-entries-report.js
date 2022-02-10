@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserReportFooter from "./user-report-footer";
 import UserReportHeader from "./user-report-header";
+import UserReportBody from "./user-report-body";
 
 class UserEntriesReport extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class UserEntriesReport extends Component {
       <div>
         <UserReportHeader></UserReportHeader>
         <hr></hr>
-        Body
+        <UserReportBody></UserReportBody>
         <hr></hr>
         <UserReportFooter></UserReportFooter>
       </div>
