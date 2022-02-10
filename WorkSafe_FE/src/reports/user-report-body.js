@@ -2,13 +2,16 @@ import React from "react";
 import "../styles/report-styles.css";
 
 const UserReportBody = (props) => {
+  let entryTitle = props.entry.Title;
+  console.log(entryTitle);
+
   return (
     <div>
       <table className="report-table">
         <tbody>
           <tr>
             <td className="report-body-title" colSpan={2}>
-              <h2 className="report-h2">I updated some things</h2>
+              <h2 className="report-h2">{entryTitle}</h2>
               <h6>Project name</h6>
             </td>
           </tr>
