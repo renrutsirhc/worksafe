@@ -188,7 +188,7 @@ namespace WorkSafe_BE.DataAccess
 
         /// <summary>
         /// Gets a list of all projects from firebase
-        /// </summary>s
+        /// </summary>
         /// <returns>A list of ProjectModels</returns>
         public async Task<List<ProjectModel>> GetProjects()
         {
@@ -384,7 +384,7 @@ namespace WorkSafe_BE.DataAccess
 
             if (tags != null && tags.Length > 0)
             {
-                query = query.WhereArrayContainsAny("tags", tags);
+                query = query.WhereArrayContainsAny("Tags", tags);
             }
 
             if (orderBy != null)
