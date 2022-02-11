@@ -1,9 +1,16 @@
-import React from "react";
-import "../styles/report-styles.css";
+import React from "react"
+import "../styles/report-styles.css"
 
-const UserReportBody = (props) => {
-  let entryTitle = props.entry.Title;
-  console.log(entryTitle);
+const UserReportBody = props => {
+  let entryTitle = props.entry.Title
+  let entryDescription = props.entry.Description
+  let entryLearning = props.entry.Learning
+  let entryImpact = props.entry.Impact
+  let entryMindset = props.entry.Mindset
+  let entryNextSteps = props.entry.NextSteps
+  let entryTags = props.entry.Tags
+  let entryFiles = props.entry.Files
+  let entryDate = props.entry.EntryDate
 
   return (
     <div>
@@ -12,7 +19,6 @@ const UserReportBody = (props) => {
           <tr>
             <td className="report-body-title" colSpan={2}>
               <h2 className="report-h2">{entryTitle}</h2>
-              <h6>Project name</h6>
             </td>
           </tr>
           <tr>
@@ -22,12 +28,7 @@ const UserReportBody = (props) => {
                   <strong>Description</strong>
                 </span>
               </p>
-              <p className="paragraph">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Maecenas porttitor congue massa. Fusce posuere, magna sed
-                pulvinar ultricies, purus lectus malesuada libero, sit amet
-                commodo magna eros quis urna.
-              </p>
+              <p className="paragraph">{entryDescription}</p>
             </td>
           </tr>
           <tr>
@@ -37,10 +38,7 @@ const UserReportBody = (props) => {
                   <strong>Learning</strong>
                 </span>
               </p>
-              <p className="paragraph">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Maecenas porttitor congue massa.
-              </p>
+              <p className="paragraph">{entryLearning}</p>
             </td>
           </tr>
           <tr>
@@ -50,12 +48,7 @@ const UserReportBody = (props) => {
                   <strong>Impact</strong>
                 </span>
               </p>
-              <p className="paragraph">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Maecenas porttitor congue massa. Fusce posuere, magna sed
-                pulvinar ultricies, purus lectus malesuada libero, sit amet
-                commodo magna eros quis urna. Nunc viverra imperdiet enim.
-              </p>
+              <p className="paragraph">{entryImpact}</p>
             </td>
           </tr>
           <tr valign="top">
@@ -65,9 +58,7 @@ const UserReportBody = (props) => {
                   <strong>Mindset</strong>
                 </span>
               </p>
-              <p className="paragraph">
-                Lorem ipsum dolor sit amet, consectetuer.
-              </p>
+              <p className="paragraph">{entryMindset}</p>
             </td>
             <td className="report-td-72">
               <p className="paragraph">
@@ -75,14 +66,7 @@ const UserReportBody = (props) => {
                   <strong>Next Steps</strong>
                 </span>
               </p>
-              <p className="paragraph">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-              </p>
-              <p className="paragraph">Maecenas porttitor congue massa.</p>
-              <p className="paragraph">
-                Fusce posuere, magna sed pulvinar ultricies, purus lectus
-                malesuada libero, sit amet commodo magna eros quis urna.
-              </p>
+              <p className="paragraph">{entryNextSteps}</p>
             </td>
           </tr>
           <tr valign="top">
@@ -92,8 +76,7 @@ const UserReportBody = (props) => {
                   <strong>Tags</strong>
                 </span>
               </p>
-              <p className="paragraph">Review</p>
-              <p className="paragraph">&nbsp;</p>
+              <p className="paragraph">{entryTags}</p>
             </td>
             <td className="report-td-72">
               <p className="paragraph">
@@ -101,21 +84,11 @@ const UserReportBody = (props) => {
                   <strong>Files</strong>
                 </span>
               </p>
-              <p className="paragraph">https://filestorage.com/filename.file</p>
-              <p className="paragraph">
-                https://filestorage.com/videofile.video
-              </p>
+              <p className="paragraph">{entryFiles}</p>
             </td>
           </tr>
           <tr>
-            <td
-              style={{ background: "#648181" }}
-              colSpan={2}
-              valign="top"
-              bgcolor="#648181"
-              width="100%"
-              height={22}
-            >
+            <td style={{ background: "#648181" }} colSpan={2} valign="top" bgcolor="#648181" width="100%" height={22}>
               <p className="paragraph">
                 <span className="span-light">
                   <strong>Freddie </strong>22/01/22
@@ -127,7 +100,7 @@ const UserReportBody = (props) => {
       </table>
       <hr></hr>
     </div>
-  );
-};
+  )
+}
 
-export default UserReportBody;
+export default UserReportBody
