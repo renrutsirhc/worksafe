@@ -15,85 +15,85 @@ const UserReportBody = props => {
 
   return (
     <div>
-      <table className="report-table">
+      <table>
         <tbody>
           <tr>
-            <td className="report-body-title" colSpan={2}>
-              <h2 className="report-h2">{entryTitle}</h2>
+            <td colSpan={2}>
+              <h2>{entryTitle}</h2>
             </td>
           </tr>
           <tr>
-            <td className="report-td" colSpan={2}>
-              <p className="paragraph">
-                <span className="span">
+            <td colSpan={2}>
+              <p>
+                <span>
                   <strong>Description</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryDescription}</p>
+              <p>{entryDescription}</p>
             </td>
           </tr>
           <tr>
-            <td className="report-td" colSpan={2}>
-              <p className="paragraph">
-                <span className="span">
+            <td colSpan={2}>
+              <p>
+                <span>
                   <strong>Learning</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryLearning}</p>
+              <p>{entryLearning}</p>
             </td>
           </tr>
           <tr>
             <td className="report-td" colSpan={2}>
-              <p className="paragraph">
-                <span className="span">
+              <p>
+                <span>
                   <strong>Impact</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryImpact}</p>
+              <p>{entryImpact}</p>
             </td>
           </tr>
           <tr valign="top">
             <td className="report-td-28">
-              <p className="paragraph">
-                <span className="span">
+              <p>
+                <span>
                   <strong>Mindset</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryMindset}</p>
+              <p>{entryMindset}</p>
             </td>
             <td className="report-td-72">
-              <p className="paragraph">
-                <span className="span">
+              <p>
+                <span>
                   <strong>Next Steps</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryNextSteps}</p>
+              <p>{entryNextSteps}</p>
             </td>
           </tr>
           <tr valign="top">
             <td className="report-td-28">
-              <p className="paragraph">
-                <span className="span">
+              <p>
+                <span>
                   <strong>Tags</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryTags}</p>
+              <p>{entryTags}</p>
             </td>
             <td className="report-td-72">
-              <p className="paragraph">
-                <span className="span">
+              <p>
+                <span>
                   <strong>Files</strong>
                 </span>
               </p>
-              <p className="paragraph">{entryFiles}</p>
+              <p>{entryFiles}</p>
             </td>
           </tr>
           <tr>
             <td style={{ background: "#648181" }} colSpan={2} valign="top" bgcolor="#648181" width="100%" height={22}>
-              <p className="paragraph">
+              <p>
                 <span className="span-light">
                   <strong>
-                    Date {entryDate} by {entryAuthor}
+                    Created {entryDate} by {entryAuthor}
                   </strong>
                 </span>
               </p>

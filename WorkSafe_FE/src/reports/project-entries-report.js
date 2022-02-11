@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ProjectReportFooter from "./project-report-footer";
 import ProjectReportHeader from "./project-report-header";
-import ProjectReportBody from "./user-report-body";
+import ProjectReportBody from "./project-report-body";
 import UserReportBody from "./user-report-body";
 import "../styles/report-styles.css";
 
@@ -11,13 +11,16 @@ class ProjectEntriesReport extends Component {
   }
 
   render() {
-    var projects = this.props.projects.map(project => <ProjectReportBody key={entry.project.Id} project={project} />);
-    var entries = this.props.entries.map(entry => <UserReportBody key={entry.Id} entry={entry} />);
+    var entries = this.props.entries.map(entry => {
+      console.log(entry);
+      return <UserReportBody key={entry.Id} entry={entry} />;
+    });
+    var project = this.props.entries[0].Project;
 
     return (
       <div>
         <ProjectReportHeader></ProjectReportHeader>
-        {projects}
+        <ProjectReportBody project={project}></ProjectReportBody>
         {entries}
         <ProjectReportFooter></ProjectReportFooter>
       </div>

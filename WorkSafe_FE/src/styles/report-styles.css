@@ -2,13 +2,13 @@ input {
   margin: 0.5rem;
 }
 
-.report-table {
+table {
   width: 100%;
   background-color: aliceblue;
   text-align: justify;
 }
 
-.report-td {
+td {
   column-span: 2;
   vertical-align: top;
   width: 100%;
@@ -43,7 +43,7 @@ input {
   height: fit-content;
 }
 
-.report-h2 {
+h2 {
   width: fit-content;
   height: fit-content;
 }

@@ -10,13 +10,11 @@ class UserEntriesReport extends Component {
   }
 
   render() {
-    var entries = this.props.entries.map((entry) => (
-      <UserReportBody key={entry.Id} entry={entry} />
-    ));
+    var entries = this.props.entries.map(entry => <UserReportBody key={entry.Id} entry={entry} />);
 
     return (
       <div>
-        <UserReportHeader></UserReportHeader>
+        <UserReportHeader userName={this.props.entries[0].Author.Name}></UserReportHeader>
         <hr></hr>
         {entries}
         <UserReportFooter></UserReportFooter>
