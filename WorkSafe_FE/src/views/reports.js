@@ -538,12 +538,12 @@ class Reports extends Component {
             return (
                 <div>
                     {reportOptions}
-                    <div id="report">
-                        <UserEntriesReport entries={this.state.entries} user={this.state.user} />
-                    </div>
-                    <div>
-                        {/*this is temporary testing*/}
-                        {entries}
+                    <div className="d-flex justify-content-center">
+                        <Card className="mt-3 report-card">
+                            <div id="report">
+                                <UserEntriesReport entries={this.state.entries} user={this.state.user} />
+                            </div>
+                        </Card>
                     </div>
                 </div>
             )
@@ -554,12 +554,12 @@ class Reports extends Component {
             return (
                 <div>
                     {reportOptions}
-                    <div id="report">
-                        <ProjectEntriesReport entries={this.state.entries} project={this.state.project} />
-                    </div>
-                    <div>
-                        {/*this is temporary testing*/}
-                        {entries}
+                    <div className="d-flex justify-content-center">
+                        <Card className="mt-3 report-card">
+                            <div id="report">
+                                <ProjectEntriesReport entries={this.state.entries} project={this.state.project} />
+                            </div>
+                        </Card>
                     </div>
                 </div>
             )

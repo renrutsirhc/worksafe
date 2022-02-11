@@ -315,3 +315,14 @@ input[type="radio"] {
 .whitefooter {
   background-color: white;
 }
+
+/*Report Page*/
+#report{
+    margin:2.54cm;
+}
+
+.report-card {
+    width: 21cm;
+    min-width: 21cm!important;
+    min-height: 29.7cm;
+}
