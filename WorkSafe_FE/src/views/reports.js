@@ -419,11 +419,10 @@ class Reports extends Component {
 
         var reportOptions = <div>
             <Form>
-                <div>Report Type</div>
-                <Row sm={1} md={2}>
-
-                    <Form.Group onChange={this.setReportType}>
-
+                <FormLabel>Report Type</FormLabel>
+                <Row>
+                    <Col sm={12} md={6}>
+                        <Form.Group onChange={this.setReportType} >                       
                         <div className="radio-label-column">
                             <label className="radio-label" for="radio-user">
                                 <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
@@ -431,17 +430,19 @@ class Reports extends Component {
                             </label>
 
 
-                        </div>
-                        <div>
+                            </div>
+                            <div className="radio-label-column">
                             <label className="radio-label" for="radio-project">
                                 <input type="radio" value="Project" name="reportType" id="radio-project" />
                                 Project
                             </label>
 
                         </div>
-                    </Form.Group>
+                                            </Form.Group>
+                        </Col>
+
+                    <Col sm={12} md={6}>
                     <Select
-                        className="project-select"
                         placeholder="Select Project"
                         onChange={this.handleProjectChange}
                         options={projectsOptions}
@@ -450,13 +451,14 @@ class Reports extends Component {
                         dropdownHandle={false}
                         disabled={this.state.isUser}
                     />
+                    </Col>
                 </Row>
                 <Row>
 
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Group>
+                        <Form.Group className="mt-3">
                             <FormLabel>Start Date</FormLabel>
                             <FormControl
                                 type="date"
@@ -467,7 +469,7 @@ class Reports extends Component {
                         </Form.Group>
                     </Col>
                     <Col>
-                        <Form.Group>
+                        <Form.Group className="mt-3">
                             <FormLabel>End Date</FormLabel>
                             <FormControl
                                 type="date"
@@ -493,13 +495,11 @@ class Reports extends Component {
                         />
                     </Form.Group>
                 </Row>
-                <Row className="d-flex justify-content-between">
-                    <Col />
-                    <Col />
-                    <Col>
-                        <button className="button" onClick={this.generateReport}>Generate Report</button>
-                    </Col>
-                </Row>
+                <div className="d-flex justify-content-end">
+                    <div>
+                        <button className="button mt-3" onClick={this.generateReport}>Generate Report</button>
+                    </div>
+                </div>
             </Form>
 
 
