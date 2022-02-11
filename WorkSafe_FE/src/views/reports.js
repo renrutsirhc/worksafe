@@ -544,6 +544,11 @@ class Reports extends Component {
                             </div>
                         </Card>
                     </div>
+                    <div className="d-flex justify-content-end">
+                        <div>
+                            <button type="button" className="button mt-3" onClick={this.generateDOCX}>Create Word Document</button>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -559,6 +564,11 @@ class Reports extends Component {
                                 <ProjectEntriesReport entries={this.state.entries} project={this.state.project} />
                             </div>
                         </Card>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                        <div>
+                            <button type="button" className="button mt-3" onClick={this.generateDOCX}>Create Word Document</button>
+                        </div>
                     </div>
                 </div>
             )
