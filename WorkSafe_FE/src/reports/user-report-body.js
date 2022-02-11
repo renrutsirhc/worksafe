@@ -1,16 +1,17 @@
-import React from "react"
-import "../styles/report-styles.css"
+import React from "react";
+import "../styles/report-styles.css";
 
 const UserReportBody = props => {
-  let entryTitle = props.entry.Title
-  let entryDescription = props.entry.Description
-  let entryLearning = props.entry.Learning
-  let entryImpact = props.entry.Impact
-  let entryMindset = props.entry.Mindset
-  let entryNextSteps = props.entry.NextSteps
-  let entryTags = props.entry.Tags
-  let entryFiles = props.entry.Files
-  let entryDate = props.entry.EntryDate
+  var entryAuthor = props.entry.Author.Name;
+  var entryTitle = props.entry.Title;
+  var entryDescription = props.entry.Description;
+  var entryLearning = props.entry.Learning;
+  var entryImpact = props.entry.Impact;
+  var entryMindset = props.entry.Mindset;
+  var entryNextSteps = props.entry.NextSteps;
+  var entryTags = props.entry.Tags;
+  var entryFiles = props.entry.Files;
+  var entryDate = props.entry.EntryDate;
 
   return (
     <div>
@@ -91,7 +92,9 @@ const UserReportBody = props => {
             <td style={{ background: "#648181" }} colSpan={2} valign="top" bgcolor="#648181" width="100%" height={22}>
               <p className="paragraph">
                 <span className="span-light">
-                  <strong>Freddie </strong>22/01/22
+                  <strong>
+                    Date {entryDate} by {entryAuthor}
+                  </strong>
                 </span>
               </p>
             </td>
@@ -100,7 +103,7 @@ const UserReportBody = props => {
       </table>
       <hr></hr>
     </div>
-  )
-}
+  );
+};
 
-export default UserReportBody
+export default UserReportBody;
