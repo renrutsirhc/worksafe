@@ -47,6 +47,7 @@ const ProjectReportBody = props => {
       <p className="mb-4">
         <ul id="projectPillars"></ul>
       </p>
+      <hr></hr>
     </div>
   );
 };

@@ -14,95 +14,85 @@ const UserReportBody = props => {
   var entryDate = props.entry.EntryDate;
 
   return (
-    <div>
-      <table>
-        <tbody>
-          <tr>
-            <td colSpan={2}>
-              <h2>{entryTitle}</h2>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>
-                <span>
+    <>
+      <div>
+        <table>
+          <td>
+            <tr>
+              <td colSpan={2}>
+                <h2>{entryTitle}</h2>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <span className="light">
                   <strong>Description</strong>
                 </span>
-              </p>
-              <p>{entryDescription}</p>
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <p>
+                <td>{entryDescription}</td>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={2}>
                 <span>
                   <strong>Learning</strong>
                 </span>
-              </p>
-              <p>{entryLearning}</p>
-            </td>
-          </tr>
-          <tr>
-            <td className="report-td" colSpan={2}>
-              <p>
+                <td>{entryLearning}</td>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={2}>
                 <span>
                   <strong>Impact</strong>
                 </span>
-              </p>
-              <p>{entryImpact}</p>
+                <td>{entryImpact}</td>
+              </td>
+            </tr>
+            <td>
+              <table>
+                <tr valign="top" colSpan={3}>
+                  <td className="report-td-28">
+                    <span className="report-td-28">
+                      <strong>Mindset</strong>
+                    </span>
+                    <td>{entryMindset}</td>
+                  </td>
+                  <td className="report-td-72">
+                    <span className="report-td-72">
+                      <strong>Next Steps</strong>
+                    </span>
+                    <td>{entryNextSteps}</td>
+                  </td>
+                </tr>
+                <tr valign="top">
+                  <td className="report-td-28">
+                    <span>
+                      <strong>Tags</strong>
+                    </span>
+                    <td>{entryTags}</td>
+                  </td>
+                  <td className="report-td-72">
+                    <span>
+                      <strong>Files</strong>
+                    </span>
+                    <td>{entryFiles}</td>
+                  </td>
+                </tr>
+              </table>
             </td>
-          </tr>
-          <tr valign="top">
-            <td className="report-td-28">
-              <p>
+            <tr>
+              <td>
                 <span>
-                  <strong>Mindset</strong>
-                </span>
-              </p>
-              <p>{entryMindset}</p>
-            </td>
-            <td className="report-td-72">
-              <p>
-                <span>
-                  <strong>Next Steps</strong>
-                </span>
-              </p>
-              <p>{entryNextSteps}</p>
-            </td>
-          </tr>
-          <tr valign="top">
-            <td className="report-td-28">
-              <p>
-                <span>
-                  <strong>Tags</strong>
-                </span>
-              </p>
-              <p>{entryTags}</p>
-            </td>
-            <td className="report-td-72">
-              <p>
-                <span>
-                  <strong>Files</strong>
-                </span>
-              </p>
-              <p>{entryFiles}</p>
-            </td>
-          </tr>
-          <tr>
-            <td style={{ background: "#648181" }} colSpan={2} valign="top" bgcolor="#648181" width="100%" height={22}>
-              <p>
-                <span className="span-light">
                   <strong>
                     Created {entryDate} by {entryAuthor}
                   </strong>
                 </span>
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <hr></hr>
-    </div>
+              </td>
+            </tr>
+          </td>
+        </table>
+        <hr></hr>
+      </div>
+    </>
   );
 };
 

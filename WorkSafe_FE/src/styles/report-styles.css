@@ -4,7 +4,7 @@ input {
 
 table {
   width: 100%;
-  background-color: aliceblue;
+  background-color: #e1e5da;
   text-align: justify;
 }
 
@@ -17,26 +17,22 @@ td {
 
 .report-td-28 {
   vertical-align: top;
-  width: 28%;
-  height: 22;
+  width: auto;
+  height: auto;
 }
 
 .report-td-72 {
   vertical-align: top;
-  width: 72%;
-  height: 22;
+  width: auto;
+  height: auto;
 }
 
-.span-dark {
-  color: #282828;
-}
-
-.span-light {
-  color: beige;
+span {
+  color: #943a7a;
 }
 
 .report-body-title {
-  color: #282829;
+  color: #272725;
   column-span: 2;
   vertical-align: top;
   width: 100%;
@@ -46,4 +42,14 @@ td {
 h2 {
   width: fit-content;
   height: fit-content;
+}
+
+.h1-report {
+  display: inline-block;
+  position: relative;
+  right: 0px;
+}
+
+.logo-report {
+  display: inline-block;
 }
