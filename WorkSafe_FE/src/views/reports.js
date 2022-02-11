@@ -6,6 +6,7 @@ import { ProjectEntriesReport, UserEntriesReport } from "../reports"
 import { withAuth0 } from "@auth0/auth0-react";
 import { DateTime } from "luxon";
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap";
+import "../styles/report-styles.css";
 
 class Reports extends Component {
     constructor(props) {
