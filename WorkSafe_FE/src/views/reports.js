@@ -534,7 +534,6 @@ class Reports extends Component {
         }
 
         if (this.state.showReport && this.state.isUser) {
-            var entries = this.state.entries.map((entry) => <h1 key={entry.Id}>{entry.Title} - {new DateTime.fromISO(entry.EntryDate).toLocaleString(DateTime.DATETIME_FULL)}</h1>)
             return (
                 <div>
                     {reportOptions}
