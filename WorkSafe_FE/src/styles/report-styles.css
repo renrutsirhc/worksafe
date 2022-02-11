@@ -1,3 +1,7 @@
+input {
+  margin: 0.5rem;
+}
+
 .report-table {
   width: 100%;
   background-color: aliceblue;

@@ -1,20 +1,10 @@
 import React, { Component } from "react";
 import { Select } from "react-dropdown-select";
-import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-  SectionType,
-  HeadingLevel,
-  AlignmentType,
-  Table,
-  TableRow,
-  TableCell,
-} from "docx";
+import { Document, Packer, Paragraph, TextRun, SectionType, HeadingLevel, AlignmentType, Table, TableRow, TableCell } from "docx";
 import { saveAs } from "file-saver";
 import { ProjectEntriesReport, UserEntriesReport } from "../reports";
 import { withAuth0 } from "@auth0/auth0-react";
+import "../styles/report-styles.css";
 
 class Reports extends Component {
   constructor(props) {
@@ -25,7 +15,7 @@ class Reports extends Component {
       entries: [],
       user: props.auth0.user,
       project: {},
-      projectsLoaded: false,
+      projectsLoaded: false
     };
 
     this.generateDOCX = this.generateDOCX.bind(this);
@@ -46,8 +36,8 @@ class Reports extends Component {
     var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token,
-      },
+        Authorization: "Bearer " + token
+      }
     };
     let response = await fetch("api/tags", options);
     if (response.ok) {
@@ -63,8 +53,8 @@ class Reports extends Component {
     var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token,
-      },
+        Authorization: "Bearer " + token
+      }
     };
     let response = await fetch("/api/projects", options);
     if (response.ok) {
@@ -80,13 +70,10 @@ class Reports extends Component {
     var token = await getAccessTokenSilently();
     var options = {
       headers: {
-        Authorization: "Bearer " + token,
-      },
+        Authorization: "Bearer " + token
+      }
     };
-    let response = await fetch(
-      "/api/users/" + this.state.user.sub + "/entries",
-      options
-    );
+    let response = await fetch("/api/users/" + this.state.user.sub + "/entries", options);
     if (response.ok) {
       let result = await response.json();
       console.log(result);
@@ -98,14 +85,14 @@ class Reports extends Component {
   }
 
   handleProjectChange(event) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       let Entry = Object.assign({}, prevState.Entry);
       if (event[0] == undefined) {
         Entry.project = {
           project: {
             Id: "",
-            Title: "",
-          },
+            Title: ""
+          }
         };
       } else Entry.project = this.getProject(event[0].value);
       return { Entry };
@@ -130,22 +117,22 @@ class Reports extends Component {
           new Paragraph({
             text: element.textContent,
             spacing: {
-              after: 200,
-            },
+              after: 200
+            }
           })
         );
         break;
       case "td":
         paragraphs.push(
           new Paragraph({
-            text: element.textContent,
+            text: element.textContent
           })
         );
         break;
       case "th":
         paragraphs.push(
           new Paragraph({
-            text: element.textContent,
+            text: element.textContent
           })
         );
         break;
@@ -155,9 +142,9 @@ class Reports extends Component {
             text: element.textContent,
             heading: HeadingLevel.HEADING_1,
             spacing: {
-              after: 200,
+              after: 200
             },
-            alignment: AlignmentType.CENTER,
+            alignment: AlignmentType.CENTER
           })
         );
         break;
@@ -167,15 +154,15 @@ class Reports extends Component {
             text: element.textContent,
             heading: HeadingLevel.HEADING_2,
             spacing: {
-              after: 200,
-            },
+              after: 200
+            }
           })
         );
         break;
       case "table":
         let tableRows = this.getTableRows(element);
         const table = new Table({
-          rows: tableRows,
+          rows: tableRows
         });
         paragraphs.push(table);
     }
@@ -201,7 +188,7 @@ class Reports extends Component {
       let rowCells = this.getRowCells(element.children[i]);
       tableRows.push(
         new TableRow({
-          children: rowCells,
+          children: rowCells
         })
       );
     }
@@ -215,7 +202,7 @@ class Reports extends Component {
       this.renderElement(paragraphs, element.children[i]);
       rowCells.push(
         new TableCell({
-          children: paragraphs,
+          children: paragraphs
         })
       );
     }
@@ -233,10 +220,10 @@ class Reports extends Component {
       sections: [
         {
           properties: {
-            type: SectionType.CONTINUOUS,
+            type: SectionType.CONTINUOUS
           },
-          children: paragraphs,
-        },
+          children: paragraphs
+        }
       ],
       styles: {
         paragraphStyles: [
@@ -248,16 +235,16 @@ class Reports extends Component {
             run: {
               color: "000000",
               font: "Calibri",
-              size: 24,
+              size: 24
             },
             paragraph: {
               spacing: {
-                line: 276,
+                line: 276
               },
               indent: {
-                left: 720,
-              },
-            },
+                left: 720
+              }
+            }
           },
           {
             id: "Heading1",
@@ -267,14 +254,14 @@ class Reports extends Component {
             quickFormat: true,
             run: {
               size: 52,
-              bold: true,
+              bold: true
             },
             paragraph: {
               spacing: {
                 before: 240,
-                after: 120,
-              },
-            },
+                after: 120
+              }
+            }
           },
           {
             id: "Heading2",
@@ -284,20 +271,20 @@ class Reports extends Component {
             quickFormat: true,
             run: {
               size: 32,
-              bold: true,
+              bold: true
             },
             paragraph: {
               spacing: {
                 before: 240,
-                after: 120,
-              },
-            },
-          },
-        ],
-      },
+                after: 120
+              }
+            }
+          }
+        ]
+      }
     });
 
-    Packer.toBlob(doc).then((blob) => {
+    Packer.toBlob(doc).then(blob => {
       console.log(blob);
       saveAs(blob, "example.docx");
       console.log("Document created successfully");
@@ -306,27 +293,27 @@ class Reports extends Component {
 
   generateReport() {
     this.setState({
-      showReport: true,
+      showReport: true
     });
   }
 
   setReportType(event) {
     if (event.target.value == "User") {
       this.setState({
-        isUser: true,
+        isUser: true
       });
     } else {
       this.setState({
-        isUser: false,
+        isUser: false
       });
     }
   }
 
   feedProjectsOptions() {
-    var options = this.state.projects.map((project) => {
+    var options = this.state.projects.map(project => {
       return {
         value: project.Id,
-        label: project.Title,
+        label: project.Title
       };
     });
     // console.log(options);
@@ -353,18 +340,11 @@ class Reports extends Component {
               <input type="radio" value="Project" name="reportType" /> Project
             </div>
             <div>
-              <Select
-                placeholder={placeHolderOption}
-                onChange={this.handleProjectChange}
-                options={projectsOptions}
-                backspaceDelete={false}
-                clearable={true}
-                dropdownHandle={false}
-              />
+              <Select placeholder={placeHolderOption} onChange={this.handleProjectChange} options={projectsOptions} backspaceDelete={false} clearable={true} dropdownHandle={false} />
             </div>
           </div>
 
-          <button className="button" onClick={this.generateReport}>
+          <button className="button mt-3 mb-4" onClick={this.generateReport}>
             Generate Report
           </button>
           <div id="report">
@@ -383,18 +363,11 @@ class Reports extends Component {
               <input type="radio" value="Project" name="reportType" /> Project
             </div>
             <div>
-              <Select
-                placeholder={placeHolderOption}
-                onChange={this.handleProjectChange}
-                options={projectsOptions}
-                backspaceDelete={false}
-                clearable={true}
-                dropdownHandle={false}
-              />
+              <Select placeholder={placeHolderOption} onChange={this.handleProjectChange} options={projectsOptions} backspaceDelete={false} clearable={true} dropdownHandle={false} />
             </div>
           </div>
 
-          <button className="button" onClick={this.generateReport}>
+          <button className="button mt-3 mb-4" onClick={this.generateReport}>
             Generate Report
           </button>
           <div id="report">
@@ -412,18 +385,11 @@ class Reports extends Component {
             <input type="radio" value="Project" name="reportType" /> Project
           </div>
           <div>
-            <Select
-              placeholder={placeHolderOption}
-              onChange={this.handleProjectChange}
-              options={projectsOptions}
-              backspaceDelete={false}
-              clearable={true}
-              dropdownHandle={false}
-            />
+            <Select placeholder={placeHolderOption} onChange={this.handleProjectChange} options={projectsOptions} backspaceDelete={false} clearable={true} dropdownHandle={false} />
           </div>
         </div>
 
-        <button className="button" onClick={this.generateReport}>
+        <button className="button mt-3 mb-4" onClick={this.generateReport}>
           Generate Report
         </button>
       </div>
