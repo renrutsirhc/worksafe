@@ -12,6 +12,7 @@ class Reports extends Component {
         super(props);
         this.state = {
             showReport: false,
+            showProjectWarning: false,
             isUser: true,
             entries: [],
             tags: [],
@@ -157,9 +158,13 @@ class Reports extends Component {
                     Id: "",
                     Title: "",
                 },
+                showProjectWarning: true,
             })
         } else {
-            this.setState({ project: this.getProject(event[0].value) })
+            this.setState({
+                project: this.getProject(event[0].value),
+                showProjectWarning: false,
+            })
         }
     }
 
@@ -361,8 +366,14 @@ class Reports extends Component {
     };
 
 
-    generateReport() {
-        this.getEntries();
+    generateReport(event) {
+        event.preventDefault();
+        if (!this.state.isUser && this.state.project == null) {
+            this.setState({ showProjectWarning: true })
+        } else {
+            this.getEntries();
+        }
+
     }
 
     setReportType(event) {
@@ -410,7 +421,11 @@ class Reports extends Component {
         const localEndDate = endDate.toLocal().toISODate();
 
         if (!this.state.projectsLoaded) {
-            return <h1>Loading...</h1>;
+            return (
+                <div>
+                    <h2>Loading...</h2>
+                </div>
+            );
         }
 
         const placeHolderOption = "";
@@ -421,43 +436,43 @@ class Reports extends Component {
             <Form>
                 <FormLabel>Report Type</FormLabel>
                 <Row>
-                    <Col sm={12} md={6}>
-                        <Form.Group onChange={this.setReportType} >                       
-                        <div className="radio-label-column">
-                            <label className="radio-label" for="radio-user">
-                                <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
-                                User
-                            </label>
+                    <Col xs={12} sm={12} md={6}>
+                        <Form.Group onChange={this.setReportType} >
+                            <div className="radio-label-column">
+                                <label className="radio-label" for="radio-user">
+                                    <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
+                                    User
+                                </label>
 
 
                             </div>
                             <div className="radio-label-column">
-                            <label className="radio-label" for="radio-project">
-                                <input type="radio" value="Project" name="reportType" id="radio-project" />
-                                Project
-                            </label>
+                                <label className="radio-label" for="radio-project">
+                                    <input type="radio" value="Project" name="reportType" id="radio-project" />
+                                    Project
+                                </label>
 
-                        </div>
-                                            </Form.Group>
-                        </Col>
+                            </div>
+                        </Form.Group>
+                    </Col>
 
-                    <Col sm={12} md={6}>
-                    <Select
-                        placeholder="Select Project"
-                        onChange={this.handleProjectChange}
-                        options={projectsOptions}
-                        backspaceDelete={false}
-                        clearable={true}
-                        dropdownHandle={false}
-                        disabled={this.state.isUser}
-                    />
+                    <Col xs={12} sm={12} md={6}>
+                        <Select
+                            placeholder="Select Project"
+                            onChange={this.handleProjectChange}
+                            options={projectsOptions}
+                            backspaceDelete={false}
+                            clearable={true}
+                            dropdownHandle={false}
+                            disabled={this.state.isUser}
+                        />
                     </Col>
                 </Row>
                 <Row>
 
                 </Row>
                 <Row>
-                    <Col>
+                    <Col xs={12} sm={6} md={6}>
                         <Form.Group className="mt-3">
                             <FormLabel>Start Date</FormLabel>
                             <FormControl
@@ -468,7 +483,7 @@ class Reports extends Component {
                             />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col xs={12} sm={6} md={6}>
                         <Form.Group className="mt-3">
                             <FormLabel>End Date</FormLabel>
                             <FormControl
@@ -481,23 +496,25 @@ class Reports extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Form.Group className="mt-3">
-                        <Form.Label>Tags</Form.Label>
-                        <Select
-                            placeholder="Select Tag"
-                            options={tagsOptions}
-                            onChange={(values) => this.handleTagChange(values)}
-                            clearable={true}
-                            dropdownHandle={false}
-                            multi={true}
-                            create={false}
-                            color="#AAAAAA"
-                        />
-                    </Form.Group>
+                    <Col xs={12} sm={12} md={12}>
+                        <Form.Group className="mt-3">
+                            <Form.Label>Tags</Form.Label>
+                            <Select
+                                placeholder="Select Tag"
+                                options={tagsOptions}
+                                onChange={(values) => this.handleTagChange(values)}
+                                clearable={true}
+                                dropdownHandle={false}
+                                multi={true}
+                                create={false}
+                                color="#AAAAAA"
+                            />
+                        </Form.Group>
+                    </Col>
                 </Row>
                 <div className="d-flex justify-content-end">
                     <div>
-                        <button className="button mt-3" onClick={this.generateReport}>Generate Report</button>
+                        <button type="button" className="button mt-3" onClick={this.generateReport}>Generate Report</button>
                     </div>
                 </div>
             </Form>
@@ -506,7 +523,7 @@ class Reports extends Component {
         </div>
 
 
-        if (!this.state.isUser && this.state.project == null) {
+        if (this.state.showProjectWarning) {
             return (
                 <div>
                     {reportOptions}
