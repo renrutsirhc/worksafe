@@ -22,10 +22,11 @@ class ViewProject extends Component {
       <div className="mt-3">
         <Card className="grow" onClick={this.props.setExpanded}>
           <CardHeaderWithViewEntryButton
-            title={this.props.project.Title}
-            subTitle={this.props.project.Owner.Name}
-            setEditing={this.props.setEditing}
-            handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+                    title={this.props.project.Title}
+                    subTitle={this.props.project.Owner.Name}
+                    setEditing={this.props.setEditing}
+                    handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+                    color={this.props.project.Color}
           />
           <Card.Body>
             <Card.Text> {this.props.project.Description}</Card.Text>
