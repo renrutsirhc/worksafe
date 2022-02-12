@@ -429,7 +429,6 @@ class Reports extends Component {
             );
         }
 
-        const placeHolderOption = "";
         const projectsOptions = this.feedProjectsOptions();
         const tagsOptions = this.feedTagsOptions();
 
@@ -444,8 +443,6 @@ class Reports extends Component {
                                     <input type="radio" value="User" name="reportType" defaultChecked="checked" id="radio-user" />
                                     User
                                 </label>
-
-
                             </div>
                             <div className="radio-label-column">
                                 <label className="radio-label" for="radio-project">
@@ -456,7 +453,6 @@ class Reports extends Component {
                             </div>
                         </Form.Group>
                     </Col>
-
                     <Col xs={12} sm={12} md={6}>
                         <Select
                             placeholder="Select Project"
@@ -468,9 +464,6 @@ class Reports extends Component {
                             disabled={this.state.isUser}
                         />
                     </Col>
-                </Row>
-                <Row>
-
                 </Row>
                 <Row>
                     <Col xs={12} sm={6} md={6}>
@@ -519,10 +512,7 @@ class Reports extends Component {
                     </div>
                 </div>
             </Form>
-
-
         </div>
-
 
         if (this.state.showProjectWarning) {
             return (
