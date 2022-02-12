@@ -43,7 +43,7 @@ class CardHeaderWithEditButton extends Component {
                     </div>
                     <div className="card-header-button-container">
                         <CardHeaderButton
-                            color={this.props.color}
+                            color="#943A7A"
                             onClick={this.props.setEditing}
                             icon={faPenToSquare}
                         />
