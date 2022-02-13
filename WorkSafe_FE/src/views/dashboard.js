@@ -160,7 +160,6 @@ class Dashboard extends Component {
             this.setState({ show: !this.state.show });
             this.setState({ deletingEntry: null });
             this.handleUpdateEntry();
-            console.log(this.state.deletingEntry);
         } else {
             this.handleShowError();
         }
