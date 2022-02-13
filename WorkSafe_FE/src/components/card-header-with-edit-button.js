@@ -10,13 +10,17 @@ class CardHeaderWithEditButton extends Component {
     }
 
     render() {
+        var color = this.props.color;
+        if (this.props.subTitle == "") {
+            color = "#943A7A";
+        }
 
         var deletebutton;
         // only apply delete button to entry cards
         if (this.props.allowDelete) {
             deletebutton = 
               <CardHeaderButton
-              color={this.props.color}
+              color={color}
               icon={faTrashCan}
               onClick={(e) => { e.stopPropagation(); this.props.handleModal(this.props.entry) }}/>
         }
