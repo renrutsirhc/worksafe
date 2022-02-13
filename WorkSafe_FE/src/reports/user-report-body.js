@@ -9,7 +9,9 @@ const UserReportBody = (props) => {
   var entryImpact = props.entry.Impact;
   var entryMindset = props.entry.Mindset;
   var entryNextSteps = props.entry.NextSteps;
-  var entryTags = props.entry.Tags;
+  var entryTags = props.entry.Tags.map((value) => {
+    return value + " ";
+  });
   var entryFiles = props.entry.Files;
   var entryDate = props.entry.EntryDate;
 
@@ -17,7 +19,7 @@ const UserReportBody = (props) => {
     <>
       <div>
         <table>
-          <td>
+          <tbody>
             <tr>
               <td colSpan={2}>
                 <h2>{entryTitle}</h2>
@@ -28,7 +30,7 @@ const UserReportBody = (props) => {
                 <span className="light">
                   <strong>Description</strong>
                 </span>
-                <td>{entryDescription}</td>
+                <p>{entryDescription}</p>
               </td>
             </tr>
             <tr>
@@ -36,7 +38,7 @@ const UserReportBody = (props) => {
                 <span>
                   <strong>Learning</strong>
                 </span>
-                <td>{entryLearning}</td>
+                <p>{entryLearning}</p>
               </td>
             </tr>
             <tr>
@@ -44,43 +46,39 @@ const UserReportBody = (props) => {
                 <span>
                   <strong>Impact</strong>
                 </span>
-                <td>{entryImpact}</td>
+                <p>{entryImpact}</p>
               </td>
             </tr>
-            <td>
-              <table>
-                <tr valign="top" colSpan={3}>
-                  <td className="report-td-28">
-                    <span className="report-td-28">
-                      <strong>Mindset</strong>
-                    </span>
-                    <td>{entryMindset}</td>
-                  </td>
-                  <td className="report-td-72">
-                    <span className="report-td-72">
-                      <strong>Next Steps</strong>
-                    </span>
-                    <td>{entryNextSteps}</td>
-                  </td>
-                </tr>
-                <tr valign="top">
-                  <td className="report-td-28">
-                    <span>
-                      <strong>Tags</strong>
-                    </span>
-                    <td>{entryTags}</td>
-                  </td>
-                  <td className="report-td-72">
-                    <span>
-                      <strong>Files</strong>
-                    </span>
-                    <td>{entryFiles}</td>
-                  </td>
-                </tr>
-              </table>
-            </td>
+            <tr valign="top">
+              <td className="report-td-28">
+                <span className="span">
+                  <strong>Mindset</strong>
+                </span>
+                <p>{entryMindset}</p>
+              </td>
+              <td className="report-td-72">
+                <span className="span">
+                  <strong>Next Steps</strong>
+                </span>
+                <p>{entryNextSteps}</p>
+              </td>
+            </tr>
+            <tr valign="top">
+              <td className="report-td-28">
+                <span className="span">
+                  <strong>Tags</strong>
+                </span>
+                <p>{entryTags}</p>
+              </td>
+              <td className="report-td-72">
+                <span className="span">
+                  <strong>Files</strong>
+                </span>
+                <p>{entryFiles}</p>
+              </td>
+            </tr>
             <tr>
-              <td>
+              <td colSpan={2}>
                 <span>
                   <strong>
                     Created {entryDate} by {entryAuthor}
@@ -88,7 +86,7 @@ const UserReportBody = (props) => {
                 </span>
               </td>
             </tr>
-          </td>
+          </tbody>
         </table>
         <hr></hr>
       </div>
