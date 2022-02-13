@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
 import {CardHeaderButton} from "../components"
 import "../styles/styles.css";
@@ -10,7 +10,19 @@ class CardHeaderWithEditButton extends Component {
     }
 
     render() {
+
+        var deletebutton;
+        // only apply delete button to entry cards
+        if (this.props.allowDelete) {
+            deletebutton = 
+              <CardHeaderButton
+              color={this.props.color}
+              icon={faTrashCan}
+              onClick={(e) => { e.stopPropagation(); this.props.handleModal(this.props.entry) }}/>
+        }
+
         var headerStyle;
+
         if (this.props.subTitle != "") {
             headerStyle = {
                 backgroundColor: this.props.color,
@@ -23,6 +35,7 @@ class CardHeaderWithEditButton extends Component {
                         <h6 className="card-project-title">{this.props.subTitle}</h6>
                     </div>
                     <div className="card-header-button-container">
+                        {deletebutton}
                         <CardHeaderButton
                             color={this.props.color}
                             onClick={this.props.setEditing}
@@ -42,6 +55,7 @@ class CardHeaderWithEditButton extends Component {
                         <h4 className="card-title">{this.props.title}</h4>
                     </div>
                     <div className="card-header-button-container">
+                        {deletebutton}
                         <CardHeaderButton
                             color="#943A7A"
                             onClick={this.props.setEditing}
@@ -51,6 +65,7 @@ class CardHeaderWithEditButton extends Component {
                 </Card.Header>
             );
         }
+
     }
 }
 
