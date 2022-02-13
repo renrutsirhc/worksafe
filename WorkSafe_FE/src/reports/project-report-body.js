@@ -8,22 +8,28 @@ const ProjectReportBody = props => {
   var projectDescription = props.project.Description;
   var projectGoal = props.project.Goal;
   var projectTimeStamp = props.project.TimeStamp;
-  var projectPillars = document.getElementById("projectPillars");
+  var projectPillars = [];
+  projectPillars.push(result);
 
   if (props.PillarConnection) {
     projectPillars.append("Connection");
+    return result;
   }
   if (props.PillarLeadership) {
     projectPillars.append("Leadership");
+    return result;
   }
   if (props.PillarNeeds) {
     projectPillars.append("Needs");
+    return result;
   }
   if (props.PillarEmbedding) {
     projectPillars.append("Embedding");
+    return result;
   }
   if (props.PillarResources) {
     projectPillars.append("Resources");
+    return result;
   }
   // Need to finish this
 
