@@ -54,7 +54,7 @@ namespace WorkSafe_BE.Controllers
         // POST api/<UsersController>
         [HttpPost]
         [Produces("application/json")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] UserModel user)
         {
             var userId = await _dbService.AddUser(user);
@@ -113,9 +113,9 @@ namespace WorkSafe_BE.Controllers
         [HttpGet("{userid}/entries")]
         [Produces("application/json")]
         [Authorize]
-        public async Task<IActionResult> GetEntries(string userid)
+        public async Task<IActionResult> GetEntries(string userid, [FromQuery] DateTime? startDate = null, [FromQuery] DateTime? endDate = null, [FromQuery] int? startEntryNum = null, [FromQuery] int? numEntries = null, [FromQuery] string[]? tags = null, [FromQuery] string? orderBy = null)
         {
-            var entries = await _dbService.GetEntries(userid, TopCollection.Users);
+            var entries = await _dbService.GetEntries(userid, TopCollection.Users, startDate, endDate, startEntryNum, numEntries, tags, orderBy);
             if (entries != null)
             {
                 return Ok(entries);

@@ -3,11 +3,17 @@ import { Card, ButtonGroup } from "react-bootstrap";
 import "../styles/dashboard.css";
 import PillarButton from "../components/pillar-button";
 import { DateTime } from "luxon";
-import { CardHeaderWithEditButton, CardFooter } from "../components";
+import { CardHeaderWithViewEntryButton, CardFooter } from "../components";
 
 class ViewFullProject extends Component {
   constructor(props) {
     super(props);
+    this.handleUpdateSelectedProject =
+      this.handleUpdateSelectedProject.bind(this);
+  }
+
+  handleUpdateSelectedProject() {
+    this.props.handleUpdateSelectedProject(this.props.project);
   }
 
   render() {
@@ -18,10 +24,12 @@ class ViewFullProject extends Component {
     return (
       <div className="mt-3 d-flex flex-column">
         <Card className="grow" onClick={this.props.setExpanded}>
-          <CardHeaderWithEditButton
+          <CardHeaderWithViewEntryButton
             title={this.props.project.Title}
             subTitle={this.props.project.Owner.Name}
             setEditing={this.props.setEditing}
+                    handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+                    color={this.props.project.Color}
           />
           <Card.Body>
             <Card.Title>Description</Card.Title>
@@ -29,8 +37,8 @@ class ViewFullProject extends Component {
             <Card.Title>Goal</Card.Title>
             <Card.Text>{this.props.project.ProjectGoal}</Card.Text>
             <Card.Title>Pillars</Card.Title>
-            <Card.Text>
-              <ButtonGroup className="mb-2 d-flex flex-wrap">
+            <>
+              <div className="mb-2 d-flex flex-wrap">
                 <PillarButton
                   checked={this.props.project.PillarEmbedding}
                   disabled={true}
@@ -56,8 +64,8 @@ class ViewFullProject extends Component {
                   disabled={true}
                   pillarname={"Connection"}
                 />
-              </ButtonGroup>
-            </Card.Text>
+              </div>
+            </>
             <Card.Title>Creation Date</Card.Title>
             <Card.Text>{localCreationTime}</Card.Text>
           </Card.Body>

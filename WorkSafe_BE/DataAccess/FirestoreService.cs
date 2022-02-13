@@ -147,7 +147,8 @@ namespace WorkSafe_BE.DataAccess
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
                 { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
                 { "OwnerId", project.Owner.Id },
-                { "LastUpdatedById", project.LastUpdatedBy.Id }
+                { "LastUpdatedById", project.LastUpdatedBy.Id },
+                { "Color", project.Color },
 
             };
             await docRef.SetAsync(projectDictionary);
@@ -188,7 +189,7 @@ namespace WorkSafe_BE.DataAccess
 
         /// <summary>
         /// Gets a list of all projects from firebase
-        /// </summary>s
+        /// </summary>
         /// <returns>A list of ProjectModels</returns>
         public async Task<List<ProjectModel>> GetProjects()
         {
@@ -232,7 +233,8 @@ namespace WorkSafe_BE.DataAccess
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
                 { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
                 { "OwnerId", project.Owner.Id },
-                { "LastUpdatedById", project.LastUpdatedBy.Id }
+                { "LastUpdatedById", project.LastUpdatedBy.Id },
+                { "Color", project.Color },
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -355,11 +357,48 @@ namespace WorkSafe_BE.DataAccess
             return entry;
         }
 
-        public async Task<List<EntryModel>> GetEntries(string id, TopCollection topCollection)
+        public async Task<List<EntryModel>> GetEntries(string id, TopCollection topCollection, DateTime? startDate = null, DateTime? endDate = null, int? startEntryNum = null, int? numEntries = null, string[]? tags = null, string? orderBy = null)
         {
             var output = new List<EntryModel>();
             CollectionReference entriesRef = _db.Collection(topCollection.ToString()).Document(id).Collection("Entries");
-            Query query = entriesRef.OrderByDescending("TimeStamp");
+
+            Query query = entriesRef;
+
+            if (startDate != null)
+            {
+                query = query.WhereGreaterThanOrEqualTo ("EntryDate", startDate);
+            }
+
+            if (endDate != null)
+            {
+                query = query.WhereLessThanOrEqualTo("EntryDate", endDate);
+            }
+
+            if (startEntryNum != null)
+            {
+                startEntryNum = 0;
+            }
+
+            if (numEntries != null)
+            {
+                query = query.StartAt(startEntryNum).Limit((int)numEntries);
+            }
+
+            if (tags != null && tags.Length > 0)
+            {
+                query = query.WhereArrayContainsAny("Tags", tags);
+            }
+
+            if (orderBy != null)
+            {
+                query = query.OrderByDescending(orderBy);
+            }
+            else
+            {
+                //default to sorting by entry date
+                query = query.OrderByDescending("EntryDate");
+            }
+            
             QuerySnapshot snapshot = await query.GetSnapshotAsync();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
@@ -498,9 +537,9 @@ namespace WorkSafe_BE.DataAccess
         //Tags
 
         /// <summary>
-        /// Gets a list of all the tags currenlty in the database
+        /// Gets a list of all the tags currently in the database
         /// </summary>
-        /// <returns>A List of the tags in the databse</returns>
+        /// <returns>A List of the tags in the database</returns>
         public async Task<List<string>> GetTags()
         {
             var output = new List<string>();
@@ -563,6 +602,25 @@ namespace WorkSafe_BE.DataAccess
             DocumentReference docRef = _db.Collection("Tags").Document(tag);
             await docRef.DeleteAsync();
             return docRef.Id;
+        }
+
+
+        //Colors
+
+        /// <summary>
+        /// Gets a list of all the colors currently in the database
+        /// </summary>
+        /// <returns>A List of the colors in the database</returns>
+        public async Task<List<string>> GetColors()
+        {
+            var output = new List<string>();
+            CollectionReference usersRef = _db.Collection("Colors");
+            QuerySnapshot snapshot = await usersRef.GetSnapshotAsync();
+            foreach (DocumentSnapshot document in snapshot.Documents)
+            {
+                output.Add(document.Id);
+            }
+            return output;
         }
 
     }

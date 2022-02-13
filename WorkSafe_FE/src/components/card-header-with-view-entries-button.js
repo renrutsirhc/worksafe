@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faListAlt } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
-import { CardHeaderButton } from "../components"
+import {CardHeaderButton} from "../components"
 import "../styles/styles.css";
 
-class CardHeaderWithCloseButton extends Component {
+class CardHeaderWithViewEntryButton extends Component {
     constructor(props) {
         super(props);
     }
@@ -25,9 +26,15 @@ class CardHeaderWithCloseButton extends Component {
                     <div className="card-header-button-container">
                         <CardHeaderButton
                             color={this.props.color}
-                            onClick={this.props.setEditing}
-                            icon={faClose}
+                            onClick={this.props.handleUpdateSelectedProject}
+                            icon={faListAlt}
                         />
+                        <CardHeaderButton
+                            color={this.props.color}
+                            onClick={this.props.setEditing}
+                            icon={faPenToSquare}
+                        />
+
                     </div>
                 </Card.Header>
             );
@@ -43,9 +50,14 @@ class CardHeaderWithCloseButton extends Component {
                     </div>
                     <div className="card-header-button-container">
                         <CardHeaderButton
-                            color="#943A7A"
+                            color={this.props.color}
+                            onClick={this.props.handleUpdateSelectedProject}
+                            icon={faListAlt}
+                        />
+                        <CardHeaderButton
+                            color={this.props.color}
                             onClick={this.props.setEditing}
-                            icon={faClose}
+                            icon={faPenToSquare}
                         />
                     </div>
                 </Card.Header>
@@ -54,4 +66,4 @@ class CardHeaderWithCloseButton extends Component {
     }
 }
 
-export default CardHeaderWithCloseButton;
+export default CardHeaderWithViewEntryButton;

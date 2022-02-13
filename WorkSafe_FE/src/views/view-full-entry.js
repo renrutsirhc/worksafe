@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import "../styles/dashboard.css";
-import { CardHeaderWithEditButton, CardFooter } from "../components"
+import { CardHeaderWithEditButton, CardFooter } from "../components";
 import { DateTime } from "luxon";
 
 class ViewFullEntry extends Component {
@@ -14,11 +14,7 @@ class ViewFullEntry extends Component {
         const entryDate = DateTime.fromISO(this.props.entry.EntryDate);
 
         const tagButtons = this.props.entry.Tags.map((tag) => (
-            <button
-                className="button tag-button"
-                key={tag}
-                disabled
-            >
+            <button type="button" className="button tag-button" key={tag} disabled>
                 {tag}
             </button>
         ));
@@ -26,10 +22,12 @@ class ViewFullEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <CardHeaderWithEditButton entry={this.props.entry} title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} handleModal={this.props.handleModal} allowDelete={true} />
+  <CardHeaderWithEditButton entry={this.props.entry} title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} color={this.props.entry.Project.Color} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} handleModal={this.props.handleModal} allowDelete={true} />
                     <Card.Body>
                         <Card.Title>Date</Card.Title>
-                        <Card.Text>{entryDate.toLocaleString(DateTime.DATE_FULL)}</Card.Text>
+                        <Card.Text>
+                            {entryDate.toLocaleString(DateTime.DATE_FULL)}
+                        </Card.Text>
                         <Card.Title>Project</Card.Title>
                         <Card.Text>{this.props.entry.Project.Title}</Card.Text>
                         <Card.Title>Description</Card.Title>
@@ -47,7 +45,15 @@ class ViewFullEntry extends Component {
                         <Card.Title>Tags</Card.Title>
                         {tagButtons}
                     </Card.Body>
-                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.entry.Author.Name} handleSubmit={this.handleSubmit} />
+                    <CardFooter
+                        text={
+                            "Last updated " +
+                            timeStamp.toLocaleString(DateTime.DATETIME_FULL) +
+                            " by " +
+                            this.props.entry.Author.Name
+                        }
+                        handleSubmit={this.handleSubmit}
+                    />
                 </Card>
             </div>
         );

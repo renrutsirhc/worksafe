@@ -10,6 +10,7 @@ const LoginButton = () => {
       className="button"
       onClick={() => loginWithRedirect()}
       id="qsLoginBtn"
+      type="button"
     >
       Log In
     </button>

@@ -1,0 +1,55 @@
+input {
+  margin: 0.5rem;
+}
+
+table {
+  width: 100%;
+  background-color: #e1e5da;
+  text-align: justify;
+}
+
+td {
+  column-span: 2;
+  vertical-align: top;
+  width: 100%;
+  height: 22;
+}
+
+.report-td-28 {
+  vertical-align: top;
+  width: auto;
+  height: auto;
+}
+
+.report-td-72 {
+  vertical-align: top;
+  width: auto;
+  height: auto;
+}
+
+span {
+  color: #943a7a;
+}
+
+.report-body-title {
+  color: #272725;
+  column-span: 2;
+  vertical-align: top;
+  width: 100%;
+  height: fit-content;
+}
+
+h2 {
+  width: fit-content;
+  height: fit-content;
+}
+
+.h1-report {
+  display: inline-block;
+  position: relative;
+  right: 0px;
+}
+
+.logo-report {
+  display: inline-block;
+}

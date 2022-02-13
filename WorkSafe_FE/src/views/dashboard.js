@@ -104,6 +104,7 @@ class Dashboard extends Component {
         }
     }
 
+
     handleShowError() {
         if (this.state.ShowError) {
             this.setState({ ShowError: false });
@@ -120,20 +121,23 @@ class Dashboard extends Component {
         }
     }
 
-    handleAddEntry() {
-        this.getEntries();
-        this.getTags();
-    }
 
-    handleUpdateEntry() {
-        this.getEntries();
-        this.getTags();
-    }
+  handleAddEntry() {
+    this.getEntries();
+    this.getTags();
+  }
+
+  handleUpdateEntry() {
+    this.getEntries();
+    this.getTags();
+  }
+
     //used for deleting entry features
     handleModal(entry) {
         this.setState({ show: !this.state.show });
         this.setState({ deletingEntry: entry });
     }
+  
     //used for deleting entry features
     deleteEntry = async (event) => {
         event.preventDefault();
@@ -269,8 +273,10 @@ class Dashboard extends Component {
                 <h2>No Entries to Display...</h2>
             </div>
 
+
         );
     }
+
 }
 
 export default withAuth0(Dashboard);
