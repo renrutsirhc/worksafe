@@ -213,7 +213,8 @@ class EditEntry extends Component {
           <CardHeaderWithCloseButton
             title={this.state.Entry.Title}
             subTitle={this.state.Entry.Project.Title}
-            setEditing={this.props.setEditing}
+                    setEditing={this.props.setEditing}
+                    color={this.state.Entry.Project.Color}
           />
           <Card.Body>
             <Row sm={1} md={2}>

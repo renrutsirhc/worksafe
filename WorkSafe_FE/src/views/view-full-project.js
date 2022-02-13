@@ -28,7 +28,8 @@ class ViewFullProject extends Component {
             title={this.props.project.Title}
             subTitle={this.props.project.Owner.Name}
             setEditing={this.props.setEditing}
-            handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+                    handleUpdateSelectedProject={this.handleUpdateSelectedProject}
+                    color={this.props.project.Color}
           />
           <Card.Body>
             <Card.Title>Description</Card.Title>

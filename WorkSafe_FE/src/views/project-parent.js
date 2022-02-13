@@ -43,7 +43,7 @@ class ProjectParent extends Component {
                     handleUpdateProject={this.props.handleUpdateProject}
                     setEditing={this.setEditing}
                     setExpanded={this.setExpanded}
-                    
+                    colors={this.props.colors}
                 />
             );
         }

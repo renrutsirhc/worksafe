@@ -15,7 +15,7 @@ class ViewEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <CardHeaderWithEditButton title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} />
+                    <CardHeaderWithEditButton title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} color={this.props.entry.Project.Color}/>
                     <Card.Body className="card-body">
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>
