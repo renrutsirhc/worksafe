@@ -15,11 +15,11 @@ class ViewEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <CardHeaderWithEditButton title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} allowDelete={ true }/>
+                    <CardHeaderWithEditButton entry={this.props.entry} title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} handleModal={this.props.handleModal} allowDelete={true} />
                     <Card.Body className="card-body">
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>
-                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.entry.Author.Name} handleSubmit={this.handleSubmit}/>
+                    <CardFooter text={"Last updated " + timeStamp.toLocaleString(DateTime.DATETIME_FULL) + " by " + this.props.entry.Author.Name} handleSubmit={this.handleSubmit} />
                 </Card>
             </div>
         );

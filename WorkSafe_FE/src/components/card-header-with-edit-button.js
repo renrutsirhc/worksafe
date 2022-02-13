@@ -1,23 +1,22 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "react-bootstrap";
 import "../styles/styles.css";
-
 
 class CardHeaderWithEditButton extends Component {
     constructor(props) {
         super(props);
     }
 
-
     render() {
         var deletebutton;
         // only apply delete button to entry cards
-        if (!!this.props.allowDelete && this.props.allowDelete == true) {
-            deletebutton=  <button
+        if (this.props.allowDelete) {
+            deletebutton = <button
+                entry={this.props.entry}
                 className="button grow card-header-button"
-                onClick={this.props.deleteEntry}
+                onClick={(e) => { e.stopPropagation(); this.props.handleModal(this.props.entry) }}
             >
                 <FontAwesomeIcon icon={faTrashCan} />
             </button>
@@ -64,6 +63,7 @@ class CardHeaderWithEditButton extends Component {
                 </Card.Header>
             )
         }
+
     }
 }
 
