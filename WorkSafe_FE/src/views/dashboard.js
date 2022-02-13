@@ -224,6 +224,7 @@ class Dashboard extends Component {
         if (this.state.entries.length > 0 && this.state.projectsLoaded) {
             return (
                 <div>
+                    {/*add delete confirmation modal if show is true*/}
                     {this.state.show ? <DeleteConfirmationModal show={this.state.show} handleModal={this.handleModal} deleteEntry={this.deleteEntry} deletingEntry={this.state.deletingEntry} /> : ''}
                     <div className="list-group">
                         <div className="d-flex">
