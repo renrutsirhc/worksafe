@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/report-styles.css";
 
-const UserReportBody = props => {
+const UserReportBody = (props) => {
   var entryAuthor = props.entry.Author.Name;
   var entryTitle = props.entry.Title;
   var entryDescription = props.entry.Description;

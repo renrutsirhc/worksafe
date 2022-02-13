@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/report-styles.css";
 
-const ProjectReportBody = props => {
+const ProjectReportBody = (props) => {
   console.log(props.project);
   var projectOwner = props.project.Owner.Name;
   var projectTitle = props.project.Title;
@@ -10,24 +10,22 @@ const ProjectReportBody = props => {
   var projectTimeStamp = props.project.TimeStamp;
 
   // Pillar method
-  var projectPillars = props.PillarConnection | props.PillarEmbedding | props.PillarLeadership | props.PillarNeeds | props.PillarResources;
-  var isPillarTrue = projectPillars == true;
+  var projectPillars = [];
 
-  if (props.PillarConnection) {
-    projectPillars.append("Connection");
-    return result;
-  } else if (props.PillarLeadership) {
-    projectPillars.append("Leadership");
-    return result;
-  } else if (props.PillarNeeds) {
-    projectPillars.append("Needs");
-    return result;
-  } else if (props.PillarEmbedding) {
-    projectPillars.append("Embedding");
-    return result;
-  } else if (props.PillarResources) {
-    projectPillars.append("Resources");
-    return result;
+  if (props.project.PillarConnection) {
+    projectPillars.push("Connection ");
+  }
+  if (props.project.PillarLeadership) {
+    projectPillars.push("Leadership ");
+  }
+  if (props.project.PillarNeeds) {
+    projectPillars.push("Needs ");
+  }
+  if (props.project.PillarEmbedding) {
+    projectPillars.push("Embedding ");
+  }
+  if (props.project.PillarResources) {
+    projectPillars.push("Resources ");
   }
   // Need to finish this
 
@@ -48,9 +46,7 @@ const ProjectReportBody = props => {
       <span>
         <strong>Pillars</strong>
       </span>
-      <p className="mb-4">
-        <ul id="projectPillars"></ul>
-      </p>
+      <p className="mb-4">{projectPillars}</p>
       <hr></hr>
     </div>
   );
