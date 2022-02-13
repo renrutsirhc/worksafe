@@ -147,7 +147,8 @@ namespace WorkSafe_BE.DataAccess
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
                 { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
                 { "OwnerId", project.Owner.Id },
-                { "LastUpdatedById", project.LastUpdatedBy.Id }
+                { "LastUpdatedById", project.LastUpdatedBy.Id },
+                { "Color", project.Color },
 
             };
             await docRef.SetAsync(projectDictionary);
@@ -232,7 +233,8 @@ namespace WorkSafe_BE.DataAccess
                 { "TimeStamp", Timestamp.FromDateTime(project.TimeStamp) },
                 { "CreationTime", Timestamp.FromDateTime(project.CreationTime) },
                 { "OwnerId", project.Owner.Id },
-                { "LastUpdatedById", project.LastUpdatedBy.Id }
+                { "LastUpdatedById", project.LastUpdatedBy.Id },
+                { "Color", project.Color },
             };
             await docRef.SetAsync(projectDictionary);
             //need to also add collection of Collaborators possibly later
@@ -535,9 +537,9 @@ namespace WorkSafe_BE.DataAccess
         //Tags
 
         /// <summary>
-        /// Gets a list of all the tags currenlty in the database
+        /// Gets a list of all the tags currently in the database
         /// </summary>
-        /// <returns>A List of the tags in the databse</returns>
+        /// <returns>A List of the tags in the database</returns>
         public async Task<List<string>> GetTags()
         {
             var output = new List<string>();
@@ -600,6 +602,25 @@ namespace WorkSafe_BE.DataAccess
             DocumentReference docRef = _db.Collection("Tags").Document(tag);
             await docRef.DeleteAsync();
             return docRef.Id;
+        }
+
+
+        //Colors
+
+        /// <summary>
+        /// Gets a list of all the colors currently in the database
+        /// </summary>
+        /// <returns>A List of the colors in the database</returns>
+        public async Task<List<string>> GetColors()
+        {
+            var output = new List<string>();
+            CollectionReference usersRef = _db.Collection("Colors");
+            QuerySnapshot snapshot = await usersRef.GetSnapshotAsync();
+            foreach (DocumentSnapshot document in snapshot.Documents)
+            {
+                output.Add(document.Id);
+            }
+            return output;
         }
 
     }
