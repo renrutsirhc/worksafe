@@ -13,6 +13,8 @@ import {
     TableCell,
     WidthType,
     ExternalHyperlink,
+    BorderStyle,
+    ShadingType
 } from "docx";
 import { saveAs } from "file-saver";
 import { ProjectEntriesReport, UserEntriesReport } from "../reports";
@@ -291,6 +293,55 @@ class Reports extends Component {
                     },
                 });
                 paragraphs.push(table);
+                break;
+            case "hr":
+                paragraphs.push(
+                    new Table({
+                        width: {
+                            size: 6.25 * 1440,
+                            type: WidthType.DXA
+                        },
+                        rows: [
+                            new TableRow({
+                                children: [
+                                    new TableCell({
+                                        children: [new Paragraph({
+                                            children: [],  // Just newline without text
+                                        })],
+                                        columnSpan: 2,
+                                        borders: {
+                                            top: {
+                                                style: BorderStyle.NONE,
+                                                size: 0,
+                                                color: "ffffff"
+                                            },
+                                            bottom: {
+                                                style: BorderStyle.THICK,
+                                                size: 6,
+                                                color: "#C8C9CA"
+                                            },
+                                            left: {
+                                                style: BorderStyle.NONE,
+                                                size: 0,
+                                                color: "ffffff"
+                                            },
+                                            right: {
+                                                style: BorderStyle.NONE,
+                                                size: 0,
+                                                color: "ffffff"
+                                            },
+                                        },                                    })
+                                ]
+                            })
+                        ]
+                    })
+                );
+                paragraphs.push(
+                    new Paragraph({
+                        children: [],  // Just newline without text
+                    })
+                );
+                break;
         }
 
         //base case - no children - return
@@ -332,6 +383,33 @@ class Reports extends Component {
                 new TableCell({
                     children: paragraphs,
                     columnSpan: columnSpan,
+                    borders: {
+                        top: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "ffffff"
+                        },
+                        bottom: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "ffffff"
+                        },
+                        left: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "ffffff"
+                        },
+                        right: {
+                            style: BorderStyle.NONE,
+                            size: 0,
+                            color: "ffffff"
+                        },
+                    },
+                    shading: {
+                        fill: "e1e5da",
+                        type: ShadingType.SOLID,
+                        color: "e1e5da",
+                    },
                 })
             );
         }
