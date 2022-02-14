@@ -10,6 +10,8 @@ import PillarButtonClickable from "./pillar-button-clickable";
 import PillarButton from "./pillar-button";
 import CardHeaderWithViewEntryButton from "./card-header-with-view-entries-button";
 import EntryParent from "./entry-parent";
+import CardHeaderButton from "./card-header-button";
+import DeleteConfirmationModal from "./delete-confirmation-modal";
 
 export {
   Footer,
@@ -24,4 +26,6 @@ export {
   PillarButtonClickable,
   CardHeaderWithViewEntryButton,
   EntryParent,
+  CardHeaderButton,
+  DeleteConfirmationModal,
 };

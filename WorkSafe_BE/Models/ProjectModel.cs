@@ -32,6 +32,8 @@ namespace WorkSafe_BE.Models
             _pillarLeadership = (bool)documentDictionary["PillarLeadership"];
             _pillarNeeds = (bool)documentDictionary["PillarNeeds"];
             _pillarResources = (bool)documentDictionary["PillarResources"];
+            _color = (string)documentDictionary["Color"];
+
             _owner = owner;
             _lastUpdatedBy = lastUpdatedBy;
         }
@@ -109,6 +111,13 @@ namespace WorkSafe_BE.Models
             set { _pillarConnection = value; }
         }
 
+        private string _color = "";
+
+        public string Color
+        {
+            get { return _color; }
+            set { _color = value; }
+        }
 
 
         //this field is for the last time the project was updated

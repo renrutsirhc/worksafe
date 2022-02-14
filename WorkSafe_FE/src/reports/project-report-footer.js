@@ -1,12 +1,9 @@
 import React from "react";
+import { DateTime } from "luxon";
 
 const ProjectReportFooter = (props) => {
-  return (
-    <div>
-      <h6>Summary:</h6>
-      <input type="text" placeholder="Summary for project report"></input>
-    </div>
-  );
+  const time = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
+  return <div className="report-h6">Report generated on: {time}</div>;
 };
 
 export default ProjectReportFooter;

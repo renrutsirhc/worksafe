@@ -1,34 +1,30 @@
-input {
-  margin: 0.5rem;
-}
-
-table {
+.table-container {
   width: 100%;
   background-color: #e1e5da;
-  text-align: justify;
-}
-
-td {
-  column-span: 2;
-  vertical-align: top;
-  width: 100%;
-  height: 22;
+  padding: 0.5cm;
 }
 
 .report-td-28 {
   vertical-align: top;
-  width: auto;
+  width: 50%;
   height: auto;
+  margin: 0.5cm;
 }
 
 .report-td-72 {
   vertical-align: top;
-  width: auto;
+  width: 50%;
   height: auto;
+  margin: 0.5cm;
 }
 
-span {
+.report-h5 {
   color: #943a7a;
+  font-size: 12pt;
+}
+
+.report-p {
+  font-size: 8pt;
 }
 
 .report-body-title {
@@ -39,9 +35,16 @@ span {
   height: fit-content;
 }
 
-h2 {
-  width: fit-content;
-  height: fit-content;
+.report-h6 {
+  font-size: 10pt;
+}
+
+.report-h2 {
+  font-size: 16pt;
+}
+
+.report-h1 {
+  font-size: 18pt;
 }
 
 .h1-report {
@@ -51,5 +54,10 @@ h2 {
 }
 
 .logo-report {
-  display: inline-block;
+}
+
+.logo-report-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
