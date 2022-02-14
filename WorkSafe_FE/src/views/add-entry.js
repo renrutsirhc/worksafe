@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Select } from "react-dropdown-select";
+
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap";
 import {
   CardHeaderWithCloseButton,
@@ -8,6 +9,8 @@ import {
 import ErrorCard from "./error-card";
 import { withAuth0 } from "@auth0/auth0-react";
 import { DateTime } from "luxon";
+import { TableRowHeightAttributes } from "docx";
+import FilesChooser from "../components/files-chooser";
 
 class AddEntry extends Component {
   constructor(props) {
@@ -31,6 +34,8 @@ class AddEntry extends Component {
     };
     this.state = {
       Entry: entry,
+      newUrl: "",
+      value: "",
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -48,6 +53,7 @@ class AddEntry extends Component {
     this.handleTagChange = this.handleTagChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleShowError = this.handleShowError.bind(this);
+    this.handleSetFiles = this.handleSetFiles.bind(this);
   }
 
   handleTitleChange(event) {
@@ -194,6 +200,14 @@ class AddEntry extends Component {
     }
   }
 
+  handleSetFiles(files) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Files = files;
+      return { Entry };
+    });
+  }
+
   render() {
     if (this.state.ShowError) {
       return (
@@ -272,10 +286,10 @@ class AddEntry extends Component {
               </Form.Group>
             </Row>
             <Row>
-              <Form.Group className="mt-3">
-                <Form.Label>Upload files</Form.Label>
-                <Form.Control type="file" multiple />
-              </Form.Group>
+              <FilesChooser
+                files={this.state.Entry.Files}
+                handleSetFiles={this.handleSetFiles}
+              />
             </Row>
             <Row>
               <Form.Group className="mt-3">
