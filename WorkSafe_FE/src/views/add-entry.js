@@ -34,8 +34,6 @@ class AddEntry extends Component {
     };
     this.state = {
       Entry: entry,
-      newUrl: "",
-      value: "",
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
