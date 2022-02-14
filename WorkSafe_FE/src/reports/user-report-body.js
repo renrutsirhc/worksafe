@@ -1,23 +1,28 @@
 import React from "react";
 import "../styles/report-styles.css";
+import { DateTime } from "luxon";
 
-const UserReportBody = props => {
+const UserReportBody = (props) => {
   var entryAuthor = props.entry.Author.Name;
   var entryTitle = props.entry.Title;
   var entryDescription = props.entry.Description;
   var entryLearning = props.entry.Learning;
   var entryImpact = props.entry.Impact;
-  var entryMindset = props.entry.Mindset;
+  var entryMindset = props.entry.MindSet;
   var entryNextSteps = props.entry.NextSteps;
-  var entryTags = props.entry.Tags;
+  var entryTags = props.entry.Tags.map((value) => {
+    return value + " ";
+  });
   var entryFiles = props.entry.Files;
-  var entryDate = props.entry.EntryDate;
+  var entryDate = DateTime.fromISO(props.entry.EntryDate).toLocaleString(
+    DateTime.DATETIME_FULL
+  );
 
   return (
     <>
-      <div>
+      <div className="table-container">
         <table>
-          <td>
+          <tbody>
             <tr>
               <td colSpan={2}>
                 <h2>{entryTitle}</h2>
@@ -25,73 +30,55 @@ const UserReportBody = props => {
             </tr>
             <tr>
               <td colSpan={2}>
-                <span className="light">
-                  <strong>Description</strong>
-                </span>
-                <td>{entryDescription}</td>
+                <h5 className="report-h5">Description</h5>
+                <p>{entryDescription}</p>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
-                <span>
-                  <strong>Learning</strong>
-                </span>
-                <td>{entryLearning}</td>
+                <h5 className="report-h5">Learning</h5>
+                <p>{entryLearning}</p>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
-                <span>
-                  <strong>Impact</strong>
-                </span>
-                <td>{entryImpact}</td>
+                <h5 className="report-h5">Impact</h5>
+                <p>{entryImpact}</p>
               </td>
             </tr>
-            <td>
-              <table>
-                <tr valign="top" colSpan={3}>
-                  <td className="report-td-28">
-                    <span className="report-td-28">
-                      <strong>Mindset</strong>
-                    </span>
-                    <td>{entryMindset}</td>
-                  </td>
-                  <td className="report-td-72">
-                    <span className="report-td-72">
-                      <strong>Next Steps</strong>
-                    </span>
-                    <td>{entryNextSteps}</td>
-                  </td>
-                </tr>
-                <tr valign="top">
-                  <td className="report-td-28">
-                    <span>
-                      <strong>Tags</strong>
-                    </span>
-                    <td>{entryTags}</td>
-                  </td>
-                  <td className="report-td-72">
-                    <span>
-                      <strong>Files</strong>
-                    </span>
-                    <td>{entryFiles}</td>
-                  </td>
-                </tr>
-              </table>
-            </td>
+            <tr valign="top">
+              <td className="report-td-28">
+                <h5 className="report-h5">Mindset</h5>
+                <p>{entryMindset}</p>
+              </td>
+              <td className="report-td-72">
+                <h5 className="report-h5">Next Steps</h5>
+                <p>{entryNextSteps}</p>
+              </td>
+            </tr>
+            <tr valign="top" colSpan={2}>
+              <td className="report-td-28">
+                <h5 className="report-h5">Tags</h5>
+                <p>{entryTags}</p>
+              </td>
+            </tr>
             <tr>
-              <td>
-                <span>
-                  <strong>
-                    Created {entryDate} by {entryAuthor}
-                  </strong>
-                </span>
+              <td className="report-td-72" colSpan={2}>
+                <h5 className="report-h5">Files</h5>
+                <p>{entryFiles}</p>
               </td>
             </tr>
-          </td>
+            <tr>
+              <td colSpan={2}>
+                <p>
+                  Last updated {entryDate} by {entryAuthor}
+                </p>
+              </td>
+            </tr>
+          </tbody>
         </table>
-        <hr></hr>
       </div>
+      <hr></hr>
     </>
   );
 };
