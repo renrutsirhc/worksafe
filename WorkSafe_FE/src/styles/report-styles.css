@@ -1,7 +1,3 @@
-input {
-  margin: 0.5rem;
-}
-
 .table-container {
   width: 100%;
   background-color: #e1e5da;
@@ -24,6 +20,11 @@ input {
 
 .report-h5 {
   color: #943a7a;
+  font-size: 12pt;
+}
+
+.report-p {
+  font-size: 8pt;
 }
 
 .report-body-title {
@@ -34,9 +35,16 @@ input {
   height: fit-content;
 }
 
-h2 {
-  width: fit-content;
-  height: fit-content;
+.report-h6 {
+  font-size: 10pt;
+}
+
+.report-h2 {
+  font-size: 16pt;
+}
+
+.report-h1 {
+  font-size: 18pt;
 }
 
 .h1-report {

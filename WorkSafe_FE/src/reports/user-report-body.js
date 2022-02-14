@@ -25,52 +25,52 @@ const UserReportBody = (props) => {
           <tbody>
             <tr>
               <td colSpan={2}>
-                <h2>{entryTitle}</h2>
+                <h2 className="report-h2">{entryTitle}</h2>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
                 <h5 className="report-h5">Description</h5>
-                <p>{entryDescription}</p>
+                <p className="report-p">{entryDescription}</p>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
                 <h5 className="report-h5">Learning</h5>
-                <p>{entryLearning}</p>
+                <p className="report-p">{entryLearning}</p>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
                 <h5 className="report-h5">Impact</h5>
-                <p>{entryImpact}</p>
+                <p className="report-p">{entryImpact}</p>
               </td>
             </tr>
             <tr valign="top">
               <td className="report-td-28">
                 <h5 className="report-h5">Mindset</h5>
-                <p>{entryMindset}</p>
+                <p className="report-p">{entryMindset}</p>
               </td>
               <td className="report-td-72">
                 <h5 className="report-h5">Next Steps</h5>
-                <p>{entryNextSteps}</p>
+                <p className="report-p">{entryNextSteps}</p>
               </td>
             </tr>
             <tr valign="top" colSpan={2}>
               <td className="report-td-28">
                 <h5 className="report-h5">Tags</h5>
-                <p>{entryTags}</p>
+                <p className="report-p">{entryTags}</p>
               </td>
             </tr>
             <tr>
               <td className="report-td-72" colSpan={2}>
                 <h5 className="report-h5">Files</h5>
-                <p>{entryFiles}</p>
+                <p className="report-p">{entryFiles}</p>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
-                <p>
+                <p className="report-p">
                   Last updated {entryDate} by {entryAuthor}
                 </p>
               </td>

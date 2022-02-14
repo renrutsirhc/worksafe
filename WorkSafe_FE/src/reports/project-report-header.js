@@ -48,18 +48,18 @@ const ProjectReportHeader = (props) => {
         </svg>
       </div>
       <br></br>
-      <h1 className="h1-report">Project Report</h1>
+      <h1 className="report-h1">Project Report</h1>
       <div>
-        <h2 className="mt-4">{projectTitle}</h2>
-        <p>Owner: {projectOwner}</p>
-        <h5>Description</h5>
-        <p>{projectDescription}</p>
-        <h5>Goal</h5>
-        <p>{projectGoal}</p>
-        <h5>Pillars</h5>
-        <p className="mb-4">{projectPillars}</p>
+        <h2 className="report-h2 mt-4">{projectTitle}</h2>
+        <p className="report-p">Owner: {projectOwner}</p>
+        <h5 className="report-h5">Description</h5>
+        <p className="report-p">{projectDescription}</p>
+        <h5 className="report-h5">Goal</h5>
+        <p className="report-p">{projectGoal}</p>
+        <h5 className="report-h5">Pillars</h5>
+        <p className="report-p mb-4">{projectPillars}</p>
         <hr></hr>
-        <h6>Summary:</h6>
+        <h6 className="report-h6">Summary:</h6>
         <hr></hr>
       </div>
     </div>
