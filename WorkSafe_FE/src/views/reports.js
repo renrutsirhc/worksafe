@@ -36,7 +36,7 @@ class Reports extends Component {
       endDate: null,
     };
 
-    var timeLimit = null;
+    var startLimit, endLimit;
 
     this.generateDOCX = this.generateDOCX.bind(this);
     this.renderElement = this.renderElement.bind(this);
@@ -150,17 +150,20 @@ class Reports extends Component {
 
   handleStartDateChange(event) {
     var startDate = DateTime.fromISO(event.target.value).toUTC();
-    this.timeLimit = startDate.toISODate();
+    this.startLimit = startDate.toLocal().toISODate();
     this.setState({
       startDate: startDate.toISO(),
     });
+    console.log(this.startLimit);
   }
 
   handleEndDateChange(event) {
     var endDate = DateTime.fromISO(event.target.value).toUTC();
+    this.endLimit = endDate.toLocal().toISODate();
     this.setState({
       endDate: endDate.toISO(),
     });
+    console.log(this.endLimit);
   }
 
   handleProjectChange(event) {
@@ -494,6 +497,7 @@ class Reports extends Component {
                   value={localStartDate}
                   onChange={this.handleStartDateChange}
                   name="date"
+                  max={this.endLimit}
                 />
               </Form.Group>
             </Col>
@@ -505,7 +509,7 @@ class Reports extends Component {
                   value={localEndDate}
                   onChange={this.handleEndDateChange}
                   name="date"
-                  min={this.timeLimit}
+                  min={this.startLimit}
                 />
               </Form.Group>
             </Col>
