@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Select } from "react-dropdown-select";
+
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap";
 import {
     CardHeaderWithCloseButton,
@@ -8,6 +9,8 @@ import {
 import ErrorCard from "./error-card";
 import { withAuth0 } from "@auth0/auth0-react";
 import { DateTime } from "luxon";
+import { TableRowHeightAttributes } from "docx";
+import FilesChooser from "../components/files-chooser";
 
 class AddEntry extends Component {
     constructor(props) {
@@ -38,18 +41,20 @@ class AddEntry extends Component {
                 "An error has occurred while trying to get data from the API. Please contact your developer.",
         };
 
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleEntryDateChange = this.handleEntryDateChange.bind(this);
-        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleLearningChange = this.handleLearningChange.bind(this);
-        this.handleMindsetChange = this.handleMindsetChange.bind(this);
-        this.handleImpactChange = this.handleImpactChange.bind(this);
-        this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
-        this.handleProjectChange = this.handleProjectChange.bind(this);
-        this.handleTagChange = this.handleTagChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleShowError = this.handleShowError.bind(this);
-    }
+
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleEntryDateChange = this.handleEntryDateChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleLearningChange = this.handleLearningChange.bind(this);
+    this.handleMindsetChange = this.handleMindsetChange.bind(this);
+    this.handleImpactChange = this.handleImpactChange.bind(this);
+    this.handleNextStepsChange = this.handleNextStepsChange.bind(this);
+    this.handleProjectChange = this.handleProjectChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleShowError = this.handleShowError.bind(this);
+    this.handleSetFiles = this.handleSetFiles.bind(this);
+  }
 
     handleTitleChange(event) {
         this.setState((prevState) => {
@@ -195,6 +200,15 @@ class AddEntry extends Component {
         }
     }
 
+
+  handleSetFiles(files) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Files = files;
+      return { Entry };
+    });
+  }
+
     render() {
         if (this.state.ShowError) {
             return (
@@ -215,132 +229,132 @@ class AddEntry extends Component {
         return (
             // add a button, call this.props.handleShowAddEntry
 
-            <Form>
-                <Card>
-                    <CardHeaderWithCloseButton
-                        title="Add Entry"
-                        subTitle=""
-                        setEditing={this.props.handleShowAddEntry}
-                        color={this.state.Entry.Project.Color}
-                    />
-                    <Card.Body>
-                        <Row sm={1} md={2}>
-                            <Col>
-                                <Form.Group>
-                                    <FormLabel>Title</FormLabel>
-                                    <FormControl
-                                        type="text"
-                                        value={this.state.Entry.Title}
-                                        onChange={this.handleTitleChange}
-                                        placeholder="Summarise the entry"
-                                    />
-                                </Form.Group>
-                            </Col>
-                            <Col md={3}>
-                                <Form.Group>
-                                    <FormLabel>Date</FormLabel>
-                                    <FormControl
-                                        type="date"
-                                        value={localEntryDate}
-                                        onChange={this.handleEntryDateChange}
-                                        name="date"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row sm={1} md={2}>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Project</Form.Label>
-                                <Select
-                                    placeholder={placeHolderOption}
-                                    onChange={this.handleProjectChange}
-                                    options={projectsOptions}
-                                    backspaceDelete={false}
-                                    clearable={true}
-                                    dropdownHandle={false}
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    type="text"
-                                    value={this.state.Entry.Description || ""}
-                                    onChange={this.handleDescriptionChange}
-                                    placeholder="Describe the entry"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Upload files</Form.Label>
-                                <Form.Control type="file" multiple />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Learning</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    value={this.state.Entry.Learning}
-                                    onChange={this.handleLearningChange}
-                                    placeholder="Describe the learning"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Mindset</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={this.state.Entry.Mindset}
-                                    onChange={this.handleMindsetChange}
-                                    placeholder="Mind set used"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mt-3">
-                                    <Form.Label>Impact</Form.Label>
-                                    <Form.Control
-                                        as="textarea"
-                                        value={this.state.Entry.Impact}
-                                        onChange={this.handleImpactChange}
-                                        placeholder="Impact of entry"
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Next steps</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    value={this.state.Entry.NextSteps}
-                                    onChange={this.handleNextStepsChange}
-                                    placeholder="Next steps based on this entry"
-                                />
-                            </Form.Group>
-                        </Row>
-                        <Row sm={1} md={2}>
-                            <Form.Group className="mt-3">
-                                <Form.Label>Tag</Form.Label>
-                                <Select
-                                    placeholder={placeHolderOption}
-                                    options={tagsOptions}
-                                    onChange={(values) => this.handleTagChange(values)}
-                                    clearable={true}
-                                    dropdownHandle={false}
-                                    multi={true}
-                                    create={true}
-                                    color="#AAAAAA"
-                                />
-                            </Form.Group>
-                        </Row>
-                    </Card.Body>
+      <Form>
+        <Card>
+          <CardHeaderWithCloseButton
+            title="Add Entry"
+            subTitle=""
+            setEditing={this.props.handleShowAddEntry}
+          />
+          <Card.Body>
+            <Row sm={1} md={2}>
+              <Col>
+                <Form.Group>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl
+                    type="text"
+                    value={this.state.Entry.Title}
+                    onChange={this.handleTitleChange}
+                    placeholder="Summarise the entry"
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={3}>
+                <Form.Group>
+                  <FormLabel>Date</FormLabel>
+                  <FormControl
+                    type="date"
+                    value={localEntryDate}
+                    onChange={this.handleEntryDateChange}
+                    name="date"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Project</Form.Label>
+                <Select
+                  placeholder={placeHolderOption}
+                  onChange={this.handleProjectChange}
+                  options={projectsOptions}
+                  backspaceDelete={false}
+                  clearable={true}
+                  dropdownHandle={false}
+                />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  type="text"
+                  value={this.state.Entry.Description || ""}
+                  onChange={this.handleDescriptionChange}
+                  placeholder="Describe the entry"
+                />
+              </Form.Group>
+            </Row>
+            <Row>
+              <FilesChooser
+                files={this.state.Entry.Files}
+                handleSetFiles={this.handleSetFiles}
+              />
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Learning</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={this.state.Entry.Learning}
+                  onChange={this.handleLearningChange}
+                  placeholder="Describe the learning"
+                />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Mindset</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={this.state.Entry.Mindset}
+                  onChange={this.handleMindsetChange}
+                  placeholder="Mind set used"
+                />
+              </Form.Group>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group className="mt-3">
+                  <Form.Label>Impact</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    value={this.state.Entry.Impact}
+                    onChange={this.handleImpactChange}
+                    placeholder="Impact of entry"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Form.Group className="mt-3">
+                <Form.Label>Next steps</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  value={this.state.Entry.NextSteps}
+                  onChange={this.handleNextStepsChange}
+                  placeholder="Next steps based on this entry"
+                />
+              </Form.Group>
+            </Row>
+            <Row sm={1} md={2}>
+              <Form.Group className="mt-3">
+                <Form.Label>Tag</Form.Label>
+                <Select
+                  placeholder={placeHolderOption}
+                  options={tagsOptions}
+                  onChange={(values) => this.handleTagChange(values)}
+                  clearable={true}
+                  dropdownHandle={false}
+                  multi={true}
+                  create={true}
+                  color="#AAAAAA"
+                />
+              </Form.Group>
+            </Row>
+          </Card.Body>
+
 
                     <CardFooterWithSaveButton
                         text={""}

@@ -16,6 +16,10 @@
   color: white;
 }
 
+.button:disabled {
+  background-color: #7e7e7f;
+}
+
 .logout-button {
   background-color: #282829;
   height: 100%;
@@ -109,93 +113,108 @@
   background-color: #943a7a;
 }
 
+.url-list-item {
+  background-color: #943a7a;
+  color: white;
+  padding: 4px;
+  margin: 4px;
+}
+
+.url-link {
+  color: white;
+}
+
+.url-link:hover {
+  color: white;
+  font-weight: 700;
+}
+
 /*radio-buttons*/
 
-.project-select{
-    margin-top:8px;
-    margin-bottom:8px;
+.project-select {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 :root {
-    --form-control-color: #943a7a;
+  --form-control-color: #943a7a;
 }
 
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .radio-label-column {
-    white-space: nowrap;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    float: left;
+  white-space: nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
 }
 
 .radio-label {
-    font-family: Verdana;
-    font-size: 1em;
-    font-weight: 400;
-    line-height: 1.1;
-    display: flex;
-    flex-direction: row;
-    grid-template-columns: 1em auto;
-    gap: 0.5em;
-    border: none;
-    margin:8px;
-    margin-right:16px;
+  font-family: Verdana;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+  border: none;
+  margin: 8px;
+  margin-right: 16px;
 }
 
-    .radio-label + .radio-label {
-        margin-top: 1em;
-    }
+.radio-label + .radio-label {
+  margin-top: 1em;
+}
 
-    .radio-label:focus-within {
-        color: black;
-    }
+.radio-label:focus-within {
+  color: black;
+}
 
 input[type="radio"] {
-    /* Add if not using autoprefixer */
-    -webkit-appearance: none;
-    /* Remove most all native input styles */
-    appearance: none;
-    /* For iOS < 15 */
-    background-color: var(--form-background);
-    /* Not removed via appearance */
-    margin: 0;
-    font: inherit;
-    color: currentColor;
-    width: 1.15em;
-    height: 1.15em;
-    border: 0.15em solid currentColor;
-    border-radius: 50%;
-    transform: translateY(-0.075em);
-    display: grid !important;
-    place-content: center;
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+  display: grid !important;
+  place-content: center;
 }
 
-    input[type="radio"]::before {
-        content: "";
-        width: 0.65em;
-        height: 0.65em;
-        border-radius: 50%;
-        transform: scale(0);
-        transition: 120ms transform ease-in-out;
-        box-shadow: inset 1em 1em var(--form-control-color);
-        /* Windows High Contrast Mode */
-        background-color: CanvasText;
-    }
+input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
 
-    input[type="radio"]:checked::before {
-        transform: scale(1);
-    }
-
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
 
 /*cards*/
 .grow {
@@ -323,8 +342,8 @@ input[type="radio"] {
 }
 
 /*Report Page*/
-#report{
-    margin:2.54cm;
+#report {
+  margin: 2.54cm;
 }
 
 .report-card {
@@ -346,3 +365,4 @@ input[type="radio"] {
     border: 1px solid black;
     margin-right:8px;
 }
+
