@@ -36,6 +36,8 @@ class Reports extends Component {
       endDate: null,
     };
 
+    var timeLimit = null;
+
     this.generateDOCX = this.generateDOCX.bind(this);
     this.renderElement = this.renderElement.bind(this);
     this.generateReport = this.generateReport.bind(this);
@@ -148,6 +150,7 @@ class Reports extends Component {
 
   handleStartDateChange(event) {
     var startDate = DateTime.fromISO(event.target.value).toUTC();
+    this.timeLimit = startDate.toISODate();
     this.setState({
       startDate: startDate.toISO(),
     });
@@ -190,6 +193,7 @@ class Reports extends Component {
     this.setState({
       selectedTags: values.map((tag) => tag.value),
     });
+    console.log(this.state);
   }
 
   renderElement(paragraphs, element) {
@@ -501,6 +505,7 @@ class Reports extends Component {
                   value={localEndDate}
                   onChange={this.handleEndDateChange}
                   name="date"
+                  min={this.timeLimit}
                 />
               </Form.Group>
             </Col>
