@@ -376,3 +376,7 @@ input[type="radio"]:checked::before {
   border: 1px solid black;
   margin-right: 8px;
 }
+
+.files-list {
+  margin-bottom: 8px;
+}

@@ -19,6 +19,14 @@ class ViewFullEntry extends Component {
       </button>
     ));
 
+    const urlList = this.props.entry.Files.map((file, index) => (
+      <div>
+        <a href={file} key={index}>
+          {file}
+        </a>
+      </div>
+    ));
+
     return (
       <div className="view-entry mt-3">
         <Card className="grow" onClick={this.props.setExpanded}>
@@ -42,7 +50,7 @@ class ViewFullEntry extends Component {
             <Card.Title>Description</Card.Title>
             <Card.Text>{this.props.entry.Description}</Card.Text>
             <Card.Title>Files</Card.Title>
-            <Card.Text>{this.props.entry.Files}</Card.Text>
+            <div className="files-list">{urlList}</div>
             <Card.Title>Learning</Card.Title>
             <Card.Text>{this.props.entry.Learning}</Card.Text>
             <Card.Title>Mindset</Card.Title>
