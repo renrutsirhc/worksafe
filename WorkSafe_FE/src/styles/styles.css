@@ -56,17 +56,16 @@
 }
 
 .card-header-button {
-    /*background-color: #943a7a;*/
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+  /*background-color: #943a7a;*/
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 /*.card-header-button:hover {
   background-color: white;
   color: #943a7a;
 }*/
-
 
 .tag-button {
   background-color: #a9a8a8;
@@ -127,6 +126,18 @@
 .url-link:hover {
   color: white;
   font-weight: 700;
+}
+
+.url-header-button {
+  background-color: #943a7a;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.url-header-button:hover {
+  background-color: white;
+  color: #943a7a;
 }
 
 /*radio-buttons*/
@@ -238,8 +249,8 @@ input[type="radio"]:checked::before {
 }
 
 .card-header-default {
-    color: white;
-    background-color: #943a7a;
+  color: white;
+  background-color: #943a7a;
 }
 
 .card-title-container {
@@ -347,22 +358,21 @@ input[type="radio"]:checked::before {
 }
 
 .report-card {
-    width: 21cm;
-    min-width: 21cm!important;
-    min-height: 29.7cm;
+  width: 21cm;
+  min-width: 21cm !important;
+  min-height: 29.7cm;
 }
 
 /*Color Picker*/
 .color-option {
-    display: flex;
-    align-items: center;
-    flex-direction:row;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .color-option-box {
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
-    margin-right:8px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  margin-right: 8px;
 }
-
