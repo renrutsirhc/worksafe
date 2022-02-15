@@ -20,30 +20,39 @@ const UserReportBody = (props) => {
         DateTime.DATETIME_FULL
     );
 
+    var project = props.entry.Project.Id == "" ? "" : <tr>
+        <td colSpan={2} className="report-td">
+            <h5 className="report-h5">Project</h5>
+            <p className="report-p">{props.entry.Project.Title}</p>
+        </td>
+    </tr>
+
     return (
         <>
             <div className="table-container">
-                <table>
+                <table className="report-table">
                     <tbody>
                         <tr>
-                            <td colSpan={2}>
+                            <td colSpan={2} className="report-td">
                                 <h2 className="report-h2">{entryTitle}</h2>
+                                
                             </td>
                         </tr>
+                        {project}
                         <tr>
-                            <td colSpan={2}>
+                            <td colSpan={2} className="report-td">
                                 <h5 className="report-h5">Description</h5>
                                 <p className="report-p">{entryDescription}</p>
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={2}>
+                            <td colSpan={2} className="report-td">
                                 <h5 className="report-h5">Learning</h5>
                                 <p className="report-p">{entryLearning}</p>
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={2}>
+                            <td colSpan={2} className="report-td">
                                 <h5 className="report-h5">Impact</h5>
                                 <p className="report-p">{entryImpact}</p>
                             </td>
@@ -59,22 +68,22 @@ const UserReportBody = (props) => {
                             </td>
                         </tr>
                         <tr valign="top" >
-                            <td className="report-td-28" colSpan={2}>
+                            <td className="report-td" colSpan={2}>
                                 <h5 className="report-h5">Tags</h5>
                                 <p className="report-p">{entryTags}</p>
                             </td>
                         </tr>
                         <tr>
-                            <td className="report-td-72" colSpan={2}>
+                            <td className="report-td" colSpan={2}>
                                 <h5 className="report-h5">Files</h5>
-                                <p className="report-p">{entryFiles}</p>
+                                {entryFiles}
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={2}>
-                                <p className="report-p">
+                            <td colSpan={2} className="report-td">
+                                <h4 className="report-h4">
                                     Last updated {entryDate} by {entryAuthor}
-                                </p>
+                                </h4>
                             </td>
                         </tr>
                     </tbody>

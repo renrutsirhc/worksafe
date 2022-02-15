@@ -5,6 +5,7 @@ import {
     Packer,
     Paragraph,
     TextRun,
+    ImageRun,
     SectionType,
     HeadingLevel,
     AlignmentType,
@@ -22,6 +23,7 @@ import { withAuth0 } from "@auth0/auth0-react";
 import { DateTime } from "luxon";
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap";
 import "../styles/report-styles.css";
+import logo from "./Worksafe-WS-Primary-BLK-copy.png"
 
 class Reports extends Component {
     constructor(props) {
@@ -55,6 +57,12 @@ class Reports extends Component {
     componentDidMount() {
         this.getTags();
         this.getProjects();
+    }
+
+    async getLogo() {
+        var response = await fetch(logo);
+        var data = await response.blob();
+        return data;
     }
 
     async getTags() {
@@ -208,76 +216,92 @@ class Reports extends Component {
         //render this element
         switch (element.localName) {
             case "a":
-                paragraphs.push(
-                    new Paragraph({
-                        children: [
-                            new ExternalHyperlink({
-                                children: [
-                                    new TextRun({
-                                        text: element.textContent,
-                                        style: "Hyperlink",
-                                    }),
-                                ],
-                                link: element.href,
-                            })
-                        ]
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            children: [
+                                new ExternalHyperlink({
+                                    children: [
+                                        new TextRun({
+                                            text: element.textContent,
+                                            style: "Hyperlink",
+                                        }),
+                                    ],
+                                    link: element.href,
+                                })
+                            ],
+                        })
+                    );
+                }
                 break;
             case "p":
-                paragraphs.push(
-                    new Paragraph({
-                        text: element.textContent,
-                        spacing: {
-                            after: 200,
-                        },
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                        })
+                    );
+                }
                 break;
             case "h1":
-                paragraphs.push(
-                    new Paragraph({
-                        text: element.textContent,
-                        heading: HeadingLevel.HEADING_1,
-                        spacing: {
-                            after: 200,
-                        },
-                        alignment: AlignmentType.CENTER,
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_1,
+                        })
+                    );
+                }
                 break;
             case "h2":
-                paragraphs.push(
-                    new Paragraph({
-                        text: element.textContent,
-                        heading: HeadingLevel.HEADING_2,
-                        spacing: {
-                            after: 200,
-                        },
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_2,
+                        })
+                    );
+                }
+                break;
+            case "h3":
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_3,
+                        })
+                    );
+                }
+                break;
+            case "h4":
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_4,
+                        })
+                    );
+                }
                 break;
             case "h5":
-                paragraphs.push(
-                    new Paragraph({
-                        text: element.textContent,
-                        heading: HeadingLevel.HEADING_5,
-                        spacing: {
-                            after: 200,
-                        },
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_5,
+                        })
+                    );
+                }
                 break;
             case "h6":
-                paragraphs.push(
-                    new Paragraph({
-                        text: element.textContent,
-                        heading: HeadingLevel.HEADING_6,
-                        spacing: {
-                            after: 200,
-                        },
-                    })
-                );
+                if (element.textContent != "") {
+                    paragraphs.push(
+                        new Paragraph({
+                            text: element.textContent,
+                            heading: HeadingLevel.HEADING_6,
+                        })
+                    );
+                }
                 break;
             case "tbody":
                 let tableRows = this.getTableRows(element);
@@ -293,6 +317,20 @@ class Reports extends Component {
                     },
                 });
                 paragraphs.push(table);
+                break;
+            case "svg":
+                const para = new Paragraph({
+                    children: [
+                        new ImageRun({
+                            data: this.getLogo(),
+                            transformation: {
+                                width: 588.2 * 0.3,
+                                height: 193.733 * 0.3,
+                            },
+                        }),
+                    ],
+                });
+                paragraphs.push(para);
                 break;
             case "hr":
                 paragraphs.push(
@@ -405,6 +443,12 @@ class Reports extends Component {
                             color: "ffffff"
                         },
                     },
+                    margins: {
+                        left: 0.5 / 2.54 * 1440,
+                        top: 0.25 / 2.54 * 1440,
+                        right: 0.5 / 2.54 * 1440,
+                        bottom: 0.25 / 2.54 * 1440,
+                    },
                     shading: {
                         fill: "e1e5da",
                         type: ShadingType.SOLID,
@@ -447,9 +491,8 @@ class Reports extends Component {
                         paragraph: {
                             spacing: {
                                 line: 276,
-                            },
-                            indent: {
-                                left: 0.5/2.54 * 1440,
+                                before:0,
+                                after: 120,
                             },
                         },
                     },
@@ -460,12 +503,11 @@ class Reports extends Component {
                         next: "Normal",
                         quickFormat: true,
                         run: {
-                            size: 52,
-                            bold: true,
+                            size: 36,
+                            bold: false,
                         },
                         paragraph: {
                             spacing: {
-                                before: 240,
                                 after: 120,
                             },
                         },
@@ -478,14 +520,47 @@ class Reports extends Component {
                         quickFormat: true,
                         run: {
                             size: 32,
-                            bold: true,
+                            bold: false,
                         },
                         paragraph: {
                             spacing: {
-                                before: 240,
                                 after: 120,
                             },
                         },
+                    },
+                    {
+                        id: "Heading3",
+                        name: "Heading 3",
+                        basedOn: "Normal",
+                        next: "Normal",
+                        quickFormat: true,
+                        run: {
+                            size: 28,
+                            bold: false,
+                        },
+                        paragraph: {
+                            spacing: {
+                                after: 120,
+                            },
+                        },
+                    },
+                    {
+                        id: "Heading4",
+                        name: "Heading 4",
+                        basedOn: "Normal",
+                        next: "Normal",
+                        quickFormat: true,
+                        run: {
+                            size: 20,
+                            bold: false,
+                        },
+                        paragraph: {
+                            spacing: {
+                                before: 360,
+                                after: 120,
+                            },
+                        },
+
                     },
                     {
                         id: "Heading5",
@@ -494,13 +569,12 @@ class Reports extends Component {
                         next: "Normal",
                         quickFormat: true,
                         run: {
-                            size: 24,
-                            bold: true,
+                            size: 28,
+                            bold: false,
                             color: "943a7a",
                         },
                         paragraph: {
                             spacing: {
-                                before: 240,
                                 after: 120,
                             },
                         },
@@ -514,12 +588,10 @@ class Reports extends Component {
                         quickFormat: true,
                         run: {
                             size: 24,
-                            bold: true,
-                            color: "943a7a",
+                            bold: false,
                         },
                         paragraph: {
                             spacing: {
-                                before: 240,
                                 after: 120,
                             },
                         },
