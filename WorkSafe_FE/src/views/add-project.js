@@ -33,6 +33,7 @@ class AddProject extends Component {
     };
     this.state = {
       Project: project,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -142,28 +143,37 @@ class AddProject extends Component {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();
-    const { getAccessTokenSilently } = this.props.auth0;
-    var token = await getAccessTokenSilently();
-    var project = this.state.Project;
-    var options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(project),
-    };
-
-    var url = "/api/projects";
-    var response = await fetch(url, options);
-    if (response.ok) {
-      var result = await response.json();
-      console.log(result);
-      this.props.handleAddProject();
-      this.props.handleShowAddProject();
+    this.setState({ validated: true });
+    if (
+      this.state.Project.Title == null ||
+      this.state.Project.Title.length == 0
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
     } else {
-      this.handleShowError();
+      event.preventDefault();
+      const { getAccessTokenSilently } = this.props.auth0;
+      var token = await getAccessTokenSilently();
+      var project = this.state.Project;
+      var options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(project),
+      };
+
+      var url = "/api/projects";
+      var response = await fetch(url, options);
+      if (response.ok) {
+        var result = await response.json();
+        console.log(result);
+        this.props.handleAddProject();
+        this.props.handleShowAddProject();
+      } else {
+        this.handleShowError();
+      }
     }
   }
 
@@ -201,7 +211,7 @@ class AddProject extends Component {
     return (
       // add a button, call this.props.handleShowAddProject
 
-      <Form>
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title="Add Project"
@@ -218,7 +228,11 @@ class AddProject extends Component {
                   value={this.state.Project.Title}
                   onChange={this.handleTitleChange}
                   placeholder="Project title"
+                  required={true}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please include a title
+                </Form.Control.Feedback>
               </Form.Group>
             </Row>
             <Row sm={1} md={2}>

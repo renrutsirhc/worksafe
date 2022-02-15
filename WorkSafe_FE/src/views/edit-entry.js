@@ -16,6 +16,7 @@ class EditEntry extends Component {
     let entry = this.props.entry;
     this.state = {
       Entry: entry,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -116,31 +117,41 @@ class EditEntry extends Component {
   }
 
   handleSubmit = async (event) => {
-    event.preventDefault();
-    var entry = this.state.Entry;
-    const { getAccessTokenSilently } = this.props.auth0;
-    var token = await getAccessTokenSilently();
-    var options = {
-      method: "PUT", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(entry),
-    };
-
-    var url =
-      "/api/users/" +
-      this.state.Entry.Author.Id +
-      "/entries/" +
-      this.state.Entry.Id;
-    var response = await fetch(url, options);
-    if (response.ok) {
-      var result = await response.json();
-      this.props.handleUpdateEntry();
-      this.props.setEditing();
+    this.setState({ validated: true });
+    if (
+      this.state.Entry.Title == null ||
+      this.state.Entry.Title.length == 0 ||
+      this.state.Entry.EntryDate == null
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
     } else {
-      this.handleShowError();
+      event.preventDefault();
+      var entry = this.state.Entry;
+      const { getAccessTokenSilently } = this.props.auth0;
+      var token = await getAccessTokenSilently();
+      var options = {
+        method: "PUT", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(entry),
+      };
+
+      var url =
+        "/api/users/" +
+        this.state.Entry.Author.Id +
+        "/entries/" +
+        this.state.Entry.Id;
+      var response = await fetch(url, options);
+      if (response.ok) {
+        var result = await response.json();
+        this.props.handleUpdateEntry();
+        this.props.setEditing();
+      } else {
+        this.handleShowError();
+      }
     }
   };
 
@@ -217,7 +228,7 @@ class EditEntry extends Component {
     const localEntryDate = entryDate.toLocal().toISODate();
 
     return (
-      <Form>
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title={this.state.Entry.Title}
@@ -235,7 +246,11 @@ class EditEntry extends Component {
                     value={this.state.Entry.Title}
                     onChange={this.handleTitleChange}
                     placeholder="Summarise the entry"
+                    required={true}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please include a title
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
 

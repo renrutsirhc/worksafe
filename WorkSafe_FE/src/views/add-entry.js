@@ -35,6 +35,7 @@ class AddEntry extends Component {
     };
     this.state = {
       Entry: entry,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -174,28 +175,38 @@ class AddEntry extends Component {
   }
 
   async handleSubmit(event) {
-    event.preventDefault();
-    const { getAccessTokenSilently } = this.props.auth0;
-    var token = await getAccessTokenSilently();
-    var entry = this.state.Entry;
-    var options = {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(entry),
-    };
-
-    var url = "/api/users/" + this.state.Entry.Author.Id + "/entries";
-    var response = await fetch(url, options);
-    if (response.ok) {
-      var result = await response.json();
-      console.log(result);
-      this.props.handleAddEntry();
-      this.props.handleShowAddEntry();
+    this.setState({ validated: true });
+    if (
+      this.state.Entry.Title == null ||
+      this.state.Entry.Title.length == 0 ||
+      this.state.Entry.EntryDate == null
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
     } else {
-      this.handleShowError();
+      event.preventDefault();
+      const { getAccessTokenSilently } = this.props.auth0;
+      var token = await getAccessTokenSilently();
+      var entry = this.state.Entry;
+      var options = {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(entry),
+      };
+
+      var url = "/api/users/" + this.state.Entry.Author.Id + "/entries";
+      var response = await fetch(url, options);
+      if (response.ok) {
+        var result = await response.json();
+        console.log(result);
+        this.props.handleAddEntry();
+        this.props.handleShowAddEntry();
+      } else {
+        this.handleShowError();
+      }
     }
   }
 
@@ -218,6 +229,7 @@ class AddEntry extends Component {
       );
     }
 
+
     const projectPlaceHolder =
       this.props.projectPlaceHolder == undefined
         ? ""
@@ -231,7 +243,7 @@ class AddEntry extends Component {
     return (
       // add a button, call this.props.handleShowAddEntry
 
-      <Form>
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title="Add Entry"
@@ -248,7 +260,11 @@ class AddEntry extends Component {
                     value={this.state.Entry.Title}
                     onChange={this.handleTitleChange}
                     placeholder="Summarise the entry"
+                    required={true}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please include a title
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col md={3}>
@@ -259,7 +275,11 @@ class AddEntry extends Component {
                     value={localEntryDate}
                     onChange={this.handleEntryDateChange}
                     name="date"
+                    required={true}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a date
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
