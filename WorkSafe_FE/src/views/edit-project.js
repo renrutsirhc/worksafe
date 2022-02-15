@@ -15,6 +15,7 @@ class EditProject extends Component {
     super(props);
     this.state = {
       Project: this.props.project,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -124,6 +125,7 @@ class EditProject extends Component {
   }
 
   handleSubmit = async (event) => {
+    this.setState({ validated: true });
     if (
       this.state.Project.Title == null ||
       this.state.Project.Title.length == 0
@@ -190,7 +192,7 @@ class EditProject extends Component {
 
     const timeStamp = DateTime.fromISO(this.state.Project.TimeStamp);
     return (
-      <Form className="was-validated">
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title="Update Project"

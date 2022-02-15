@@ -35,6 +35,7 @@ class AddEntry extends Component {
     };
     this.state = {
       Entry: entry,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -174,10 +175,11 @@ class AddEntry extends Component {
   }
 
   async handleSubmit(event) {
+    this.setState({ validated: true });
     if (
       this.state.Entry.Title == null ||
       this.state.Entry.Title.length == 0 ||
-      this.state.Entry.DateTime == null
+      this.state.Entry.EntryDate == null
     ) {
       event.preventDefault();
       event.stopPropagation();
@@ -236,7 +238,7 @@ class AddEntry extends Component {
     return (
       // add a button, call this.props.handleShowAddEntry
 
-      <Form className="was-validated">
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title="Add Entry"

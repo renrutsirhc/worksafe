@@ -16,6 +16,7 @@ class EditEntry extends Component {
     let entry = this.props.entry;
     this.state = {
       Entry: entry,
+      validated: false,
       ShowError: false,
       ErrorTitle: "Error",
       ErrorText:
@@ -115,10 +116,11 @@ class EditEntry extends Component {
   }
 
   handleSubmit = async (event) => {
+    this.setState({ validated: true });
     if (
       this.state.Entry.Title == null ||
       this.state.Entry.Title.length == 0 ||
-      this.state.Entry.DateTime == null
+      this.state.Entry.EntryDate == null
     ) {
       event.preventDefault();
       event.stopPropagation();
@@ -217,7 +219,7 @@ class EditEntry extends Component {
     const localEntryDate = entryDate.toLocal().toISODate();
 
     return (
-      <Form className="was-validated">
+      <Form noValidate validated={this.state.validated}>
         <Card>
           <CardHeaderWithCloseButton
             title={this.state.Entry.Title}
