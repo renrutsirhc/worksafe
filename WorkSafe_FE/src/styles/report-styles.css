@@ -1,63 +1,97 @@
 .table-container {
-  width: 100%;
-  background-color: #e1e5da;
-  padding: 0.5cm;
+    width: 100%;
+    background-color: #e1e5da;
+}
+
+.report-table{
+    width: 100%;
+}
+
+.report-td {
+    vertical-align: top;
+    padding-left: 0.5cm;
+    padding-right: 0.5cm;
+    padding-top: 0.25cm;
+    padding-bottom: 0.25cm;
 }
 
 .report-td-28 {
-  vertical-align: top;
-  width: 50%;
-  height: auto;
-  margin: 0.5cm;
+    vertical-align: top;
+    width: 6.96cm;
+    height: auto;
+    padding-left: 0.5cm;
+    padding-right: 0.5cm;
+    padding-top: 0.25cm;
+    padding-bottom: 0.25cm;
 }
 
 .report-td-72 {
-  vertical-align: top;
-  width: 50%;
-  height: auto;
-  margin: 0.5cm;
+    vertical-align: top;
+    width: 6.96cm;
+    height: auto;
+    padding-left: 0.5cm;
+    padding-right: 0.5cm;
+    padding-top: 0.25cm;
+    padding-bottom: 0.25cm;
 }
 
-.report-h5 {
-  color: #943a7a;
-  font-size: 12pt;
+
+
+.report-body-title {
+    color: #272725;
+    column-span: 2;
+    vertical-align: top;
+    width: 100%;
+    height: fit-content;
 }
 
 .report-p {
-  font-size: 8pt;
-}
-
-.report-body-title {
-  color: #272725;
-  column-span: 2;
-  vertical-align: top;
-  width: 100%;
-  height: fit-content;
-}
-
-.report-h6 {
-  font-size: 10pt;
-}
-
-.report-h2 {
-  font-size: 16pt;
+    font-size: 12pt;
+    font-family: Verdana;
 }
 
 .report-h1 {
-  font-size: 18pt;
+    font-size: 18pt;
+    font-family: Verdana;
+}
+
+.report-h2 {
+    font-size: 16pt;
+    font-family: Verdana;
+}
+
+.report-h3 {
+    font-size: 14pt;
+    font-family: Verdana;
+}
+
+.report-h4 {
+    font-size: 10pt;
+    font-family: Verdana;
+}
+
+.report-h5 {
+    color: #943a7a;
+    font-size: 14pt;
+    font-family: Verdana;
+}
+
+.report-h6 {
+    font-size: 12pt;
+    font-family: Verdana;
 }
 
 .h1-report {
-  display: inline-block;
-  position: relative;
-  right: 0px;
+    display: inline-block;
+    position: relative;
+    right: 0px;
 }
 
 .logo-report {
 }
 
 .logo-report-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
