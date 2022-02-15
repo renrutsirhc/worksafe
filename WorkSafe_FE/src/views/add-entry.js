@@ -3,8 +3,8 @@ import { Select } from "react-dropdown-select";
 
 import { Form, FormLabel, FormControl, Row, Col, Card } from "react-bootstrap";
 import {
-    CardHeaderWithCloseButton,
-    CardFooterWithSaveButton,
+  CardHeaderWithCloseButton,
+  CardFooterWithSaveButton,
 } from "../components";
 import ErrorCard from "./error-card";
 import { withAuth0 } from "@auth0/auth0-react";
@@ -13,34 +13,33 @@ import { TableRowHeightAttributes } from "docx";
 import FilesChooser from "../components/files-chooser";
 
 class AddEntry extends Component {
-    constructor(props) {
-        super(props);
-        var entry = {
-            Author: {
-                Id: this.props.currentUser.sub,
-                Name: this.props.currentUser.name,
-            },
-            Project: {
-                Id: "",
-                Title: "",
-                Color: "#943A7A",
-            },
-            Description: "",
-            Files: [],
-            Impact: "",
-            Learning: "",
-            MindSet: "",
-            NextSteps: "",
-            Tags: [],
-        };
-        this.state = {
-            Entry: entry,
-            ShowError: false,
-            ErrorTitle: "Error",
-            ErrorText:
-                "An error has occurred while trying to get data from the API. Please contact your developer.",
-        };
-
+  constructor(props) {
+    super(props);
+    var entry = {
+      Author: {
+        Id: this.props.currentUser.sub,
+        Name: this.props.currentUser.name,
+      },
+      Project: {
+        Id: "",
+        Title: "",
+        Color: "#943A7A",
+      },
+      Description: "",
+      Files: [],
+      Impact: "",
+      Learning: "",
+      MindSet: "",
+      NextSteps: "",
+      Tags: [],
+    };
+    this.state = {
+      Entry: entry,
+      ShowError: false,
+      ErrorTitle: "Error",
+      ErrorText:
+        "An error has occurred while trying to get data from the API. Please contact your developer.",
+    };
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleEntryDateChange = this.handleEntryDateChange.bind(this);
@@ -56,150 +55,158 @@ class AddEntry extends Component {
     this.handleSetFiles = this.handleSetFiles.bind(this);
   }
 
-    handleTitleChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Title = event.target.value;
-            return { Entry };
-        });
-    }
+  handleTitleChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Title = event.target.value;
+      return { Entry };
+    });
+  }
 
-    handleEntryDateChange(event) {
-        var entryDate = DateTime.fromISO(event.target.value).toUTC();
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.EntryDate = entryDate.toISO();
-            return { Entry };
-        });
-    }
+  handleEntryDateChange(event) {
+    var entryDate = DateTime.fromISO(event.target.value).toUTC();
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.EntryDate = entryDate.toISO();
+      return { Entry };
+    });
+  }
 
-    handleProjectChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            if (event[0] == undefined) {
-                Entry.Project = {
-                    Project: {
-                        Id: "",
-                        Title: "",
-                    },
-                };
-            } else Entry.Project = this.getProject(event[0].value);
-            console.log(Entry.Project);
-            return { Entry };
-        });
-    }
-
-    handleDescriptionChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Description = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleLearningChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Learning = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleMindsetChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.MindSet = event.target.value;
-            return { Entry };
-        });
-    }
-
-    handleImpactChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Impact = event.target.value;
-            return { Entry };
-        });
-    }
-    handleNextStepsChange(event) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.NextSteps = event.target.value;
-            return { Entry };
-        });
-    }
-
-    getProject(id) {
-        for (var i = 0; i < this.props.projects.length; i++) {
-            if (this.props.projects[i].Id == id) {
-                return this.props.projects[i];
-            }
-        }
-        return null;
-    }
-
-    feedProjectsOptions() {
-        var options = this.props.projects.map((project) => {
-            return {
-                value: project.Id,
-                label: project.Title,
-            };
-        });
-        // console.log(options);
-        return options;
-    }
-
-    handleTagChange(values) {
-        this.setState((prevState) => {
-            let Entry = Object.assign({}, prevState.Entry);
-            Entry.Tags = values.map((tag) => tag.value);
-            return { Entry };
-        });
-    }
-
-    feedTagsOptions() {
-        var options = this.props.tags.map((tag) => {
-            return {
-                label: tag,
-                value: tag,
-            };
-        });
-        return options;
-    }
-
-    handleShowError() {
-        if (this.state.ShowError) {
-            this.setState({ ShowError: false });
-        } else {
-            this.setState({ ShowError: true });
-        }
-    }
-
-    async handleSubmit(event) {
-        event.preventDefault();
-        const { getAccessTokenSilently } = this.props.auth0;
-        var token = await getAccessTokenSilently();
-        var entry = this.state.Entry;
-        var options = {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-            },
-            body: JSON.stringify(entry),
+  handleProjectChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      if (event[0] == undefined) {
+        Entry.Project = {
+          Project: {
+            Id: "",
+            Title: "",
+          },
         };
+      } else Entry.Project = this.getProject(event[0].value);
+      console.log(Entry.Project);
+      return { Entry };
+    });
+  }
 
-        var url = "/api/users/" + this.state.Entry.Author.Id + "/entries";
-        var response = await fetch(url, options);
-        if (response.ok) {
-            var result = await response.json();
-            console.log(result);
-            this.props.handleAddEntry();
-            this.props.handleShowAddEntry();
-        } else {
-            this.handleShowError();
-        }
+  handleDescriptionChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Description = event.target.value;
+      return { Entry };
+    });
+  }
+
+  handleLearningChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Learning = event.target.value;
+      return { Entry };
+    });
+  }
+
+  handleMindsetChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.MindSet = event.target.value;
+      return { Entry };
+    });
+  }
+
+  handleImpactChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Impact = event.target.value;
+      return { Entry };
+    });
+  }
+  handleNextStepsChange(event) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.NextSteps = event.target.value;
+      return { Entry };
+    });
+  }
+
+  getProject(id) {
+    for (var i = 0; i < this.props.projects.length; i++) {
+      if (this.props.projects[i].Id == id) {
+        return this.props.projects[i];
+      }
     }
+    return null;
+  }
 
+  feedProjectsOptions() {
+    var options = this.props.projects.map((project) => {
+      return {
+        value: project.Id,
+        label: project.Title,
+      };
+    });
+    // console.log(options);
+    return options;
+  }
+
+  handleTagChange(values) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Tags = values.map((tag) => tag.value);
+      return { Entry };
+    });
+  }
+
+  feedTagsOptions() {
+    var options = this.props.tags.map((tag) => {
+      return {
+        label: tag,
+        value: tag,
+      };
+    });
+    return options;
+  }
+
+  handleShowError() {
+    if (this.state.ShowError) {
+      this.setState({ ShowError: false });
+    } else {
+      this.setState({ ShowError: true });
+    }
+  }
+
+  async handleSubmit(event) {
+    if (
+      this.state.Entry.Title == null ||
+      this.state.Entry.Title.length == 0 ||
+      this.state.Entry.DateTime == null
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      event.preventDefault();
+      const { getAccessTokenSilently } = this.props.auth0;
+      var token = await getAccessTokenSilently();
+      var entry = this.state.Entry;
+      var options = {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(entry),
+      };
+
+      var url = "/api/users/" + this.state.Entry.Author.Id + "/entries";
+      var response = await fetch(url, options);
+      if (response.ok) {
+        var result = await response.json();
+        console.log(result);
+        this.props.handleAddEntry();
+        this.props.handleShowAddEntry();
+      } else {
+        this.handleShowError();
+      }
+    }
+  }
 
   handleSetFiles(files) {
     this.setState((prevState) => {
@@ -209,27 +216,27 @@ class AddEntry extends Component {
     });
   }
 
-    render() {
-        if (this.state.ShowError) {
-            return (
-                <ErrorCard
-                    title={this.state.ErrorTitle}
-                    text={this.state.ErrorText}
-                    handleShowError={this.handleShowError}
-                />
-            );
-        }
+  render() {
+    if (this.state.ShowError) {
+      return (
+        <ErrorCard
+          title={this.state.ErrorTitle}
+          text={this.state.ErrorText}
+          handleShowError={this.handleShowError}
+        />
+      );
+    }
 
-        const placeHolderOption = "";
-        const projectsOptions = this.feedProjectsOptions();
-        const tagsOptions = this.feedTagsOptions();
-        const entryDate = DateTime.fromISO(this.state.Entry.EntryDate);
-        const localEntryDate = entryDate.toLocal().toISODate();
+    const placeHolderOption = "";
+    const projectsOptions = this.feedProjectsOptions();
+    const tagsOptions = this.feedTagsOptions();
+    const entryDate = DateTime.fromISO(this.state.Entry.EntryDate);
+    const localEntryDate = entryDate.toLocal().toISODate();
 
-        return (
-            // add a button, call this.props.handleShowAddEntry
+    return (
+      // add a button, call this.props.handleShowAddEntry
 
-      <Form>
+      <Form className="was-validated">
         <Card>
           <CardHeaderWithCloseButton
             title="Add Entry"
@@ -246,7 +253,11 @@ class AddEntry extends Component {
                     value={this.state.Entry.Title}
                     onChange={this.handleTitleChange}
                     placeholder="Summarise the entry"
+                    required={true}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please include a title
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
               <Col md={3}>
@@ -257,7 +268,11 @@ class AddEntry extends Component {
                     value={localEntryDate}
                     onChange={this.handleEntryDateChange}
                     name="date"
+                    required={true}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a date
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
@@ -355,15 +370,14 @@ class AddEntry extends Component {
             </Row>
           </Card.Body>
 
-
-                    <CardFooterWithSaveButton
-                        text={""}
-                        handleSubmit={this.handleSubmit}
-                    />
-                </Card>
-            </Form>
-        );
-    }
+          <CardFooterWithSaveButton
+            text={""}
+            handleSubmit={this.handleSubmit}
+          />
+        </Card>
+      </Form>
+    );
+  }
 }
 
 export default withAuth0(AddEntry);
