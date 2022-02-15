@@ -165,6 +165,7 @@ class Reports extends Component {
         this.startLimit = startDate.toLocal().toISODate();
         this.setState({
             startDate: startDate.toISO(),
+            showReport: false,
         });
         console.log(this.startLimit);
     }
@@ -174,6 +175,7 @@ class Reports extends Component {
         this.endLimit = endDate.toLocal().toISODate();
         this.setState({
             endDate: endDate.toISO(),
+            showReport: false,
         });
         console.log(this.endLimit);
     }
@@ -186,11 +188,13 @@ class Reports extends Component {
                     Title: "",
                 },
                 showProjectWarning: true,
+                showReport: false,
             });
         } else {
             this.setState({
                 project: this.getProject(event[0].value),
                 showProjectWarning: false,
+                showReport: false,
             });
         }
     }
@@ -207,6 +211,7 @@ class Reports extends Component {
     handleTagChange(values) {
         this.setState({
             selectedTags: values.map((tag) => tag.value),
+            showReport: false,
         });
         console.log(this.state);
     }

@@ -24,10 +24,32 @@ const generatePillarsString = (props) => {
 };
 
 const ProjectReportHeader = (props) => {
+    var selectedTags = "";
+    if (props.selectedTags.length > 0) {
+        selectedTags = "Tags: ";
+        props.selectedTags.map((value) => {
+            selectedTags += value + " | ";
+        });
+        selectedTags = selectedTags.substring(0, selectedTags.length - 3);
+    }
+
   var projectOwner = props.project.Owner.Name;
   var projectTitle = props.project.Title;
   var projectDescription = "Description: " + props.project.Description;
-  var projectGoal = "Goal: " + props.project.ProjectGoal;
+    var projectGoal = "Goal: " + props.project.ProjectGoal;
+
+    const startDate =
+        props.startDate == null
+            ? ""
+            : "From: " +
+            DateTime.fromISO(props.startDate).toLocaleString(DateTime.DATE_FULL);
+    const endDate =
+        props.endDate == null
+            ? ""
+            : " To: " +
+            DateTime.fromISO(props.endDate).toLocaleString(DateTime.DATE_FULL);
+    const date = startDate + endDate;
+    date.trimStart();
 
   // Pillar method
   var projectPillars = generatePillarsString(props);
@@ -53,7 +75,9 @@ const ProjectReportHeader = (props) => {
         <h6 className="report-h6">Owner: {projectOwner}</h6>
         <h6 className="report-h6">{projectDescription}</h6>
         <h6 className="report-h6">{projectGoal}</h6>
-        <h6 className="report-h6">{projectPillars}</h6>
+              <h6 className="report-h6">{projectPillars}</h6>
+              <h6 className="report-h6">{selectedTags}</h6>
+              <h6 className="report-h6">{date}</h6>
         <hr></hr>
         <h6 className="report-h6">Summary:</h6>
         <hr></hr>

@@ -17,7 +17,8 @@ class ProjectEntriesReport extends Component {
 
     return (
       <div>
-        <ProjectReportHeader project={this.props.project}></ProjectReportHeader>
+            <ProjectReportHeader project={this.props.project} startDate={this.props.startDate}
+                endDate={this.props.endDate} selectedTags={this.props.selectedTags}></ProjectReportHeader>
         {entries}
         <ProjectReportFooter></ProjectReportFooter>
       </div>
