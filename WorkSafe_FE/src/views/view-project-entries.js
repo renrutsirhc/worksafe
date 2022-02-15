@@ -9,7 +9,7 @@ import {
 import { ViewFullProject, AddEntry } from "./";
 import { withAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { DeleteConfirmationModal } from "../components";
 
 // Display view-project-entries
@@ -211,7 +211,15 @@ class ViewProjectEntries extends Component {
             <h6>Goal: {this.props.project.ProjectGoal}</h6>
             <h6>Pillars: {pillars}</h6>
             <div className="d-flex">
-              <div className="mr-auto"></div>
+                      <div className="mr-auto">
+                          {/*add back btn*/}
+                          <button
+                              onClick={this.props.handleShowProjectEntries}
+                              className="button round-button"
+                          >
+                              <FontAwesomeIcon icon={faArrowLeft} />
+                          </button>
+                      </div>
               <div className="mx-auto"></div>
               <div className="ml-auto">
                 <button
@@ -248,9 +256,17 @@ class ViewProjectEntries extends Component {
           <div className="mx-auto"></div>
           <div className="ml-auto"></div>
         </div>
-        <h2>No Entries to Display...</h2>
+
         <div className="d-flex">
-          <div className="mr-auto"></div>
+                <div className="mr-auto">
+                    {/*add back btn*/}
+                    <button
+                        onClick={this.props.handleShowProjectEntries}
+                        className="button round-button"
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </button>
+                </div>
           <div className="mx-auto"></div>
           <div className="ml-auto">
             <button
@@ -261,7 +277,8 @@ class ViewProjectEntries extends Component {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
-        </div>
+            </div>
+            <h2>No Entries to Display...</h2>
       </div>
     );
   }
