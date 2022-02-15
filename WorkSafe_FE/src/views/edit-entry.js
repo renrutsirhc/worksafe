@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Select } from "react-dropdown-select";
 import { Row, Col, Form, FormLabel, FormControl, Card } from "react-bootstrap";
 import ErrorCard from "./error-card";
-
+import FilesChooser from "../components/files-chooser";
 import { withAuth0 } from "@auth0/auth0-react";
 import {
   CardHeaderWithCloseButton,
@@ -33,6 +33,7 @@ class EditEntry extends Component {
     this.handleProjectChange = this.handleProjectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleShowError = this.handleShowError.bind(this);
+    this.handleSetFiles = this.handleSetFiles.bind(this);
   }
 
   handleTitleChange(event) {
@@ -199,6 +200,14 @@ class EditEntry extends Component {
     return value;
   }
 
+  handleSetFiles(files) {
+    this.setState((prevState) => {
+      let Entry = Object.assign({}, prevState.Entry);
+      Entry.Files = files;
+      return { Entry };
+    });
+  }
+
   render() {
     if (this.state.ShowError) {
       return (
@@ -283,10 +292,10 @@ class EditEntry extends Component {
               </Form.Group>
             </Row>
             <Row>
-              <Form.Group className="mt-3">
-                <Form.Label>Upload files</Form.Label>
-                <Form.Control className="file-chooser" type="file" multiple />
-              </Form.Group>
+              <FilesChooser
+                files={this.state.Entry.Files}
+                handleSetFiles={this.handleSetFiles}
+              />
             </Row>
             <Row>
               <Form.Group className="mt-3">

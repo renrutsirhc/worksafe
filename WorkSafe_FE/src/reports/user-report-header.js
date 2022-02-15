@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 
 const UserReportHeader = (props) => {
   var userName = props.userName;
-  var selectedTags;
+  var selectedTags = "";
   if (props.selectedTags.length > 0) {
     selectedTags = "Tags: ";
     props.selectedTags.map((value) => {
@@ -20,8 +20,10 @@ const UserReportHeader = (props) => {
   const endDate =
     props.endDate == null
       ? ""
-      : "To: " +
-        DateTime.fromISO(props.endDate).toLocaleString(DateTime.DATE_FULL);
+      : " To: " +
+            DateTime.fromISO(props.endDate).toLocaleString(DateTime.DATE_FULL);
+    const date = startDate + endDate;
+    date.trimStart();
 
   return (
     <div>
@@ -41,9 +43,7 @@ const UserReportHeader = (props) => {
       <h1 className="report-h1">Monthly User Report</h1>
       <h6 className="report-h6">Author: {userName}</h6>
       <h6 className="report-h6">{selectedTags}</h6>
-      <h6 className="report-h6">
-        {startDate} {endDate}
-      </h6>
+      <h6 className="report-h6">{date}</h6>
       <hr></hr>
       <h6 className="report-h6">Summary:</h6>
     </div>

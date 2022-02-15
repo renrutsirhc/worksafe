@@ -23,7 +23,7 @@ class UrlListItem extends Component {
         </a>
         <div></div>
         <button
-          className="button grow card-header-button"
+          className="button grow url-header-button"
           onClick={this.handleDeleteFile}
           type="button"
         >

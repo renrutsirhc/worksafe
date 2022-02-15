@@ -229,7 +229,12 @@ class AddEntry extends Component {
       );
     }
 
-    const placeHolderOption = "";
+
+    const projectPlaceHolder =
+      this.props.projectPlaceHolder == undefined
+        ? ""
+        : this.props.projectPlaceHolder;
+    const tagPlaceHolder = "";
     const projectsOptions = this.feedProjectsOptions();
     const tagsOptions = this.feedTagsOptions();
     const entryDate = DateTime.fromISO(this.state.Entry.EntryDate);
@@ -282,7 +287,7 @@ class AddEntry extends Component {
               <Form.Group className="mt-3">
                 <Form.Label>Project</Form.Label>
                 <Select
-                  placeholder={placeHolderOption}
+                  placeholder={projectPlaceHolder}
                   onChange={this.handleProjectChange}
                   options={projectsOptions}
                   backspaceDelete={false}
@@ -359,7 +364,7 @@ class AddEntry extends Component {
               <Form.Group className="mt-3">
                 <Form.Label>Tag</Form.Label>
                 <Select
-                  placeholder={placeHolderOption}
+                  placeholder={tagPlaceHolder}
                   options={tagsOptions}
                   onChange={(values) => this.handleTagChange(values)}
                   clearable={true}
