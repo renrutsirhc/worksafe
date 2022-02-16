@@ -498,7 +498,11 @@ namespace WorkSafe_BE.DataAccess
             if (await EntryExists(userid, entryid))
             {
                 var entry = await GetEntry(entryid, userid, TopCollection.Users);
-                if (entry.Project != null)
+                if (entry.Project == null)
+                {
+                    throw new NullReferenceException();
+                }
+                if (!entry.Project.Id.Equals(""))
                 {
                     var projectEntryRef = _db.Collection("Projects").Document(entry.Project.Id).Collection("Entries").Document(entryid);
                     await projectEntryRef.DeleteAsync();
