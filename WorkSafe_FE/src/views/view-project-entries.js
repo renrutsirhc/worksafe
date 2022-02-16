@@ -26,6 +26,7 @@ class ViewProjectEntries extends Component {
       //used for deleting entry features
       show: false,
       deletingEntry: null,
+      loading: true,
     };
     this.handleShowAddEntry = this.handleShowAddEntry.bind(this);
     this.handleAddEntry = this.handleAddEntry.bind(this);
@@ -52,7 +53,9 @@ class ViewProjectEntries extends Component {
     let response = await fetch(url, options);
     if (response.ok) {
       let result = await response.json();
-      this.setState({ entries: result });
+        this.setState({
+            entries: result,
+            loading: false,        });
     } else {
       this.handleShowError();
     }
@@ -193,7 +196,48 @@ class ViewProjectEntries extends Component {
           projectPlaceHolder={this.props.project.Title}
         />
       );
-    }
+        }
+
+        if (this.state.loading) {
+            return (
+                <div>
+                    <div>
+                        <h1>Project Entries</h1>
+                        <h2>{this.props.project.Title}</h2>
+                        <h6>Descrition: {this.props.project.Description}</h6>
+                        <h6>Goal: {this.props.project.ProjectGoal}</h6>
+                        <h6>Pillars: {pillars}</h6>
+                    </div>
+                    <div className="d-flex">
+                        <div className="mx-auto"></div>
+                        <div className="ml-auto"></div>
+                    </div>
+
+                    <div className="d-flex">
+                        <div className="mr-auto">
+                            {/*add back btn*/}
+                            <button
+                                onClick={this.props.handleShowProjectEntries}
+                                className="button round-button"
+                            >
+                                <FontAwesomeIcon icon={faArrowLeft} />
+                            </button>
+                        </div>
+                        <div className="mx-auto"></div>
+                        <div className="ml-auto">
+                            <button
+                                type="button"
+                                className="button round-button"
+                                onClick={this.handleShowAddEntry}
+                            >
+                                <FontAwesomeIcon icon={faPlus} />
+                            </button>
+                        </div>
+                    </div>
+                    <h2>Loading...</h2>
+                </div>
+            );
+        }
 
     if (this.state.entries.length > 0 && this.state.projectsLoaded) {
       return (
