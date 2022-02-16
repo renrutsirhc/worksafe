@@ -133,10 +133,14 @@ class EditProject extends Component {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      event.preventDefault();
+        event.preventDefault();
+
+        var project = this.state.Project;
+        project.LastUpdatedBy.Id = this.props.auth0.user.sub;
+
       const { getAccessTokenSilently } = this.props.auth0;
       var token = await getAccessTokenSilently();
-      var project = this.state.Project;
+
       var options = {
         method: "PUT",
         headers: {

@@ -606,9 +606,16 @@ class Reports extends Component {
             },
         });
 
+        var fileName = "";
+        if (this.state.isUser) {
+            fileName = "WorkSafe User Report - " + this.state.user.name;
+        } else {
+            fileName = "WorkSafe Project Report - " + this.state.project.Title;
+        }
+
         Packer.toBlob(doc).then((blob) => {
             console.log(blob);
-            saveAs(blob, "example.docx");
+            saveAs(blob, fileName);
             console.log("Document created successfully");
         });
     }
