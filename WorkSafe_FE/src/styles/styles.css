@@ -93,10 +93,17 @@
 }
 
 .pillar-button {
-  background-color: #d7e16c;
-  color: white;
-  margin: 4px;
-  display: flex;
+    background-color: #d7e16c;
+    color: white;
+    margin: 4px;
+    display: flex;
+    font-family: Verdana;
+    font-weight: 700;
+    border-style: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .pillar-button:hover {
@@ -104,10 +111,17 @@
 }
 
 .pillar-button-unselected {
-  background-color: #a9a8a8;
-  color: white;
-  margin: 4px;
-  display: flex;
+    background-color: #a9a8a8;
+    color: white;
+    margin: 4px;
+    display: flex;
+    font-family: Verdana;
+    font-weight: 700;
+    border-style: none;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .pillar-button-unselected:hover {

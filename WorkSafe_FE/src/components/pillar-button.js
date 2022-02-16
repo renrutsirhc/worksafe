@@ -4,7 +4,7 @@ const PillarButton = (props) => {
   if (props.checked) {
     return (
       <button
-        className="button pillar-button"
+        className="pillar-button"
         disabled={props.disabled}
         type="button"
       >
@@ -14,7 +14,7 @@ const PillarButton = (props) => {
   } else {
     return (
       <button
-        className="button pillar-button-unselected"
+        className="pillar-button-unselected"
         disabled={props.disabled}
         type="button"
       >
