@@ -201,7 +201,7 @@ class Dashboard extends Component {
                 tags={tags}
                 handleUpdateEntry={this.handleUpdateEntry}
                 handleModal={this.handleModal}
-
+                allowDelete={true}
             />
         ));
 

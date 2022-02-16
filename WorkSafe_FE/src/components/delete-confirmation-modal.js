@@ -14,8 +14,8 @@ class DeleteConfirmationModal extends Component {
                 <Modal.Body><b>Entry Title - </b>{this.props.deletingEntry.Title}</Modal.Body>
                 <Modal.Body><b>Project Title - </b>{this.props.deletingEntry.Project.Title}</Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.props.handleModal} className="btn btn-secondary">Cancel</Button>
-                    <Button onClick={this.props.deleteEntry} className="btn btn-danger">Delete</Button>
+                    <button onClick={this.props.handleModal} className="button button-grey">Cancel</button>
+                    <button onClick={this.props.deleteEntry} className="button button-danger">Delete</button>
                 </Modal.Footer>
             </Modal>
         </div>

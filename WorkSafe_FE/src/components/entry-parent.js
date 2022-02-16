@@ -61,6 +61,7 @@ class EntryParent extends Component {
                     setExpanded={this.setExpanded}
                     setEditing={this.setEditing}
                     handleModal={this.props.handleModal}
+                    allowDelete={this.props.allowDelete}
                 />
             );
         }
@@ -72,6 +73,7 @@ class EntryParent extends Component {
                 setExpanded={this.setExpanded}
                 setEditing={this.setEditing}
                 handleModal={this.props.handleModal}
+                allowDelete={this.props.allowDelete}
             />
 
         );

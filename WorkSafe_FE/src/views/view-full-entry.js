@@ -38,7 +38,7 @@ class ViewFullEntry extends Component {
             setEditing={this.props.setEditing}
             deleteEntry={this.props.deleteEntry}
             handleModal={this.props.handleModal}
-            allowDelete={true}
+            allowDelete={this.props.allowDelete}
           />
           <Card.Body>
             <Card.Title>Date</Card.Title>

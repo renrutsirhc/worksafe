@@ -15,7 +15,7 @@ class ViewEntry extends Component {
         return (
             <div className="view-entry mt-3">
                 <Card className="grow" onClick={this.props.setExpanded}>
-                    <CardHeaderWithEditButton entry={this.props.entry} title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} color={this.props.entry.Project.Color} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} handleModal={this.props.handleModal} allowDelete={true} />
+                    <CardHeaderWithEditButton entry={this.props.entry} title={this.props.entry.Title} subTitle={this.props.entry.Project.Title} color={this.props.entry.Project.Color} setEditing={this.props.setEditing} deleteEntry={this.props.deleteEntry} handleModal={this.props.handleModal} allowDelete={this.props.allowDelete} />
                     <Card.Body className="card-body">
                         <Card.Text> {this.props.entry.Description}</Card.Text>
                     </Card.Body>

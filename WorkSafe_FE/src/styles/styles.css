@@ -12,13 +12,29 @@
 }
 
 .button:hover {
-  background-color: #e0e88e;
+  background-color: #e9eeaa;
   color: white;
 }
 
 .button:disabled {
   background-color: #7e7e7f;
 }
+
+.button-danger {
+    background-color: #DC3E38;
+}
+
+    .button-danger:hover {
+        background-color: #ab3733;
+    }
+
+.button-grey {
+    background-color: #7E7E7F;
+}
+
+    .button-grey:hover {
+        background-color: #D4D5D5;
+    }
 
 .logout-button {
   background-color: #282829;
@@ -108,9 +124,9 @@
   font-size: 24px;
 }
 
-.round-button:hover {
-  background-color: #943a7a;
-}
+    .round-button:hover {
+        background-color: #e9eeaa;
+    }
 
 .url-list-item {
   background-color: #943a7a;

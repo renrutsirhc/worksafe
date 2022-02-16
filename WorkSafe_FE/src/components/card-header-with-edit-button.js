@@ -16,13 +16,20 @@ class CardHeaderWithEditButton extends Component {
         }
 
         var deletebutton;
+        var editButton;
         // only apply delete button to entry cards
         if (this.props.allowDelete) {
             deletebutton = 
               <CardHeaderButton
               color={color}
               icon={faTrashCan}
-              onClick={(e) => { e.stopPropagation(); this.props.handleModal(this.props.entry) }}/>
+                    onClick={(e) => { e.stopPropagation(); this.props.handleModal(this.props.entry) }} />
+            
+            editButton = <CardHeaderButton
+                color={color}
+                onClick={this.props.setEditing}
+                icon={faPenToSquare}
+            />
         }
 
         var headerStyle;
@@ -40,11 +47,7 @@ class CardHeaderWithEditButton extends Component {
                     </div>
                     <div className="card-header-button-container">
                         {deletebutton}
-                        <CardHeaderButton
-                            color={this.props.color}
-                            onClick={this.props.setEditing}
-                            icon={faPenToSquare}
-                        />
+                        {editButton}
                     </div>
                 </Card.Header>
             );
@@ -60,11 +63,7 @@ class CardHeaderWithEditButton extends Component {
                     </div>
                     <div className="card-header-button-container">
                         {deletebutton}
-                        <CardHeaderButton
-                            color="#943A7A"
-                            onClick={this.props.setEditing}
-                            icon={faPenToSquare}
-                        />
+                        {editButton}
                     </div>
                 </Card.Header>
             );

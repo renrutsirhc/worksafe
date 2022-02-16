@@ -165,15 +165,19 @@ class ViewProjectEntries extends Component {
     }
   };
 
-  render() {
+    render() {
+
+
+
     var entries = this.state.entries.map((entry) => (
       <EntryParent
-        key={entry.Id}
-        entry={entry}
-        projects={this.props.projects}
-        tags={this.state.tags}
-        handleUpdateEntry={this.handleUpdateEntry}
-        handleModal={this.handleModal}
+            key={entry.Id}
+            entry={entry}
+            projects={this.props.projects}
+            tags={this.state.tags}
+            handleUpdateEntry={this.handleUpdateEntry}
+            handleModal={this.handleModal}
+            allowDelete={this.props.user.sub == entry.Author.Id}
       />
     ));
     var pillars = this.generatePillarsString();
